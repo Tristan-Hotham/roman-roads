@@ -1,0 +1,127 @@
+<!-- wp:paragraph -->
+<p><em>A new open map puts 299,171 km of Roman road on one screen. I walked it, in a model at least: London is 81 days from Rome on foot, Alexandria 180, and by road alone Carthage is further than either.</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://maps.tristanhotham.com/roman-roads/">Explore the interactive version</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23857866">Read the paper</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:paragraph -->
+<p>All roads lead to Rome, the saying goes, and in 2025 a team of archaeologists made it possible to check. Itiner-e, built at Aarhus University and the Autonomous University of Barcelona with many collaborators, is the most detailed open dataset yet of the roads of the Roman Empire: 14,769 road sections, from Hadrian's Wall to the Euphrates and from Portugal to the edge of the Sahara, each drawn from atlases, excavation reports, milestones and aerial photographs, and each with a note of how sure we are of where it ran.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Add them up and you get 299,171 km of road, 7.5 times round the Earth. I wanted to know three things: how much of that we actually know, where the network was densest and straightest, and the question every schoolchild studying the Romans eventually asks: how long did it take to get anywhere?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How many days from Rome</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>A road map becomes a travel map once you treat it as a network. The places where sections meet become 10,315 junctions, and each section becomes a link with a time attached. For the speeds I used Wikipedia's article on Roman roads: people on foot covered 20 to 25 km a day, horse-drawn carts 40 to 50, and a relay of horses could carry a letter about 80 km. I took the middle of each range. Itiner-e also has a passability value for every section, which turns out to match a standard rule for how much hills slow walkers down, so steep roads cost more. Where the roads stop at the sea, the Channel, the Strait of Messina, the Strait of Otranto and the Strait of Gibraltar each count as one day.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_days.png|Map of the Roman road network from Britain to Egypt, each road coloured by modelled days on foot from Rome: deep red in central Italy, orange and gold across northern Italy, Gaul and the Balkans, green in Britain, Spain and Asia Minor, teal in Syria, and blue and violet across North Africa and Egypt. Grey islands (Sardinia, Corsica, Crete, Cyprus) have no road link.|Every road in Itiner-e, coloured by modelled days on foot from the Forum in Rome.}}
+
+<!-- wp:paragraph -->
+<p>On foot, London comes out at 81 days (73 to 91 depending on your pace): 1,672 km over the Alps, through Gaul to Boulogne and across the Channel. A cart takes 41 days and a courier 23. Byzantium, the later Constantinople, is 75 days, by the ferry from Brindisi and the Via Egnatia across the Balkans. Paris is 67 days, Athens 67 and Jerusalem 157.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_cities.png|Horizontal bar chart of modelled days from Rome to twenty cities. On foot: Milan 28, Aquileia 32, Lyon 50, Paris 67, Athens 67, Constantinople 75, London 81, York 94, Cádiz 116, Antioch 128, Jerusalem 157, Alexandria 180, Carthage 210 and Leptis Magna 231 days. Carts take about half as long and couriers about a quarter.|Modelled days from Rome on foot (bars), by cart (diamonds) and by courier (dots).}}
+
+<!-- wp:paragraph -->
+<p>Then the model does something strange. Alexandria, only 1,952 km from Rome as the crow flies, is 180 days away, because there is no road across the sea: you go over to Greece, through Asia Minor, down through Syria and Judaea and across the Sinai. Carthage is stranger still. It sits 590 km from Rome, but by road you go through Gaul and Spain, cross at Gibraltar and walk the whole coast of North Africa: 4,490 km and 210 days.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:pullquote -->
+<figure class="wp-block-pullquote"><blockquote><p>By road alone, Carthage was further from Rome than Alexandria. Nobody went that way: they took a ship.</p></blockquote></figure>
+<!-- /wp:pullquote -->
+
+<!-- wp:paragraph -->
+<p>That is the point, really. The Mediterranean was the empire's main highway, and the roads fed it. Stanford's ORBIS model of the Roman world does this properly, with sea routes, rivers and seasons, and it shows how often the sea was the quicker way. My model is narrower, roads only, but on a far more detailed network, and it shows how the land itself was stitched together. On the interactive map you can start from any city, switch between walking, cart and courier, and click anywhere to see the route.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Most of the map is an educated guess</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>The best thing about Itiner-e is its honesty. Every section is graded. Certain roads are well documented and drawn to within 50 to 200 m. Conjectured roads are known to have existed but their exact line is less sure. Hypothetical roads probably existed but cannot be placed, or are desert tracks with no single course. Only 8,181 km, 2.7% of the network, is certain. 90% is conjectured.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_certainty.png|Map of the Roman road network coloured by certainty: almost everything is pale orange (conjectured), with dashed beige hypothetical routes across the Sahara and short dark blue certain sections concentrated in Syria, Jordan, Israel, central Turkey and a few places in Germany and the Low Countries.|Certain (dark blue), conjectured (orange) and hypothetical (dashed) roads.}}
+
+<!-- wp:paragraph -->
+<p>The certain kilometres cluster where surveys have been thorough and dry country preserves the line, in Arabia, Syria, central Anatolia and Judaea. Not a single kilometre of the modelled route from Rome to London is graded certain. For travel times that hardly matters, since a few hundred metres either way makes no difference to a journey of weeks. For anyone asking which field a road crossed, it matters a lot. Dates are rarer still: only 19% of the length has a date or the name of a builder, led by Claudius (5,925 km), Trajan and Hadrian.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Ruler-straight, for 56 km</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Roman roads have a reputation for running dead straight, so I measured it. I joined sections into continuous lines and looked for stretches that never stray more than 200 m from a straight line. 46 stretches manage at least 20 km. The longest, 56.1 km, crosses the chalk plain of Picardy between Saint-Quentin and Amiens. The Via Postumia in the Veneto (49 km) and the Via Appia across the Pontine plain towards Terracina (42 km) follow.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_straight.png|Six small maps at the same scale, each showing a long straight Roman road as a red band among the grey lines of nearby roads: 56.1 km between Saint-Quentin and Amiens, 49.4 km on the Via Postumia, 42.0 km on the Via Appia, 40.5 km on the Via Belgica, 33.7 km on the Via Aemilia and 32.5 km between Arras and Cambrai.|The six longest straight runs, each within 200 m of a straight line.}}
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Where the network was densest</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Measured as kilometres of road per 1,000 km² in the provinces of about AD 117, the densest network is in Latium and Campania, the country round Rome, with 144. Outside Italy, Cyprus, Judaea and Lycia in southern Turkey lead. The thinnest are Egypt, mostly desert, and Trajan's short-lived Armenia and Mesopotamia. Density follows modern research as well as ancient engineering, though: some regions have been surveyed field by field, others only from old atlases.</p>
+<!-- /wp:paragraph -->
+
+{{IMG|b_provinces.png|Map of Roman provinces shaded by road density, darkest in central Italy, Cyprus, Judaea and southern Turkey, mid-tones across Gaul, Greece and the Balkans, and palest in Egypt, Cyrenaica and Mesopotamia.|Kilometres of road per 1,000 km² by province, about AD 117.}}
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">How I did this</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Everything starts from the Itiner-e static version 2024 on Zenodo. Section ends that meet within a metre form the junctions of the network. Travel time on each section is its length divided by the speed and by the dataset's own passability value; each sea crossing counts as one day; the last stretch off a road counts at half speed. Shortest paths come from Dijkstra's algorithm, and the page runs the same model in your browser, so you can start from anywhere. Straight runs use a 200 m tolerance on lines joined through junctions, and province outlines come from the Digital Atlas of the Roman Empire. The times are modelled, not recorded: there are no rests, seasons, rivers or ships in them. The paper sets out every step.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://maps.tristanhotham.com/roman-roads/">Explore the interactive version</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://doi.org/10.5281/zenodo.23857866">Read the paper</a></div>
+<!-- /wp:button -->
+<!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="https://github.com/Tristan-Hotham/roman-roads">Data and code</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Notes and sources</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li>de Soto, P., Pažout, A., Brughmans, T. et al. (2025) <a href="https://doi.org/10.5281/zenodo.17122148">A high-resolution dataset of roads of the Roman Empire: Itiner-e static version 2024</a>, Zenodo, described in <a href="https://doi.org/10.1038/s41597-025-06140-z">Scientific Data</a>. CC BY 4.0. Living version at <a href="https://itiner-e.org/">itiner-e.org</a>.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>Province outlines and ancient place names: the Digital Atlas of the Roman Empire (DARE), Johan Åhlfeldt, via <a href="https://github.com/klokantech/roman-empire">github.com/klokantech/roman-empire</a>.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>Travel speeds: English Wikipedia, <a href="https://en.wikipedia.org/wiki/Roman_roads">Roman roads</a>. CC BY-SA 4.0.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>For comparison: Scheidel, W. and Meeks, E., <a href="https://orbis.stanford.edu/">ORBIS: The Stanford Geospatial Network Model of the Roman World</a>.</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>Land and modern place names: <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain).</li>
+<!-- /wp:list-item -->
+<!-- wp:list-item -->
+<li>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
