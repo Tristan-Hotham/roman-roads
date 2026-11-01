@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Roads of the Roman Empire</title>
+<meta name="description" content="Every road in Itiner-e, the new open map of the roads of the Roman Empire: 299,171 km, how much of it is certain, and a travel-time model of how many days it took to reach anywhere from Rome.">
+<meta property="og:title" content="Roads of the Roman Empire: 299,171 km of road, and how many days from Rome">
+<meta property="og:description" content="Only 2.7% of the network is mapped as certain. On foot, the model puts London 81 days from Rome, Constantinople 75 and Alexandria, the long way round by road, 180.">
+<meta property="og:image" content="https://maps.tristanhotham.com/roman-roads/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/roman-roads/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Milestone and parchment: warm paper, ink, Pompeian red; roads coloured by days from Rome. */
+:root{
+  --bg:#F6F1E7; --panel:#ECE5D8; --fg:#1F1A17; --muted:#6B625A; --rule:#E2D9C9; --card:#FCFAF5; --border:#CFC4B2;
+  --hot:#A8322D; --cool:#1C3A5E; --gold:#B7802A; --teal:#2F6F62; --sea:#E9EEEE;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#15120F; --panel:#211C18; --fg:#EEE7DC; --muted:#A99E92; --rule:#2E2722; --card:#1A1613; --border:#3D352E;
+  --hot:#E0675D; --cool:#8DB0D8; --gold:#E2AA4E; --teal:#6FBFAE; --sea:#141A1C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#15120F; --panel:#211C18; --fg:#EEE7DC; --muted:#A99E92; --rule:#2E2722; --card:#1A1613; --border:#3D352E;
+  --hot:#E0675D; --cool:#8DB0D8; --gold:#E2AA4E; --teal:#6FBFAE; --sea:#141A1C; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:700px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1180px,calc(100vw - 32px));margin-left:calc((100% - min(1180px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--hot);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--hot);color:#fff;padding:5px 8px;font-weight:500}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(44px,11vw,96px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 .a{color:var(--hot)}
+.mark{width:clamp(78px,16vw,128px);height:auto;display:block}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:58ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:54px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--hot);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--hot)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(22px,4.4vw,32px)/1 var(--display);letter-spacing:-.01em}
+.stats b.h{color:var(--hot)} .stats b.c{color:var(--cool)} .stats b.g{color:var(--gold)} .stats b.t{color:var(--teal)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:290px;z-index:1000;transform:translate(-50%,calc(-100% - 12px));display:none}
+.tip b{font-weight:500}
+.controls{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.scrollrow{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px;max-width:100%}
+.scrollrow .btn{flex:0 0 auto;white-space:nowrap}
+.ctl-l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px;flex:0 0 auto;align-self:center}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+select.sel{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 6px;min-height:36px;max-width:100%}
+.searchbox{position:relative;flex:1 1 260px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 11px;min-height:40px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1001;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px;align-items:start}
+@media (max-width:900px){.mapgrid{grid-template-columns:1fr}}
+.side{background:var(--card);border:1px solid var(--border);padding:12px 12px 10px;font:400 13px/1.45 var(--mono);max-height:660px;overflow:auto}
+@media (max-width:900px){.side{max-height:none}}
+.side h4{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.side h4:first-child{margin-top:2px}
+.side .big{font:800 24px/1.1 var(--display);margin:2px 0 4px}
+.side .sub{color:var(--muted);font-size:12px;margin:0 0 8px}
+.side table{width:100%;border-collapse:collapse;margin:4px 0 6px}
+.side td{padding:4px 4px 4px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.side td.num{text-align:right;white-space:nowrap}
+.side td small{color:var(--muted)}
+.side .acts{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.side .acts .btn{min-height:30px;padding:6px 8px;font-size:11.5px}
+.chip{display:inline-block;font:500 11px/1 var(--mono);padding:4px 7px;border-radius:999px;color:#fff;margin:0 4px 4px 0}
+.back{font:400 12px var(--mono);background:none;border:0;color:var(--muted);padding:0;cursor:pointer;text-decoration:underline;margin-bottom:6px}
+.go{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px}
+.lmap{height:640px;border:1px solid var(--border);background:var(--sea);border-radius:2px}
+@media (max-width:600px){.lmap{height:min(64vh,470px)}}
+.leaflet-container{font:400 12px/1.4 var(--mono);background:var(--sea)}
+.lyrBtn{background:var(--card,var(--bg));color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:8px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card,var(--bg));color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;margin-top:6px;width:250px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono);max-height:min(70vh,520px);overflow:auto}
+.lyrPanel[hidden]{display:none}
+.lyrPanel .row{margin:0 0 9px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel select{font:400 12px var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:2px;padding:2px 4px;width:100%;min-height:0}
+.lyrPanel .sub{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px;margin-top:3px}
+.lyrPanel .sub span{flex:0 0 58px}
+.lyrPanel .hd{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 7px;border-top:1px solid var(--rule);padding-top:9px}
+.lyrPanel .reset{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.mapnote{background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--border);border-radius:3px;padding:6px 9px;font:400 12px/1.35 var(--mono);max-width:min(300px,62vw);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.mapnote b{font:900 18px/1.1 var(--display);display:block;margin-bottom:2px}
+@media (max-width:600px){.mapnote{display:none}}
+.cityL{font:600 10.5px/1.15 var(--mono);color:var(--fg);white-space:nowrap;text-shadow:0 0 3px var(--bg),0 0 3px var(--bg),0 0 2px var(--bg);pointer-events:none;text-align:center}
+.zlow .cityL.minor{display:none}
+.cityL small{display:block;font-weight:400;color:var(--muted)}
+.leaflet-bar a,.leaflet-bar a:hover{background:var(--card);color:var(--fg);border-bottom-color:var(--border)}
+.leaflet-control-attribution{background:color-mix(in srgb,var(--card) 85%,transparent)!important;color:var(--muted)}
+.leaflet-control-attribution a{color:var(--fg)}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--card);color:var(--fg)}
+.leaflet-popup-content{font:400 12.5px/1.45 var(--mono);margin:10px 12px}
+.leaflet-popup-content b.t{font:800 16px/1.2 var(--display);display:block;margin-bottom:3px}
+.leaflet-popup-content table{border-collapse:collapse;margin:4px 0}
+.leaflet-popup-content td{padding:2px 8px 2px 0}
+.leaflet-popup-content .btn{min-height:28px;padding:5px 7px;font-size:11px;margin:4px 4px 0 0}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:8px;align-items:center}
+.legend span{display:inline-flex;align-items:center}
+.legend i{display:inline-block;width:18px;height:4px;margin-right:6px;border-radius:2px}
+.legend i.dash{background-image:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px)!important;background-color:transparent!important}
+.legend .rampbar{display:inline-block;width:min(320px,70vw);height:10px;border-radius:2px;margin:0 6px}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--hot);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+.note h3{margin-top:0}
+table.rank{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--mono);margin:8px 0 18px}
+table.rank th{font:500 11px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:2px solid var(--fg);padding:6px 6px 6px 0}
+table.rank td{border-bottom:1px solid var(--rule);padding:6px 6px 6px 0;vertical-align:top}
+table.rank td.num,table.rank th.num{text-align:right;white-space:nowrap}
+table.rank tr.cl{cursor:pointer}
+table.rank tr.cl:hover td{background:var(--panel)}
+table.rank .bar{display:inline-block;height:9px;background:var(--hot);border-radius:1px;vertical-align:0}
+table.rank small{color:var(--muted)}
+@media (max-width:600px){table.rank .hide-s{display:none}}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--hot);border-color:var(--hot);color:#fff}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+@media print{.theme,.controls{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>History</span><span>Roman Empire, 2026</span></div>
+<header class="hero">
+  <h1>Roads of the <span class="a">Roman Empire</span></h1>
+  <svg class="mark" viewBox="0 0 120 140" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">A team of archaeologists has published Itiner-e, the most detailed open map yet of the roads of the Roman Empire: 299,171 km of them, section by section. I mapped every one, asked how much of the network we really know, and built a travel-time model to answer an old question: how many days was it from Rome to anywhere?</p>
+</header>
+<div class="byline">Dr Tristan Hotham · Independent researcher · 2026 · Data: Itiner-e (de Soto, Pažout, Brughmans et al.), CC BY 4.0; DARE provinces; Natural Earth</div>
+
+<div class="stats">
+  <div><b class="h">299,171 km</b><span>of Roman road in Itiner-e, in 14,769 sections</span></div>
+  <div><b class="c">2.7%</b><span>of that length is mapped as certain; 90% is conjectured</span></div>
+  <div><b class="g">81 days</b><span>from Rome to London on foot, in the model (23 for a courier)</span></div>
+  <div><b class="t">180 days</b><span>to Alexandria by road, the long way round the eastern Mediterranean</span></div>
+</div>
+
+<p class="lede">Every Roman road began, in a sense, at the golden milestone that Augustus set up in the Forum. For centuries the best maps of the network were printed atlases. Itiner-e, released in 2025 by teams at Aarhus University and the Autonomous University of Barcelona with many collaborators, puts it all in one open dataset: 14,769 road sections, digitised from atlases, surveys, excavation reports, milestones and aerial and satellite images, with 299,171 km of road from Scotland to the Sahara and from Portugal to the Euphrates. That is 7.5 times round the Earth.</p>
+<p>Each section has a name, a type (main or secondary road), a grade of how sure we are of its course, and, when known, the period it was built and the ancient itinerary it appears in. I used it to ask three things. How much of the network is known for certain? Where was it densest, and where does it run straightest? And, by building a graph of the whole network and walking it with stated speeds, how many days did it take to get from Rome to anywhere else?</p>
+
+<h2><span class="n">01 · The map</span>Every road, and how far it is from Rome</h2>
+<div class="bleed" id="atlas">
+<div class="controls">
+  <div class="scrollrow" id="colRow"><span class="ctl-l">Colour</span></div>
+</div>
+<div class="controls">
+  <div class="scrollrow" id="modeRow"><span class="ctl-l">Travel</span></div>
+  <label class="ctl-l" for="startSel">From</label><select class="sel" id="startSel" aria-label="Start city"></select>
+</div>
+<div class="controls">
+  <div class="searchbox"><input type="search" id="q" placeholder="Search a place, ancient or modern (Londinium, York, Petra)" aria-label="Search a place" autocomplete="off"><ul class="suggest" id="sug" role="listbox"></ul></div>
+</div>
+<div class="mapgrid">
+  <div><div id="map" class="lmap" role="application" aria-label="Map of Roman roads"></div>
+    <div class="legend" id="legend"></div></div>
+  <div class="side" id="side" aria-live="polite"></div>
+</div>
+<p class="src">Roads: Itiner-e static version 2024 (de Soto, Pažout, Brughmans et al. 2025, doi:10.5281/zenodo.17122148), CC BY 4.0, lines lightly simplified. Travel times are modelled, not recorded (see section 02). Click any road, or anywhere on land, for how long it took from the chosen start.</p>
+</div>
+
+<h2><span class="n">02 · How many days from Rome</span>London in 81 days, Alexandria in 180</h2>
+<p>To turn a map into travel times I treated the network as a graph: the 10,315 points where sections meet are the junctions, and the 14,769 sections are the links between them. Wikipedia's article on Roman roads gives the speeds: people on foot covered 20 to 25 km a day, horse-drawn carts 40 to 50 km, and a relay of horses could carry a letter about 80 km in a day. I used the middle of each range, 22.5, 45 and 80 km a day.</p>
+<p>Hills slow everyone down. Itiner-e gives every section a passability value that falls as the road gets steeper. It is not explained in the field description, but it matches Tobler's hiking function, a standard rule for walking speed on slopes, for every section with an average slope above about 3.4 degrees (median difference 0.001), and is 1 on gentler ground. I divided each section's time by it: 27% of the network is slowed. Where the roads stop at the sea, four short crossings join them, each counted as one day whatever the traveller: the Channel, the Strait of Messina, the Strait of Otranto and the Strait of Gibraltar. Then a shortest-path search from the Forum gives a time to every junction in the empire.</p>
+<div class="figure"><p class="fig-h">Days from Rome by road</p><p class="fig-sub">Modelled travel time from the Forum to 20 cities. Lines show the range for the low and high ends of each speed. Click a city to see its route on the map.</p>
+<div class="controls"><div class="scrollrow" id="cityMode"><span class="ctl-l">Travel</span></div></div>
+<div class="chart" id="cityChart"></div></div>
+<p>On foot, London is 81 days from Rome (73 to 91 days at 25 or 20 km a day): 1,672 km of road, through Gaul to Boulogne, across the Channel and up from Dover. A cart would take 41 days and a courier 23. Constantinople, then still Byzantium, is 75 days, across the Strait of Otranto and along the Via Egnatia; by land the whole way, round the head of the Adriatic, it is 107.</p>
+<p>Alexandria is the surprise. It is only 1,952 km from Rome as the crow flies, but there is no road across the sea, so the model takes you over to Greece, through Asia Minor, down through Syria and Judaea and across the Sinai: 3,807 km of road and 180 days on foot, 2.2 times as long as London. Carthage is stranger still. Rome to Carthage by road goes through Gaul and Spain, across the Strait of Gibraltar and back along the whole of North Africa: 4,490 km, 210 days on foot, for a city 590 km away.</p>
+<p class="pull">By road alone, Carthage was further from Rome than Alexandria. Nobody went that way: they took a ship.</p>
+<p>That is the main limit of a roads-only model. The Mediterranean was the empire's real highway, and the roads fed it. Stanford's ORBIS model of the Roman world (Scheidel and Meeks) does the job properly, with sea routes, rivers, seasons and many kinds of traveller, and it shows how often the sea was much quicker than the road. This map does something narrower on a far more detailed road network: it shows how the land itself was tied together, and where the roads alone could and could not take you.</p>
+<div class="figure"><p class="fig-h">How much of the network lies how far from Rome</p><p class="fig-sub">Kilometres of road by days on foot from Rome (the time to the middle of each section). Hover a bar.</p><div class="chart" id="bandChart"></div></div>
+<p>Only 5% of the network is within a month's walk of Rome; by courier, 64% is. The furthest point the roads reach is Murzuq, in the Fezzan in southern Libya, 266 days on foot along desert routes that Itiner-e marks as hypothetical. 4,063 km of road (1.4%) cannot be reached by road at all: Sardinia, Corsica, Crete and Cyprus, and a few short fragments.</p>
+
+<h2><span class="n">03 · How much is certain</span>Most of the map is an educated guess</h2>
+<p>Itiner-e grades every section by how sure we are of where it ran. <b>Certain</b> sections are well documented and digitised to within 50 m in mountains and 200 m in the plains. <b>Conjectured</b> sections are known roads whose exact course is less sure. <b>Hypothetical</b> ones are roads that probably existed but cannot be placed, or desert and floodplain tracks with no single fixed line. Only 8,181 km, 2.7% of the network, is certain. 90% is conjectured and 7.4% hypothetical.</p>
+<div class="figure"><p class="fig-h">Certain, conjectured and hypothetical road</p><p class="fig-sub">Kilometres of main and secondary road by certainty. Hover a block.</p><div class="chart" id="certChart"></div></div>
+<p>Main roads make up 35% of the length, and even of these only 5.4% is certain. The certain kilometres cluster where surveys have been thorough and dry country preserves the line: Arabia, Syria, Galatia and Cappadocia, and Judaea have the most. The longest single section, Dedris-Cydamus Ghadames in the Libyan desert, runs 493 km and is hypothetical. Not one kilometre of the modelled route from Rome to London runs on a section graded certain.</p>
+<p>None of this is a weakness of the dataset. It is the dataset being honest. A road can be known from milestones and itineraries long before anyone can say which field it crossed, and Itiner-e records that difference instead of hiding it. For a travel-time model it matters less than it sounds: an error of a few hundred metres in a road's course hardly changes a journey of weeks. Leaving out every hypothetical section changes the times to Constantinople and Alexandria by less than a day.</p>
+
+<h2><span class="n">04 · When they were built</span>A fifth of the network has a date</h2>
+<p>Few roads can be dated. 3,176 sections, 19% of the length, carry the name of the emperor or magistrate under whom they were built or a start date, mostly from milestones and inscriptions. That is a record of where inscriptions survive and have been studied, not of when the network grew, so I have not tried to animate it. Within it, Claudius has the most kilometres (5,925 km), much of it in Gaul and in Lycia, where a monument at Patara lists the roads built under him, then Trajan (4,067 km) and Hadrian (3,932 km).</p>
+<div class="figure"><p class="fig-h">Kilometres of road by the emperor or magistrate named as builder</p><p class="fig-sub">The construction period field, grouped by name (3,191 sections have one). Hover a bar.</p><div class="chart" id="builderChart"></div></div>
+<p>The ancient itineraries tell a different story. 38% of the length appears in at least one: 75,486 km on the Tabula Peutingeriana, the medieval copy of a late Roman road map, and 68,861 km in the Antonine Itinerary, a list of routes and stopping places. Among the named roads the longest in the data is the Via Egnatia across the Balkans (1,165 km), then the Via Hadriana in Egypt and the Via Claudia Augusta over the Alps.</p>
+
+<h2><span class="n">05 · The straightest roads</span>Roman roads really do run straight</h2>
+<p>To find the longest straight runs I joined sections into continuous lines through junctions where the road carries on within 20 degrees of straight, then looked for stretches that never stray more than 200 m from a straight line, the accuracy of a certain section in the plains. Long conjectured lines drawn with only a few points are left out, because they are straight only because they were drawn that way. 46 stretches run straight for 20 km or more.</p>
+<div class="figure"><p class="fig-h">The longest straight runs</p><p class="fig-sub">Stretches that stay within 200 m of a straight line. Click a row to see it on the map.</p><div id="runTable"></div></div>
+<p>The longest, 56 km, crosses the chalk plain of Picardy between Saint-Quentin and Amiens, a line a modern road still follows. Then come the Via Postumia in the Veneto (49 km) and the Via Appia across the Pontine plain towards Terracina (42 km), the longest straight on a section graded certain. These are lower bounds: a tolerance of 200 m is strict, and the famous long alignments of Roman Britain and Gaul bend just enough, at river crossings and ridges, to break into shorter runs.</p>
+
+<h2><span class="n">06 · The densest networks</span>Latium leads, Mesopotamia trails</h2>
+<p>Measured as kilometres of road per 1,000 km² in the provinces of about AD 117 (from the Digital Atlas of the Roman Empire, with Italy as its eleven regions), the densest network is in Italia, regio I (Latium et Campania), the country round Rome: 144 km per 1,000 km². Outside Italy, Cyprus (131), Iudaea (130) and Lycia et Pamphylia (129) lead. Italy as a whole has 70, against 58 for all the provinces together.</p>
+<div class="figure"><p class="fig-h">Road density by province</p><p class="fig-sub">Kilometres of road per 1,000 km² of land, provinces of about AD 117. Click a row to see the province on the map.</p><div id="provTable"></div>
+<button class="btn" id="provMore">Show all 53</button></div>
+<p>The thinnest networks are where the province was mostly desert or held only briefly: Egypt (24), Crete and Cyrenaica (20) and Trajan's short-lived Armenia and Mesopotamia (3.8), with Mauretania Tingitana in Morocco (23) not far behind. Within Italy, Umbria (regio VI) is surprisingly thin (31), a reminder that coverage is uneven. Density also follows research. Judaea, one of the most intensively surveyed landscapes in the world, has 39% of its roads graded certain, against 2.7% for the network as a whole. 5.3% of the network, 15,732 km, lies outside the provinces altogether: in Scotland, beyond the Rhine and Danube, and along desert routes into the Sahara.</p>
+
+<h2><span class="n">07 · How I did this</span>Methods and caveats</h2>
+<p><b>Data.</b> Itiner-e static version 2024 (Zenodo record version 1.3), 14,769 road sections with their geodesic length, average slope and passability. Section ends that meet within 1 m are one junction; the network is clean at that tolerance. Dates come from the construction period field, else the lower date; 9999 means not given.</p>
+<p><b>Travel times.</b> Time on a section is its length divided by the speed (on foot 22.5, cart 45, courier 80 km a day, the middle of Wikipedia's ranges) and by the section's passability. Each sea crossing counts as one day; the Euripus bridge to Euboea counts as road, and the Bosporus and Hellespont ferries are already in Itiner-e. Off the network, the last stretch to any point is counted at half the road speed, up to 50 km from a road. There are no rests, seasons, rivers, sea routes or borders. These are modelled times for a steady traveller, not records of real journeys.</p>
+<p><b>Straight runs and density.</b> Straight runs are found on continuous lines joined through junctions (deflection under 20 degrees), simplified with a 200 m tolerance in a local equidistant projection; conjectured stretches need at least one point every 2 km. Density uses DARE's province outlines, which are themselves approximate, and land area in an equal-area projection.</p>
+<p><b>What this cannot say.</b> Most of the network is conjectured, and only a fifth is dated, so the map shows the roads that existed at some point between about 300 BCE and 300 CE, not the network at any one moment. Coverage is uneven: some regions have been surveyed field by field, others only from old atlases. And the travel model leaves out the sea, which for most long journeys was the quicker way.</p>
+<details><summary>Sources and licences</summary>
+<ul>
+<li>de Soto, P., Pažout, A., Brughmans, T. et al. (2025) A high-resolution dataset of roads of the Roman Empire: Itiner-e static version 2024. Zenodo, doi:10.5281/zenodo.17122148. Described in Scientific Data, doi:10.1038/s41597-025-06140-z. CC BY 4.0. A growing version is at itiner-e.org.</li>
+<li>Province outlines and ancient place names: the Digital Atlas of the Roman Empire (DARE), Johan Åhlfeldt, via github.com/klokantech/roman-empire.</li>
+<li>English Wikipedia, 'Roman roads' (travel speeds and the 400,000 km estimate), CC BY-SA 4.0.</li>
+<li>Scheidel, W. and Meeks, E., ORBIS: The Stanford Geospatial Network Model of the Roman World, orbis.stanford.edu (mentioned for comparison only).</li>
+<li>Natural Earth (public domain): land and modern place names for search.</li>
+<li>Base map tiles © Esri.</li>
+</ul></details>
+
+<div class="cta"><a class="p" href="https://doi.org/10.5281/zenodo.23857866">Read the paper</a><a href="https://github.com/Tristan-Hotham/roman-roads">Data and code</a><a href="https://blog.tristanhotham.com/2026/10/31/roman-roads/">Blog post</a></div>
+
+<footer>
+<p>Dr Tristan Hotham, Independent researcher. ORCID <a href="https://orcid.org/0000-0003-4931-9349">0000-0003-4931-9349</a>.</p>
+<p>Cite as: Hotham, T. (2026) Roads of the Roman Empire: certainty, density, straight runs and days from Rome in the Itiner-e network. Zenodo. <a href="https://doi.org/10.5281/zenodo.23857866">https://doi.org/10.5281/zenodo.23857866</a></p>
+<p>Data: Itiner-e (de Soto, Pažout, Brughmans et al. 2025), CC BY 4.0. Licence: derived data, text and figures CC BY 4.0; code MIT. Blog post: <a href="https://blog.tristanhotham.com/2026/10/31/roman-roads/">blog.tristanhotham.com</a>.</p>
+<p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">◐</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const R = {"meta":{"itinere_doi":"10.5281/zenodo.17122148","itinere_paper_doi":"10.1038/s41597-025-06140-z","itinere_version":"static version 2024 (Zenodo record version 1.3)","page":"https://maps.tristanhotham.com/roman-roads/","repo":"https://github.com/Tristan-Hotham/roman-roads","year":2026},"n_sections":14769,"km_total":299171.3101427936,"n_nodes":10315,"km_main":103477.95734388019,"km_secondary":195693.35279891343,"n_main":5698,"n_secondary":9071,"share_main":0.34588195403660354,"share_secondary":0.6541180459633966,"cert":{"Certain":{"km":8180.751231026192,"n":1040,"share_km":0.027344705035792182,"share_n":0.07041776694427516},"Conjectured":{"km":268709.51010096003,"n":12952,"share_km":0.89817940755317,"share_n":0.8769720360213962},"Hypothetical":{"km":22281.048810807373,"n":777,"share_km":0.07447588741103782,"share_n":0.05261019703432866}},"type_cert":{"Secondary Road":{"Certain":2557.9039103811224,"Conjectured":171369.79692164226,"Hypothetical":21765.651966890047},"Main Road":{"Certain":5622.847320645069,"Conjectured":97339.71317931778,"Hypothetical":515.3968439173269}},"main_certain_share":0.054338599881316764,"secondary_certain_share":0.013070980050147748,"secondary_hyp_share":0.11122325646520835,"median_section_km":13.0009949638,"longest_section":{"name":"Dedris-Cydamus Ghadames","km":493.275102649,"cert":"Hypothetical"},"n_digitisers":124,"earth_circ_times":7.465285343550682,"wiki":{"total_km":400000,"paved_km":80500,"revid":1383149720,"tiberius_km":296},"share_of_wiki":0.7479282753569839,"pass":{"median_absdiff":0.001189108837166497,"max_absdiff":0.05845955142874307,"slope_threshold":3.43037800787,"n_below1":3845,"km_below1":81677.59866916633,"share_km_below1":0.2730128053728877,"min":0.156427,"slope_max":33.5741616599,"median_absdiff_r":"0.001"},"straightline_conj":{"n":306,"km":141.32652764598254},"dated":{"n":3176,"km":57985.14588239857,"share_km":0.1938192063093297,"share_n":0.21504502674520956,"n_cons":3191,"n_lowdate":477,"n_update":198,"share_undated_km":0.8061807936906703},"date_bands":[{"key":"rep","label":"Before 27 BCE (Republic)","n":413,"km":7468.72943917116},{"key":"jc","label":"27 BCE to 68 CE (Augustus to Nero)","n":787,"km":10844.903442824248},{"key":"hi","label":"69 to 192 CE (Flavians to Antonines)","n":832,"km":15636.992103451537},{"key":"late","label":"193 CE and later","n":1144,"km":24034.520896951624}],"builders":[{"name":"Claudius","km":5924.576174883782,"n":507},{"name":"Trajan","km":4066.874475181954,"n":198},{"name":"Hadrian","km":3931.5251917842143,"n":223},{"name":"Caracalla","km":3174.284179347754,"n":154},{"name":"Tetrarchy","km":3087.715391173925,"n":160},{"name":"Septimius Severus","km":3021.3789175553943,"n":151},{"name":"Augustus","km":2135.6372962975447,"n":128},{"name":"Septimius Severus and Caracalla","km":1701.2891786745117,"n":103},{"name":"Vespasian","km":1587.6695636826735,"n":92},{"name":"Maximinus Thrax","km":1423.3684222107197,"n":67},{"name":"Domitian","km":1313.7350328973248,"n":60},{"name":"Manius Aquilius","km":1216.2951628163519,"n":114}],"named_roads":[{"name":"Via Egnatia","km":1165.0453095704502,"n":66},{"name":"Via Hadriana","km":853.13209851083,"n":18},{"name":"Via Claudia Augusta","km":630.485396559789,"n":22},{"name":"Via Domitia","km":622.9278409279551,"n":40},{"name":"Via Appia","km":576.2407374078061,"n":38},{"name":"Via Popillia Capua-Rhegium","km":511.62822501358403,"n":32},{"name":"Via Postumia","km":462.1153724125821,"n":25},{"name":"Via Sebaste","km":461.66336575223295,"n":38},{"name":"Via Nova Traiana","km":454.64915944474205,"n":38},{"name":"Via Julia Augusta","km":421.674388719862,"n":15},{"name":"Ermine Street","km":420.8014103567872,"n":68},{"name":"Via Aquitania","km":395.2190793310239,"n":13},{"name":"Via Cassia","km":373.55390847652,"n":10},{"name":"Fosse Way","km":372.04039336184906,"n":34},{"name":"Watling Street","km":352.0292917408823,"n":58},{"name":"Via Aemilia Scauri","km":319.9421417013,"n":8},{"name":"Via Traiana","km":318.286149308501,"n":23},{"name":"Via Aurelia","km":317.34627272797803,"n":15},{"name":"Via Flaminia","km":306.76804829513003,"n":6},{"name":"Via Maris","km":294.68526612686003,"n":8}],"n_named":131,"itin":{"km_peutinger":75485.88453762993,"km_antonine":68861.24109016468,"km_any":112484.534032553,"share_any":0.3759870355846103},"runs":[{"km":56.123854528971044,"maxdev_m":124.13411262878705,"n_vertices":49,"share_certain":0.0,"road":null,"from":"Viromandis","to":"Samarobriva","sections":"Viromandis-Samarobriva;Viromandis-Augusta Viromanduorum","lon0":3.145341390846157,"lat0":49.879111713518895,"lon1":2.3647692899427533,"lat1":49.86794949979083,"label":"Between Saint-Quentin and Amiens"},{"km":49.360557840206354,"maxdev_m":109.4474830598296,"n_vertices":120,"share_certain":0.0,"road":"Via Postumia","from":"near Vicetia","to":"Iulia Concordia","sections":"Vicetia-Iulia Concordia","lon0":11.708521038067452,"lat0":45.6551333532314,"lon1":12.328832473270072,"lat1":45.746286775180266,"label":"Via Postumia, between Vicenza and Concordia"},{"km":41.988375886200735,"maxdev_m":20.46712537712456,"n_vertices":19,"share_certain":1.0,"road":"Via Appia","from":"Tarracinae","to":"Velitrae","sections":"Tarracinae-Rome","lon0":13.191674518409966,"lat0":41.31546200545739,"lon1":12.842158891606989,"lat1":41.587090314746845,"label":"Via Appia, across the Pontine plain to Terracina"},{"km":40.487030465659366,"maxdev_m":36.95434917181777,"n_vertices":29,"share_certain":0.37714088943654317,"road":"Via Belgica","from":"Coriovallum","to":"Colonia Claudia Ara Agrippinensium","sections":"Colonia Claudia Ara Agrippinensium-Iuliacum;Coriovallum-Iuliacum","lon0":6.129075275479307,"lat0":50.91174622991337,"lon1":6.70306100111166,"lat1":50.940991386523685,"label":"Via Belgica, between Heerlen and Cologne"},{"km":33.71669149446314,"maxdev_m":59.45065859724083,"n_vertices":92,"share_certain":0.0,"road":"Via Aemilia","from":"Ad Silarum","to":"Bononia","sections":"Ariminum-Placentia","lon0":11.720045552695186,"lat0":44.35175950336049,"lon1":11.34627143368427,"lat1":44.49429249008781,"label":"Via Aemilia, east of Bologna"},{"km":32.498568622420024,"maxdev_m":96.42774428348591,"n_vertices":19,"share_certain":0.0,"road":null,"from":"Nemetacum","to":"Camaracum","sections":"Nemetacum-Camaracum;Camaracum-Bapaume","lon0":2.7902819765572464,"lat0":50.28597757684924,"lon1":3.213610803918775,"lat1":50.178154302242255,"label":"Nemetacum to Camaracum"},{"km":30.08139815128815,"maxdev_m":25.936566119590715,"n_vertices":17,"share_certain":0.0,"road":null,"from":"Castrum Divionense","to":"Andematunnum","sections":"Cabilonnum-Andematunnum","lon0":5.069301848029106,"lat0":47.37814573300585,"lon1":5.254821448889927,"lat1":47.61772402548963,"label":"Castrum Divionense to Andematunnum"},{"km":29.99085860720036,"maxdev_m":169.89876305259622,"n_vertices":58,"share_certain":0.0,"road":null,"from":"Samarobriva","to":"Saint Just en Chauseeée","sections":"Saint Just en Chauseeée-Saint Martin Longeau;Paillart-Saint Just en Chauseeée","lon0":2.348573875400769,"lat0":49.60797971087909,"lon1":2.5477135870723733,"lat1":49.371578837343414,"label":"Samarobriva to Saint Just en Chauseeée"},{"km":28.356939800206234,"maxdev_m":128.10979322484854,"n_vertices":73,"share_certain":1.0,"road":"Via Belgica","from":"Bagacum","to":"Furfooz","sections":"Bagacum-Atuatuca","lon0":3.9089697033207464,"lat0":50.32844325798368,"lon1":4.255328486721972,"lat1":50.454773369392974,"label":"Via Belgica, Bagacum to Furfooz"},{"km":27.819631516221474,"maxdev_m":171.11681754787557,"n_vertices":35,"share_certain":0.0,"road":"Via Aemilia","from":"Veleia","to":"Placentia","sections":"Ariminum-Placentia","lon0":9.979651156175843,"lat0":44.88971865123708,"lon1":9.705798035012988,"lat1":45.04743036252037,"label":"Via Aemilia, Veleia to Placentia"},{"km":27.495511294935618,"maxdev_m":132.3584372186317,"n_vertices":52,"share_certain":0.0,"road":"Via Aemilia","from":"Regium Lepidum","to":"Parma","sections":"Ariminum-Placentia","lon0":10.748484443950566,"lat0":44.65757061478871,"lon1":10.4364413681831,"lat1":44.76577898063652,"label":"Via Aemilia, Regium Lepidum to Parma"},{"km":27.244924383598626,"maxdev_m":62.573040260110766,"n_vertices":15,"share_certain":0.0,"road":null,"from":"Camaracum","to":"Camaracum","sections":"Camaracum-Bapaume;Samarobriva Ambianorum-Camaracum","lon0":2.851280897335724,"lat0":50.10219931354691,"lon1":3.213610803918775,"lat1":50.178154302242255,"label":"Camaracum to Camaracum"}],"runs_certain":[{"km":41.988375886200735,"maxdev_m":20.46712537712456,"n_vertices":19,"share_certain":1.0,"road":"Via Appia","from":"Tarracinae","to":"Velitrae","sections":"Tarracinae-Rome","lon0":13.191674518409966,"lat0":41.31546200545739,"lon1":12.842158891606989,"lat1":41.587090314746845,"label":"Via Appia, across the Pontine plain to Terracina"},{"km":28.356939800206234,"maxdev_m":128.10979322484854,"n_vertices":73,"share_certain":1.0,"road":"Via Belgica","from":"Bagacum","to":"Furfooz","sections":"Bagacum-Atuatuca","lon0":3.9089697033207464,"lat0":50.32844325798368,"lon1":4.255328486721972,"lat1":50.454773369392974,"label":"Via Belgica, Bagacum to Furfooz"},{"km":27.030299460740565,"maxdev_m":105.93588665839825,"n_vertices":36,"share_certain":1.0,"road":null,"from":"Dionysias","to":"Omra","sections":"Dionysias-Phaena","lon0":36.55403831962871,"lat0":32.72132549017995,"lon1":36.466579933058725,"lat1":32.95360576638453,"label":"Dionysias to Omra"},{"km":22.27237496884336,"maxdev_m":58.13195896888263,"n_vertices":13,"share_certain":1.0,"road":null,"from":"Camaracum","to":"Hermoniacum","sections":"Camaracum-Bagacum","lon0":3.2550295848271564,"lat0":50.18355471150192,"lon1":3.540744385293364,"lat1":50.26413397815893,"label":"Camaracum to Hermoniacum"},{"km":21.48452542885863,"maxdev_m":147.2064432575553,"n_vertices":31,"share_certain":1.0,"road":null,"from":"Divodurum Mettis","to":"Divodurum Mettis","sections":"Colonia Augusta Treverorum-Divodurum Mettis","lon0":6.153773262151792,"lat0":49.160028836851716,"lon1":6.1332448786341,"lat1":49.352741590225314,"label":"Divodurum Mettis to Divodurum Mettis"},{"km":21.279797109546138,"maxdev_m":137.59990957236892,"n_vertices":18,"share_certain":1.0,"road":null,"from":"Bostra","to":"Tricomia","sections":"Bostra-Tricomia","lon0":36.48274613103707,"lat0":32.51796041969474,"lon1":36.70743829732849,"lat1":32.494084347502955,"label":"Bostra to Tricomia"},{"km":20.72487275302809,"maxdev_m":78.58918550084103,"n_vertices":5,"share_certain":1.0,"road":null,"from":"Alexandria","to":"Alexandria","sections":"Alexandria-Paraetonium","lon0":29.54305801966963,"lat0":30.95809409617593,"lon1":29.35300381735094,"lat1":30.868146394633083,"label":"Alexandria to Alexandria"},{"km":18.802379282291966,"maxdev_m":119.10438074368875,"n_vertices":38,"share_certain":1.0,"road":"Via Belgica","from":"Sauvenière","to":"Sauvenière","sections":"Bagacum-Atuatuca","lon0":4.422933496114675,"lat0":50.5019987981593,"lon1":4.668524987821834,"lat1":50.56578616802528,"label":"Via Belgica, Sauvenière to Sauvenière"}],"n_runs_30":7,"n_runs_20":46,"n_runs_cert_20":7,"n_runs_sparse_dropped":276,"provinces":[{"name":"Italia, regio I (Latium et Campania)","km":1971.9905212148037,"area_km2":13649.114878632392,"density":144.4775385620018,"share_certain":0.07855102630871247,"km_main":899.5305182692927,"italy":true},{"name":"Cyprus","km":1274.4325098224563,"area_km2":9740.916381156749,"density":130.83291755668634,"share_certain":0.09331295805135192,"km_main":0.0,"italy":false},{"name":"Iudaea","km":2272.396864085038,"area_km2":17429.796678899587,"density":130.3742611545199,"share_certain":0.39319284380787844,"km_main":874.3717132541642,"italy":false},{"name":"Lycia et Pamphylia","km":5006.364467030071,"area_km2":38906.83562085506,"density":128.67570407978724,"share_certain":0.05142606749358618,"km_main":1122.5676409258883,"italy":false},{"name":"Belgica","km":9960.64836533574,"area_km2":90367.2425628974,"density":110.22410425329656,"share_certain":0.027413420144632078,"km_main":3013.6622176316505,"italy":false},{"name":"Achaia","km":8044.613798415539,"area_km2":79743.13043435162,"density":100.88159010810658,"share_certain":0.03724864467057107,"km_main":2268.1092090407733,"italy":false},{"name":"Italia, regio II (Apulia et Calabria)","km":2604.232213347376,"area_km2":26855.07386572082,"density":96.97356359431019,"share_certain":0.0,"km_main":1426.5841134252353,"italy":true},{"name":"Lugdunensis","km":15154.185474324398,"area_km2":160624.72991466656,"density":94.34528221386087,"share_certain":0.0,"km_main":4208.327837652088,"italy":false},{"name":"Thracia","km":9516.679118339413,"area_km2":108363.1103273786,"density":87.82212959362579,"share_certain":0.01250607760296942,"km_main":1999.1030269374378,"italy":false},{"name":"Pannonia Inferior","km":2500.6241190634883,"area_km2":28667.350709990584,"density":87.2289924646584,"share_certain":0.002696929664489402,"km_main":1190.3688833687738,"italy":false},{"name":"Germania Inferior","km":3709.2864482431087,"area_km2":43598.00274369919,"density":85.079274618358,"share_certain":0.13248098650103915,"km_main":1367.101138625968,"italy":false},{"name":"Italia, regio III (Lucania et Bruttii)","km":2319.6597855696773,"area_km2":27949.312045336726,"density":82.99523729982852,"share_certain":0.0,"km_main":1392.6757065809918,"italy":true},{"name":"Moesia Inferior","km":3734.5279931584646,"area_km2":45785.90533926777,"density":81.56501363216658,"share_certain":0.0021255093284451103,"km_main":1237.6447685416072,"italy":false},{"name":"Cilicia","km":3199.0650479564147,"area_km2":40454.392501088005,"density":79.0783114063665,"share_certain":0.062438275869781755,"km_main":1251.5587117554162,"italy":false},{"name":"Lusitania","km":9337.349265634486,"area_km2":120136.1396233773,"density":77.72306730436618,"share_certain":0.009763590718793803,"km_main":2336.76534762933,"italy":false},{"name":"Asia","km":10062.649968867436,"area_km2":134196.36666526707,"density":74.9845187237239,"share_certain":0.010972201608283173,"km_main":4120.805220469332,"italy":false},{"name":"Britannia","km":10620.615778151274,"area_km2":144657.88556504363,"density":73.41885122035634,"share_certain":0.0,"km_main":4781.951930705564,"italy":false},{"name":"Germania Superior","km":7045.524244400263,"area_km2":98762.6201078246,"density":71.33796406685319,"share_certain":0.0,"km_main":2234.3758999564097,"italy":false},{"name":"Italia, regio X (Venetia et Histria)","km":3908.723975190558,"area_km2":55403.26260469785,"density":70.55042954923601,"share_certain":0.008609197459321606,"km_main":1745.8986226306083,"italy":true},{"name":"Syria","km":7226.414813447001,"area_km2":103017.01848382398,"density":70.14777674410867,"share_certain":0.15183560488791914,"km_main":3792.0913655276017,"italy":false},{"name":"Tarraconensis","km":27342.20281855997,"area_km2":393128.95135314565,"density":69.55021431122893,"share_certain":0.0003285335889704697,"km_main":6525.563114217603,"italy":false},{"name":"Moesia Superior","km":4523.874977088069,"area_km2":65067.40097251619,"density":69.52598243472039,"share_certain":0.007716583024031548,"km_main":1554.844242463703,"italy":false},{"name":"Pannonia Superior","km":4840.407302040009,"area_km2":70649.30289900949,"density":68.51316436850323,"share_certain":0.005460818824065462,"km_main":1673.0282828601478,"italy":false},{"name":"Dalmatia","km":6208.042324351069,"area_km2":91403.62412663885,"density":67.91899537538998,"share_certain":0.0,"km_main":3122.0048280835995,"italy":false},{"name":"Italia, regio IV (Samnium)","km":1199.226180796922,"area_km2":17675.421580253915,"density":67.84710482586944,"share_certain":0.019237880919975234,"km_main":687.3714170113662,"italy":true},{"name":"Numidia","km":7581.243569475866,"area_km2":112420.48380155624,"density":67.43649656283473,"share_certain":0.014428316062287493,"km_main":1241.713210776897,"italy":false},{"name":"Italia, regio V (Picenum)","km":370.7747165430428,"area_km2":5585.850605899321,"density":66.37748531109312,"share_certain":0.0,"km_main":244.0166776883926,"italy":true},{"name":"Raetia","km":3555.3447451696775,"area_km2":55383.31124534077,"density":64.19523616816569,"share_certain":0.0,"km_main":2016.2967830858681,"italy":false},{"name":"Sicilia","km":1733.7019269081563,"area_km2":27044.441413728222,"density":64.10566594391184,"share_certain":0.0,"km_main":1587.160746733717,"italy":false},{"name":"Narbonensis","km":5979.735864316974,"area_km2":94596.71804657976,"density":63.21293156674347,"share_certain":0.0,"km_main":2490.074724389818,"italy":false},{"name":"Italia, regio IX (Liguria)","km":937.9446834717784,"area_km2":15205.341755745483,"density":61.68520895739598,"share_certain":0.0,"km_main":517.5756317696461,"italy":true},{"name":"Baetica","km":4480.170273910796,"area_km2":74618.8724437231,"density":60.040712586346054,"share_certain":0.02749708806126123,"km_main":1904.2107077069616,"italy":false},{"name":"Aquitania","km":10058.97931095019,"area_km2":169104.16392364062,"density":59.483924449621156,"share_certain":0.0,"km_main":3867.552839274422,"italy":false},{"name":"Macedonia","km":4280.715309007097,"area_km2":72910.17420645796,"density":58.712180509753,"share_certain":0.011621557085098051,"km_main":1624.7406426073612,"italy":false},{"name":"Italia, regio VIII (Aemilia)","km":1335.328919152604,"area_km2":23274.958654222497,"density":57.3719136944783,"share_certain":0.0,"km_main":600.6598057182551,"italy":true},{"name":"Galatia et Cappadocia","km":14442.876298367135,"area_km2":257780.8911218143,"density":56.02772275134296,"share_certain":0.07549113965546686,"km_main":6732.911039817841,"italy":false},{"name":"Alpes Graiae et Poeninae","km":688.5676036279002,"area_km2":12752.504964055572,"density":53.99469402824846,"share_certain":0.0,"km_main":325.40423219070226,"italy":false},{"name":"Noricum","km":3782.9895234163114,"area_km2":71387.14869163446,"density":52.99258469836634,"share_certain":0.0,"km_main":1809.3299494646437,"italy":false},{"name":"Bithynia et Pontus","km":3467.3527048606975,"area_km2":65446.91343441971,"density":52.979621542200256,"share_certain":0.05256502332066807,"km_main":1346.7855238810205,"italy":false},{"name":"Dacia","km":4840.266500377829,"area_km2":91886.62746043656,"density":52.676506191958055,"share_certain":0.0014242725100016432,"km_main":1036.9777111266199,"italy":false},{"name":"Alpes Cottiae","km":345.00915968078493,"area_km2":6663.242195574193,"density":51.777970776740524,"share_certain":0.0,"km_main":150.976156704989,"italy":false},{"name":"Italia, regio VII (Etruria)","km":1581.322571531413,"area_km2":30880.971494804646,"density":51.20702150829197,"share_certain":0.03022204520604865,"km_main":1254.5185915000782,"italy":true},{"name":"Sardinia et Corsica","km":1729.4277886536183,"area_km2":33940.82122913913,"density":50.95421165498662,"share_certain":0.0,"km_main":129.5920421568182,"italy":false},{"name":"Mauretania Caesariensis","km":9944.615072590896,"area_km2":203830.89404388258,"density":48.78855641211056,"share_certain":0.014351994254526474,"km_main":1605.52058183792,"italy":false},{"name":"Italia, regio XI (Transpadana)","km":1462.90571951994,"area_km2":30292.420033587787,"density":48.292797930897954,"share_certain":0.0,"km_main":845.3911230840763,"italy":true},{"name":"Africa Proconsularis","km":13613.486298171674,"area_km2":292046.5176492313,"density":46.61410246473968,"share_certain":0.0222611108189344,"km_main":2853.5683752703044,"italy":false},{"name":"Alpes Maritimae","km":359.2840156465171,"area_km2":8144.962968727523,"density":44.11119080909064,"share_certain":0.0,"km_main":123.9070919484669,"italy":false},{"name":"Arabia","km":4234.9127701864345,"area_km2":109231.73399800871,"density":38.76998574666623,"share_certain":0.3003827257970353,"km_main":1053.1060705159905,"italy":false},{"name":"Italia, regio VI (Umbria)","km":421.7501589014558,"area_km2":13396.800421446836,"density":31.48140941371935,"share_certain":0.0,"km_main":370.6316805946758,"italy":true},{"name":"Aegyptus","km":12721.456982607187,"area_km2":520437.204896992,"density":24.44378853568913,"share_certain":0.015032622177254864,"km_main":6222.822289664383,"italy":false},{"name":"Mauretania Tingitana","km":1165.73833510498,"area_km2":51497.244349286964,"density":22.63690707794389,"share_certain":0.004879380675935104,"km_main":490.20218333455,"italy":false},{"name":"Creta et Cyrene","km":3968.6787433964146,"area_km2":202513.12558949867,"density":19.597143305373045,"share_certain":0.004924502339537906,"km_main":652.7475367471235,"italy":false},{"name":"Armenia Mesopotamia","km":770.5855606839255,"area_km2":200791.6498247277,"density":3.837737083970247,"share_certain":0.09694553011105655,"km_main":547.5170027984701,"italy":false}],"n_provinces":53,"italia":{"km":18113.859445239574,"area_km2":260168.5279403483,"density":69.62356126868941},"empire_density":58.09008822778235,"km_outside_provinces":15732.406642129272,"share_outside":0.052586615456609934,"top_prov":[{"name":"Italia, regio I (Latium et Campania)","km":1971.9905212148037,"area_km2":13649.114878632392,"density":144.4775385620018,"share_certain":0.07855102630871247,"km_main":899.5305182692927,"italy":true},{"name":"Cyprus","km":1274.4325098224563,"area_km2":9740.916381156749,"density":130.83291755668634,"share_certain":0.09331295805135192,"km_main":0.0,"italy":false},{"name":"Iudaea","km":2272.396864085038,"area_km2":17429.796678899587,"density":130.3742611545199,"share_certain":0.39319284380787844,"km_main":874.3717132541642,"italy":false},{"name":"Lycia et Pamphylia","km":5006.364467030071,"area_km2":38906.83562085506,"density":128.67570407978724,"share_certain":0.05142606749358618,"km_main":1122.5676409258883,"italy":false},{"name":"Belgica","km":9960.64836533574,"area_km2":90367.2425628974,"density":110.22410425329656,"share_certain":0.027413420144632078,"km_main":3013.6622176316505,"italy":false},{"name":"Achaia","km":8044.613798415539,"area_km2":79743.13043435162,"density":100.88159010810658,"share_certain":0.03724864467057107,"km_main":2268.1092090407733,"italy":false},{"name":"Italia, regio II (Apulia et Calabria)","km":2604.232213347376,"area_km2":26855.07386572082,"density":96.97356359431019,"share_certain":0.0,"km_main":1426.5841134252353,"italy":true},{"name":"Lugdunensis","km":15154.185474324398,"area_km2":160624.72991466656,"density":94.34528221386087,"share_certain":0.0,"km_main":4208.327837652088,"italy":false},{"name":"Thracia","km":9516.679118339413,"area_km2":108363.1103273786,"density":87.82212959362579,"share_certain":0.01250607760296942,"km_main":1999.1030269374378,"italy":false},{"name":"Pannonia Inferior","km":2500.6241190634883,"area_km2":28667.350709990584,"density":87.2289924646584,"share_certain":0.002696929664489402,"km_main":1190.3688833687738,"italy":false}],"top_prov_noit":[{"name":"Cyprus","km":1274.4325098224563,"area_km2":9740.916381156749,"density":130.83291755668634,"share_certain":0.09331295805135192,"km_main":0.0,"italy":false},{"name":"Iudaea","km":2272.396864085038,"area_km2":17429.796678899587,"density":130.3742611545199,"share_certain":0.39319284380787844,"km_main":874.3717132541642,"italy":false},{"name":"Lycia et Pamphylia","km":5006.364467030071,"area_km2":38906.83562085506,"density":128.67570407978724,"share_certain":0.05142606749358618,"km_main":1122.5676409258883,"italy":false},{"name":"Belgica","km":9960.64836533574,"area_km2":90367.2425628974,"density":110.22410425329656,"share_certain":0.027413420144632078,"km_main":3013.6622176316505,"italy":false},{"name":"Achaia","km":8044.613798415539,"area_km2":79743.13043435162,"density":100.88159010810658,"share_certain":0.03724864467057107,"km_main":2268.1092090407733,"italy":false},{"name":"Lugdunensis","km":15154.185474324398,"area_km2":160624.72991466656,"density":94.34528221386087,"share_certain":0.0,"km_main":4208.327837652088,"italy":false}],"bottom_prov":[{"name":"Italia, regio VI (Umbria)","km":421.7501589014558,"area_km2":13396.800421446836,"density":31.48140941371935,"share_certain":0.0,"km_main":370.6316805946758,"italy":true},{"name":"Aegyptus","km":12721.456982607187,"area_km2":520437.204896992,"density":24.44378853568913,"share_certain":0.015032622177254864,"km_main":6222.822289664383,"italy":false},{"name":"Mauretania Tingitana","km":1165.73833510498,"area_km2":51497.244349286964,"density":22.63690707794389,"share_certain":0.004879380675935104,"km_main":490.20218333455,"italy":false},{"name":"Creta et Cyrene","km":3968.6787433964146,"area_km2":202513.12558949867,"density":19.597143305373045,"share_certain":0.004924502339537906,"km_main":652.7475367471235,"italy":false},{"name":"Armenia Mesopotamia","km":770.5855606839255,"area_km2":200791.6498247277,"density":3.837737083970247,"share_certain":0.09694553011105655,"km_main":547.5170027984701,"italy":false}],"prov_by":{"Italia, regio I (Latium et Campania)":{"name":"Italia, regio I (Latium et Campania)","km":1971.9905212148037,"area_km2":13649.114878632392,"density":144.4775385620018,"share_certain":0.07855102630871247,"km_main":899.5305182692927,"italy":true},"Cyprus":{"name":"Cyprus","km":1274.4325098224563,"area_km2":9740.916381156749,"density":130.83291755668634,"share_certain":0.09331295805135192,"km_main":0.0,"italy":false},"Iudaea":{"name":"Iudaea","km":2272.396864085038,"area_km2":17429.796678899587,"density":130.3742611545199,"share_certain":0.39319284380787844,"km_main":874.3717132541642,"italy":false},"Lycia et Pamphylia":{"name":"Lycia et Pamphylia","km":5006.364467030071,"area_km2":38906.83562085506,"density":128.67570407978724,"share_certain":0.05142606749358618,"km_main":1122.5676409258883,"italy":false},"Belgica":{"name":"Belgica","km":9960.64836533574,"area_km2":90367.2425628974,"density":110.22410425329656,"share_certain":0.027413420144632078,"km_main":3013.6622176316505,"italy":false},"Achaia":{"name":"Achaia","km":8044.613798415539,"area_km2":79743.13043435162,"density":100.88159010810658,"share_certain":0.03724864467057107,"km_main":2268.1092090407733,"italy":false},"Italia, regio II (Apulia et Calabria)":{"name":"Italia, regio II (Apulia et Calabria)","km":2604.232213347376,"area_km2":26855.07386572082,"density":96.97356359431019,"share_certain":0.0,"km_main":1426.5841134252353,"italy":true},"Lugdunensis":{"name":"Lugdunensis","km":15154.185474324398,"area_km2":160624.72991466656,"density":94.34528221386087,"share_certain":0.0,"km_main":4208.327837652088,"italy":false},"Thracia":{"name":"Thracia","km":9516.679118339413,"area_km2":108363.1103273786,"density":87.82212959362579,"share_certain":0.01250607760296942,"km_main":1999.1030269374378,"italy":false},"Pannonia Inferior":{"name":"Pannonia Inferior","km":2500.6241190634883,"area_km2":28667.350709990584,"density":87.2289924646584,"share_certain":0.002696929664489402,"km_main":1190.3688833687738,"italy":false},"Germania Inferior":{"name":"Germania Inferior","km":3709.2864482431087,"area_km2":43598.00274369919,"density":85.079274618358,"share_certain":0.13248098650103915,"km_main":1367.101138625968,"italy":false},"Italia, regio III (Lucania et Bruttii)":{"name":"Italia, regio III (Lucania et Bruttii)","km":2319.6597855696773,"area_km2":27949.312045336726,"density":82.99523729982852,"share_certain":0.0,"km_main":1392.6757065809918,"italy":true},"Moesia Inferior":{"name":"Moesia Inferior","km":3734.5279931584646,"area_km2":45785.90533926777,"density":81.56501363216658,"share_certain":0.0021255093284451103,"km_main":1237.6447685416072,"italy":false},"Cilicia":{"name":"Cilicia","km":3199.0650479564147,"area_km2":40454.392501088005,"density":79.0783114063665,"share_certain":0.062438275869781755,"km_main":1251.5587117554162,"italy":false},"Lusitania":{"name":"Lusitania","km":9337.349265634486,"area_km2":120136.1396233773,"density":77.72306730436618,"share_certain":0.009763590718793803,"km_main":2336.76534762933,"italy":false},"Asia":{"name":"Asia","km":10062.649968867436,"area_km2":134196.36666526707,"density":74.9845187237239,"share_certain":0.010972201608283173,"km_main":4120.805220469332,"italy":false},"Britannia":{"name":"Britannia","km":10620.615778151274,"area_km2":144657.88556504363,"density":73.41885122035634,"share_certain":0.0,"km_main":4781.951930705564,"italy":false},"Germania Superior":{"name":"Germania Superior","km":7045.524244400263,"area_km2":98762.6201078246,"density":71.33796406685319,"share_certain":0.0,"km_main":2234.3758999564097,"italy":false},"Italia, regio X (Venetia et Histria)":{"name":"Italia, regio X (Venetia et Histria)","km":3908.723975190558,"area_km2":55403.26260469785,"density":70.55042954923601,"share_certain":0.008609197459321606,"km_main":1745.8986226306083,"italy":true},"Syria":{"name":"Syria","km":7226.414813447001,"area_km2":103017.01848382398,"density":70.14777674410867,"share_certain":0.15183560488791914,"km_main":3792.0913655276017,"italy":false},"Tarraconensis":{"name":"Tarraconensis","km":27342.20281855997,"area_km2":393128.95135314565,"density":69.55021431122893,"share_certain":0.0003285335889704697,"km_main":6525.563114217603,"italy":false},"Moesia Superior":{"name":"Moesia Superior","km":4523.874977088069,"area_km2":65067.40097251619,"density":69.52598243472039,"share_certain":0.007716583024031548,"km_main":1554.844242463703,"italy":false},"Pannonia Superior":{"name":"Pannonia Superior","km":4840.407302040009,"area_km2":70649.30289900949,"density":68.51316436850323,"share_certain":0.005460818824065462,"km_main":1673.0282828601478,"italy":false},"Dalmatia":{"name":"Dalmatia","km":6208.042324351069,"area_km2":91403.62412663885,"density":67.91899537538998,"share_certain":0.0,"km_main":3122.0048280835995,"italy":false},"Italia, regio IV (Samnium)":{"name":"Italia, regio IV (Samnium)","km":1199.226180796922,"area_km2":17675.421580253915,"density":67.84710482586944,"share_certain":0.019237880919975234,"km_main":687.3714170113662,"italy":true},"Numidia":{"name":"Numidia","km":7581.243569475866,"area_km2":112420.48380155624,"density":67.43649656283473,"share_certain":0.014428316062287493,"km_main":1241.713210776897,"italy":false},"Italia, regio V (Picenum)":{"name":"Italia, regio V (Picenum)","km":370.7747165430428,"area_km2":5585.850605899321,"density":66.37748531109312,"share_certain":0.0,"km_main":244.0166776883926,"italy":true},"Raetia":{"name":"Raetia","km":3555.3447451696775,"area_km2":55383.31124534077,"density":64.19523616816569,"share_certain":0.0,"km_main":2016.2967830858681,"italy":false},"Sicilia":{"name":"Sicilia","km":1733.7019269081563,"area_km2":27044.441413728222,"density":64.10566594391184,"share_certain":0.0,"km_main":1587.160746733717,"italy":false},"Narbonensis":{"name":"Narbonensis","km":5979.735864316974,"area_km2":94596.71804657976,"density":63.21293156674347,"share_certain":0.0,"km_main":2490.074724389818,"italy":false},"Italia, regio IX (Liguria)":{"name":"Italia, regio IX (Liguria)","km":937.9446834717784,"area_km2":15205.341755745483,"density":61.68520895739598,"share_certain":0.0,"km_main":517.5756317696461,"italy":true},"Baetica":{"name":"Baetica","km":4480.170273910796,"area_km2":74618.8724437231,"density":60.040712586346054,"share_certain":0.02749708806126123,"km_main":1904.2107077069616,"italy":false},"Aquitania":{"name":"Aquitania","km":10058.97931095019,"area_km2":169104.16392364062,"density":59.483924449621156,"share_certain":0.0,"km_main":3867.552839274422,"italy":false},"Macedonia":{"name":"Macedonia","km":4280.715309007097,"area_km2":72910.17420645796,"density":58.712180509753,"share_certain":0.011621557085098051,"km_main":1624.7406426073612,"italy":false},"Italia, regio VIII (Aemilia)":{"name":"Italia, regio VIII (Aemilia)","km":1335.328919152604,"area_km2":23274.958654222497,"density":57.3719136944783,"share_certain":0.0,"km_main":600.6598057182551,"italy":true},"Galatia et Cappadocia":{"name":"Galatia et Cappadocia","km":14442.876298367135,"area_km2":257780.8911218143,"density":56.02772275134296,"share_certain":0.07549113965546686,"km_main":6732.911039817841,"italy":false},"Alpes Graiae et Poeninae":{"name":"Alpes Graiae et Poeninae","km":688.5676036279002,"area_km2":12752.504964055572,"density":53.99469402824846,"share_certain":0.0,"km_main":325.40423219070226,"italy":false},"Noricum":{"name":"Noricum","km":3782.9895234163114,"area_km2":71387.14869163446,"density":52.99258469836634,"share_certain":0.0,"km_main":1809.3299494646437,"italy":false},"Bithynia et Pontus":{"name":"Bithynia et Pontus","km":3467.3527048606975,"area_km2":65446.91343441971,"density":52.979621542200256,"share_certain":0.05256502332066807,"km_main":1346.7855238810205,"italy":false},"Dacia":{"name":"Dacia","km":4840.266500377829,"area_km2":91886.62746043656,"density":52.676506191958055,"share_certain":0.0014242725100016432,"km_main":1036.9777111266199,"italy":false},"Alpes Cottiae":{"name":"Alpes Cottiae","km":345.00915968078493,"area_km2":6663.242195574193,"density":51.777970776740524,"share_certain":0.0,"km_main":150.976156704989,"italy":false},"Italia, regio VII (Etruria)":{"name":"Italia, regio VII (Etruria)","km":1581.322571531413,"area_km2":30880.971494804646,"density":51.20702150829197,"share_certain":0.03022204520604865,"km_main":1254.5185915000782,"italy":true},"Sardinia et Corsica":{"name":"Sardinia et Corsica","km":1729.4277886536183,"area_km2":33940.82122913913,"density":50.95421165498662,"share_certain":0.0,"km_main":129.5920421568182,"italy":false},"Mauretania Caesariensis":{"name":"Mauretania Caesariensis","km":9944.615072590896,"area_km2":203830.89404388258,"density":48.78855641211056,"share_certain":0.014351994254526474,"km_main":1605.52058183792,"italy":false},"Italia, regio XI (Transpadana)":{"name":"Italia, regio XI (Transpadana)","km":1462.90571951994,"area_km2":30292.420033587787,"density":48.292797930897954,"share_certain":0.0,"km_main":845.3911230840763,"italy":true},"Africa Proconsularis":{"name":"Africa Proconsularis","km":13613.486298171674,"area_km2":292046.5176492313,"density":46.61410246473968,"share_certain":0.0222611108189344,"km_main":2853.5683752703044,"italy":false},"Alpes Maritimae":{"name":"Alpes Maritimae","km":359.2840156465171,"area_km2":8144.962968727523,"density":44.11119080909064,"share_certain":0.0,"km_main":123.9070919484669,"italy":false},"Arabia":{"name":"Arabia","km":4234.9127701864345,"area_km2":109231.73399800871,"density":38.76998574666623,"share_certain":0.3003827257970353,"km_main":1053.1060705159905,"italy":false},"Italia, regio VI (Umbria)":{"name":"Italia, regio VI (Umbria)","km":421.7501589014558,"area_km2":13396.800421446836,"density":31.48140941371935,"share_certain":0.0,"km_main":370.6316805946758,"italy":true},"Aegyptus":{"name":"Aegyptus","km":12721.456982607187,"area_km2":520437.204896992,"density":24.44378853568913,"share_certain":0.015032622177254864,"km_main":6222.822289664383,"italy":false},"Mauretania Tingitana":{"name":"Mauretania Tingitana","km":1165.73833510498,"area_km2":51497.244349286964,"density":22.63690707794389,"share_certain":0.004879380675935104,"km_main":490.20218333455,"italy":false},"Creta et Cyrene":{"name":"Creta et Cyrene","km":3968.6787433964146,"area_km2":202513.12558949867,"density":19.597143305373045,"share_certain":0.004924502339537906,"km_main":652.7475367471235,"italy":false},"Armenia Mesopotamia":{"name":"Armenia Mesopotamia","km":770.5855606839255,"area_km2":200791.6498247277,"density":3.837737083970247,"share_certain":0.09694553011105655,"km_main":547.5170027984701,"italy":false}},"cert_top_prov":["Arabia","Syria","Galatia et Cappadocia","Iudaea"],"modes":{"foot":{"label":"On foot","kmd":22.5,"lo":20,"hi":25},"cart":{"label":"Horse-drawn cart","kmd":45.0,"lo":40,"hi":50},"courier":{"label":"Courier (relay of horses)","kmd":80.0,"lo":80,"hi":80}},"offroad_factor":0.5,"offroad_max_km":50,"crossing_days":1.0,"city":{"rome":{"name":"Rome","latin":"Roma","node_name":"Roma","foot":0.0,"cart":0.0,"courier":0.0,"foot_lo":0.0,"foot_hi":0.0,"cart_lo":0.0,"cart_hi":0.0,"road_km":0.0,"sea":[],"straight_km":0.0,"detour":null,"foot_nohyp":0.0,"foot_nosea":0.0,"foot_flat":0.0,"foot_weeks":0.0,"route_cert_km":{"Certain":0.0,"Conjectured":0.0,"Hypothetical":0.0},"route_share_certain":0},"london":{"name":"London","latin":"Londinium","node_name":"Londinium","foot":80.6738830485158,"cart":40.8369415242579,"courier":23.408279607395084,"foot_lo":72.70649474366424,"foot_hi":90.63311842958034,"cart_lo":36.85324737183212,"cart_hi":45.81655921479017,"road_km":1671.7148938672885,"sea":["channel"],"straight_km":1432.6929915625478,"detour":1.1668339998257788,"foot_nohyp":null,"foot_nosea":null,"foot_flat":74.65495964695734,"foot_weeks":11.524840435502258,"route_cert_km":{"Certain":0.0,"Conjectured":1670.1087187018943,"Hypothetical":1.606175165394},"route_share_certain":0.0},"constantinople":{"name":"Constantinople (Istanbul)","latin":"Byzantium","node_name":"Byzantium","foot":75.18325258714556,"cart":38.09162629357277,"courier":21.864039790134697,"foot_lo":67.76492732843103,"foot_hi":84.45615916053879,"cart_lo":34.38246366421551,"cart_hi":42.728079580269394,"road_km":1585.50102089995,"sea":["otranto"],"straight_km":1375.8726860775819,"detour":1.1523602706439275,"foot_nohyp":75.18325258714556,"foot_nosea":106.86850674298908,"foot_flat":71.02563757785013,"foot_weeks":10.740464655306509,"route_cert_km":{"Certain":143.380331013666,"Conjectured":1442.1206898862838,"Hypothetical":0.0},"route_share_certain":0.09043219091229696},"alexandria":{"name":"Alexandria","latin":"Alexandria","node_name":"Alexandria","foot":179.8861335130559,"cart":90.44306675652794,"courier":51.31172505054698,"foot_lo":161.99752016175032,"foot_hi":202.24690020218787,"cart_lo":81.49876008087514,"cart_hi":101.62345010109394,"road_km":3806.67285557316,"sea":["otranto"],"straight_km":1952.175275060253,"detour":1.9499646902636183,"foot_nohyp":180.18429555876622,"foot_nosea":211.57138766889946,"foot_flat":169.33094432161516,"foot_weeks":25.6980190732937,"route_cert_km":{"Certain":660.082061387608,"Conjectured":3053.6728984857536,"Hypothetical":92.91789569980001},"route_share_certain":0.17340131039136045},"eboracum":{"name":"York","latin":"Eboracum","node_name":"Eburacum","foot":94.33147616878944,"cart":47.66573808439472,"courier":27.24947767247206,"foot_lo":84.99832855191053,"foot_hi":105.99791068988824,"cart_lo":42.999164275955266,"cart_hi":53.49895534494412,"road_km":1979.0107390734452,"sea":["channel"],"straight_km":1674.1051394857268,"detour":1.1821304961057484,"foot_nohyp":null,"foot_nosea":null,"foot_flat":88.31255276723097,"foot_weeks":13.475925166969919,"route_cert_km":{"Certain":0.0,"Conjectured":1970.590757977818,"Hypothetical":8.41998109562717},"route_share_certain":0.0},"lutetia":{"name":"Paris","latin":"Lutetia","node_name":"Lutetia","foot":66.7490959239048,"cart":33.3745479619524,"courier":18.773183228598224,"foot_lo":60.074186331514284,"foot_hi":75.0927329143929,"cart_lo":30.037093165757142,"cart_hi":37.54636645719645,"road_km":1386.5460185719153,"sea":[],"straight_km":1105.5425390834005,"detour":1.2541769941494005,"foot_nohyp":66.7490959239048,"foot_nosea":66.7490959239048,"foot_flat":61.099353444182455,"foot_weeks":9.5355851319864,"route_cert_km":{"Certain":0.0,"Conjectured":1386.5460185719153,"Hypothetical":0.0},"route_share_certain":0.0},"lugdunum":{"name":"Lyon","latin":"Lugdunum","node_name":"Lugdunum","foot":49.57076378950058,"cart":24.78538189475029,"courier":13.941777315797042,"foot_lo":44.613687410550526,"foot_hi":55.76710926318817,"cart_lo":22.306843705275263,"cart_hi":27.883554631594084,"road_km":989.8135180972282,"sea":[],"straight_km":749.8351136011612,"detour":1.3200415666632972,"foot_nohyp":49.57076378950058,"foot_nosea":49.57076378950058,"foot_flat":42.1288916680441,"foot_weeks":7.081537684214369,"route_cert_km":{"Certain":0.0,"Conjectured":989.8135180972282,"Hypothetical":0.0},"route_share_certain":0.0},"colonia":{"name":"Cologne","latin":"Colonia Agrippina","node_name":"Claudia Ara Agrippinensium","foot":70.93497274925963,"cart":35.467486374629814,"courier":19.95046108572928,"foot_lo":63.84147547433372,"foot_hi":79.80184434291712,"cart_lo":31.92073773716686,"cart_hi":39.90092217145856,"road_km":1455.5160003111216,"sea":[],"straight_km":1090.6537313533793,"detour":1.3345353877852588,"foot_nohyp":70.93497274925963,"foot_nosea":70.93497274925963,"foot_flat":64.12448299240879,"foot_weeks":10.133567535608519,"route_cert_km":{"Certain":0.0,"Conjectured":1455.5160003111216,"Hypothetical":0.0},"route_share_certain":0.0},"treveri":{"name":"Trier","latin":"Augusta Treverorum","node_name":"Augusta Treverorum","foot":65.55091100916887,"cart":32.775455504584436,"courier":18.436193721328742,"foot_lo":58.99581990825197,"foot_hi":73.74477488531497,"cart_lo":29.497909954125983,"cart_hi":36.872387442657484,"road_km":1348.9823547330477,"sea":[],"straight_km":983.9049393538489,"detour":1.3710494792504577,"foot_nohyp":65.55091100916887,"foot_nosea":65.55091100916887,"foot_flat":58.87872529903288,"foot_weeks":9.364415858452697,"route_cert_km":{"Certain":0.0,"Conjectured":1348.9823547330477,"Hypothetical":0.0},"route_share_certain":0.0},"tarraco":{"name":"Tarragona","latin":"Tarraco","node_name":"Tarraco","foot":70.45776813418348,"cart":35.22888406709174,"courier":19.816247287739106,"foot_lo":63.41199132076514,"foot_hi":79.26498915095642,"cart_lo":31.70599566038257,"cart_hi":39.63249457547821,"road_km":1449.7999257284023,"sea":[],"straight_km":938.5978754261852,"detour":1.5446443718723504,"foot_nohyp":70.45776813418348,"foot_nosea":70.45776813418348,"foot_flat":64.14592087955431,"foot_weeks":10.065395447740498,"route_cert_km":{"Certain":0.0,"Conjectured":1449.7999257284023,"Hypothetical":0.0},"route_share_certain":0.0},"emerita":{"name":"Mérida","latin":"Emerita Augusta","node_name":"Augusta Emerita","foot":107.8514727359139,"cart":53.92573636795695,"courier":30.33322670697578,"foot_lo":97.06632546232245,"foot_hi":121.33290682790312,"cart_lo":48.53316273116123,"cart_hi":60.66645341395156,"road_km":2231.1618143280666,"sea":[],"straight_km":1624.8160635157774,"detour":1.373178087309328,"foot_nohyp":107.8514727359139,"foot_nosea":107.8514727359139,"foot_flat":97.78151237124567,"foot_weeks":15.4073532479877,"route_cert_km":{"Certain":17.635585038084997,"Conjectured":2213.526229289982,"Hypothetical":0.0},"route_share_certain":0.007904216056779415},"gades":{"name":"Cádiz","latin":"Gades","node_name":"Gades","foot":115.88868828210116,"cart":57.94434414105058,"courier":32.59369357934098,"foot_lo":104.29981945389109,"foot_hi":130.37477431736392,"cart_lo":52.149909726945545,"cart_hi":65.18738715868196,"road_km":2451.1427342666043,"sea":[],"straight_km":1719.7760943705132,"detour":1.4252685232049305,"foot_nohyp":115.88868828210116,"foot_nosea":115.88868828210116,"foot_flat":108.54150897397366,"foot_weeks":16.555526897443023,"route_cert_km":{"Certain":110.7005220017,"Conjectured":2340.4422122649044,"Hypothetical":0.0},"route_share_certain":0.0451628215909761},"carthago":{"name":"Carthage","latin":"Carthago","node_name":"Carthago","foot":209.59171987746348,"cart":105.29585993873174,"courier":59.66642121553664,"foot_lo":188.7325478897171,"foot_hi":235.66568486214655,"cart_lo":94.86627394485855,"cart_hi":118.33284243107327,"road_km":4489.665457420894,"sea":["gibraltar"],"straight_km":590.3297601215554,"detour":7.605351721546992,"foot_nohyp":303.0812423285402,"foot_nosea":329.1836323800923,"foot_flat":197.34790561325806,"foot_weeks":29.941674268209066,"route_cert_km":{"Certain":192.121015502936,"Conjectured":3866.217329584958,"Hypothetical":431.327112333},"route_share_certain":0.04279183322788167},"mediolanum":{"name":"Milan","latin":"Mediolanum","node_name":"Mediolanium","foot":28.39533546908587,"cart":14.197667734542936,"courier":7.9861881006804,"foot_lo":25.55580192217728,"foot_hi":31.9447524027216,"cart_lo":12.77790096108864,"cart_hi":15.9723762013608,"road_km":606.6984115082879,"sea":[],"straight_km":477.37996651034314,"detour":1.2708920651682665,"foot_nohyp":28.39533546908587,"foot_nosea":28.39533546908587,"foot_flat":26.822999762056355,"foot_weeks":4.056476495583696,"route_cert_km":{"Certain":0.0,"Conjectured":606.6984115082879,"Hypothetical":0.0},"route_share_certain":0.0},"aquileia":{"name":"Aquileia","latin":"Aquileia","node_name":"Aquileia","foot":31.952585951720916,"cart":15.976292975860458,"courier":8.986664798921506,"foot_lo":28.75732735654882,"foot_hi":35.946659195686024,"cart_lo":14.37866367827441,"cart_hi":17.973329597843012,"road_km":674.9601845113499,"sea":[],"straight_km":436.9517515181608,"detour":1.5447018627714482,"foot_nohyp":32.12394736507602,"foot_nosea":31.952585951720916,"foot_flat":29.998230422726675,"foot_weeks":4.564655135960131,"route_cert_km":{"Certain":33.6509765164,"Conjectured":610.1629930839499,"Hypothetical":31.146214910999998},"route_share_certain":0.04985623935841824},"sirmium":{"name":"Sremska Mitrovica","latin":"Sirmium","node_name":"Sirmium","foot":57.68400704783385,"cart":28.842003523916926,"courier":16.223626982203267,"foot_lo":51.915606343050456,"foot_hi":64.89450792881307,"cart_lo":25.957803171525228,"cart_hi":32.447253964406535,"road_km":1242.8129134018352,"sea":[],"straight_km":669.0282784333207,"detour":1.8576388374975115,"foot_nohyp":57.88704292816599,"foot_nosea":57.68400704783385,"foot_flat":54.567797640129335,"foot_weeks":8.240572435404836,"route_cert_km":{"Certain":33.6509765164,"Conjectured":1164.4208326636053,"Hypothetical":44.74110422183},"route_share_certain":0.027076461914360334},"athenae":{"name":"Athens","latin":"Athenae","node_name":"Skambonidai","foot":66.95466027321999,"cart":33.977330136609986,"courier":19.549748201843112,"foot_lo":60.359194245897974,"foot_hi":75.19899280737245,"cart_lo":30.679597122948987,"cart_hi":38.099496403686224,"road_km":1351.6193384058515,"sea":["otranto"],"straight_km":1051.6589719929832,"detour":1.285225890142332,"foot_nohyp":66.95466027321999,"foot_nosea":113.02053650725311,"foot_flat":58.412637867200175,"foot_weeks":9.564951467602855,"route_cert_km":{"Certain":154.02551679540292,"Conjectured":1197.5938216104485,"Hypothetical":0.0},"route_share_certain":0.11395628371007636},"ephesus":{"name":"Ephesus","latin":"Ephesus","node_name":"Ephesos","foot":88.40221604975727,"cart":44.701108024878636,"courier":25.581873263994247,"foot_lo":79.66199444478157,"foot_hi":99.32749305597699,"cart_lo":40.33099722239078,"cart_hi":50.16374652798849,"road_km":1863.8620281731964,"sea":["otranto"],"straight_km":1338.906579283647,"detour":1.3920777274620724,"foot_nohyp":88.40221604975727,"foot_nosea":124.8438708139829,"foot_flat":83.3972379011055,"foot_weeks":12.628888007108182,"route_cert_km":{"Certain":148.540640185402,"Conjectured":1715.3213879877944,"Hypothetical":0.0},"route_share_certain":0.07969508361677889},"antiochia":{"name":"Antioch (Antakya)","latin":"Antiochia","node_name":"Antiochia","foot":127.86674862359307,"cart":64.43337431179653,"courier":36.68127305038556,"foot_lo":115.18007376123381,"foot_hi":143.72509220154222,"cart_lo":58.0900368806169,"cart_hi":72.36254610077111,"road_km":2665.975839453499,"sea":["otranto"],"straight_km":2132.193050278862,"detour":1.2503444934804686,"foot_nohyp":128.1649106693034,"foot_nosea":159.55200277943663,"foot_flat":118.69355991428924,"foot_weeks":18.26667837479901,"route_cert_km":{"Certain":321.00674659155794,"Conjectured":2252.0511971621418,"Hypothetical":92.91789569980001},"route_share_certain":0.12040872308031172},"hierosolyma":{"name":"Jerusalem","latin":"Hierosolyma","node_name":"Ierusalem","foot":156.89629719110962,"cart":78.94814859555481,"courier":44.845833584999625,"foot_lo":141.30666747199865,"foot_hi":176.38333433999847,"cart_lo":71.15333373599933,"cart_hi":88.69166716999923,"road_km":3303.2915265391052,"sea":["otranto"],"straight_km":2305.3081147734697,"detour":1.4329067361408658,"foot_nohyp":157.67229430260673,"foot_nosea":188.5815513469532,"foot_flat":146.10395582561895,"foot_weeks":22.41375674158709,"route_cert_km":{"Certain":526.3613489069361,"Conjectured":2650.214469990469,"Hypothetical":126.71570764170002},"route_share_certain":0.15934450371033726},"lepcis":{"name":"Leptis Magna","latin":"Lepcis Magna","node_name":"Lepcis Magna","foot":231.0081652781728,"cart":116.0040826390864,"courier":65.68979648448612,"foot_lo":208.0073487503553,"foot_hi":259.75918593794444,"cart_lo":104.50367437517765,"cart_hi":130.37959296897222,"road_km":4980.307386340355,"sea":["gibraltar"],"straight_km":1041.300464154288,"detour":4.7827764970653375,"foot_nohyp":265.0313066011579,"foot_nosea":291.13369665271,"foot_flat":219.49542891967062,"foot_weeks":33.0011664683104,"route_cert_km":{"Certain":157.040687326789,"Conjectured":4333.335356271188,"Hypothetical":489.93134274238},"route_share_certain":0.031532328256988595}},"city_order":["mediolanum","aquileia","lugdunum","sirmium","treveri","lutetia","athenae","tarraco","colonia","constantinople","london","ephesus","eboracum","emerita","gades","antiochia","hierosolyma","alexandria","carthago","lepcis"],"n_cities":20,"farthest":{"node":1132,"name":"Murzuq","lon":13.914447000000049,"lat":25.91790900000011,"days":{"foot":266.04605882438085,"cart":133.52302941219043,"courier":75.54420404435717}},"max_foot":266.04605882438085,"km_reachable":295108.2286943517,"km_unreachable":4063.081448441956,"share_unreachable":0.013581119949311514,"unjoined":[{"km":1647.06448999353,"lon":8.999573881993843,"lat":40.06327802238424,"n":39},{"km":1368.33616457788,"lon":33.43150598279789,"lat":35.176819952543035,"n":128},{"km":818.935867102807,"lon":24.96228591186096,"lat":35.30084329628622,"n":41},{"km":156.3424246414,"lon":9.355055236768338,"lat":41.963037199578395,"n":3},{"km":64.7855088603,"lon":14.380565033960156,"lat":44.90334383376379,"n":1},{"km":7.292108912970001,"lon":23.03355644558481,"lat":36.240554465378025,"n":1},{"km":0.144509995958,"lon":5.039130352668613,"lat":52.079532567705314,"n":1},{"km":0.132510930764,"lon":5.711865276861476,"lat":50.80362437596027,"n":1},{"km":0.0478634263473,"lon":4.432876405412168,"lat":52.175237996282064,"n":1}],"foot_bands":[{"a":0,"b":10,"km":3931.1095711097755},{"a":10,"b":20,"km":4563.5262693292025},{"a":20,"b":30,"km":6610.76437962891},{"a":30,"b":40,"km":8350.06346460088},{"a":40,"b":50,"km":19574.741810860127},{"a":50,"b":60,"km":30878.898432839596},{"a":60,"b":75,"km":48997.64175519576},{"a":75,"b":90,"km":33044.49759978244},{"a":90,"b":120,"km":60501.23809900136},{"a":120,"b":null,"km":78655.7473120036}],"km_within":{"foot":{"7":2490.1464918774955,"30":15105.400220067888},"cart":{"7":5559.354915695181,"30":72688.28802202985},"courier":{"7":11161.533741560192,"30":191434.6826722302}},"share_within":{"foot":{"7":0.008323480251796056,"30":0.05049080479293996},"cart":{"7":0.018582513520570262,"30":0.2429654367169631},"courier":{"7":0.037308168808809994,"30":0.6398831578497918}},"crossings":[{"key":"channel","label":"English Channel","a":"Gesoriacum (Boulogne)","b":"Dubris (Dover)","km":49.46719725085513,"bridge":false,"names":["Gesoriacum","Portus Dubris"]},{"key":"messina","label":"Strait of Messina","a":"Rhegium","b":"Messana","km":11.289493039714104,"bridge":false,"names":["Rhegion","Zancle"]},{"key":"otranto","label":"Strait of Otranto","a":"Brundisium","b":"Dyrrachium","km":147.60588055031948,"bridge":false,"names":["Brundisium","Dyrrachion"]},{"key":"gibraltar","label":"Strait of Gibraltar","a":"Baelo Claudia","b":"Tingi","km":36.046459847858884,"bridge":false,"names":["Baelo","Tingi"]},{"key":"euripus","label":"Euripus (bridge)","a":"Aulis","b":"Chalcis","km":6.30793940988144,"bridge":true,"names":["Oropos","Chalcis"]}],"n_crossings":4,"share_reach_30_foot":0.05118596755806763,"alex_vs_london":2.229793914901501,"carthage_vs_alex":29.705586364407566};
+const RAMP = [[0,"#7A0F2E"],[15,"#B3262E"],[30,"#DB5A26"],[45,"#EE9A2E"],[60,"#C9B634"],[75,"#7FAF4A"],[90,"#3C9A6E"],[120,"#22818C"],[150,"#2A5F9E"],[200,"#3B3A8C"]];
+const CERT = [["Certain","Certain","#123F7A"],["Conjectured","Conjectured","#DA8A5B"],["Hypothetical","Hypothetical","#A3967E"]];
+const BANDS = [["rep","Before 27 BCE (Republic)",-9999,-28,"#6A3D9A"],["jc","27 BCE to 68 CE (Augustus to Nero)",-27,68,"#1F78B4"],["hi","69 to 192 CE (Flavians to Antonines)",69,192,"#33A02C"],["late","193 CE and later",193,9998,"#E08B00"]];
+const fmt = n => n == null || n === "" || !isFinite(n) ? "n/a" : Math.round(n).toLocaleString("en-GB");
+const f1 = n => (Math.round(n * 10) / 10).toLocaleString("en-GB");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tip = document.getElementById("tip");
+function showTip(h, x, y) { tip.innerHTML = h; tip.style.display = "block"; const w = tip.offsetWidth; x = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)); tip.style.left = x + scrollX + "px"; tip.style.top = y + scrollY + "px"; }
+function hideTip() { tip.style.display = "none"; }
+document.addEventListener("click", hideTip);
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const lbl = (svg, x, y, s, cls = "lab", anchor = "start") => { const t = el("text", { x, y, class: cls, "text-anchor": anchor }, svg); t.textContent = s; return t; };
+const redraws = [];
+function resp(box, render) { let last = 0; const go = force => { const w = Math.max(280, Math.round(box.clientWidth)); if (!force && Math.abs(w - last) < 4) return; last = w; box.innerHTML = ""; render(w, w < 560); }; new ResizeObserver(() => go()).observe(box); go(); redraws.push(() => go(true)); }
+const isDark = () => { const r = document.documentElement; return r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const small = () => innerWidth < 900;
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const RX = RAMP.map(r => r[0]), RC = RAMP.map(r => hex(r[1]));
+function rampRGB(d) { if (!isFinite(d)) return null; d = Math.max(0, Math.min(RX[RX.length - 1], d)); let i = 1; while (i < RX.length - 1 && d > RX[i]) i += 1; const t = (d - RX[i - 1]) / (RX[i] - RX[i - 1]); return RC[i - 1].map((a, j) => Math.round(a + (RC[i][j] - a) * t)); }
+const rampCol = d => { const c = rampRGB(d); return c ? `rgb(${c[0]},${c[1]},${c[2]})` : "#9A9288"; };
+const rampCSS = () => "linear-gradient(90deg," + RAMP.map(r => `${r[1]} ${(r[0] / RX[RX.length - 1] * 100).toFixed(1)}%`).join(",") + ")";
+const days = d => !isFinite(d) ? "not by road" : d < 1 ? `${Math.max(1, Math.round(d * 24))} hours` : `${fmt(d)} day${Math.round(d) === 1 ? "" : "s"}`;
+const CERTC = { 0: CERT[0][2], 1: CERT[1][2], 2: CERT[2][2] };
+const MODES = ["foot", "cart", "courier"];
+
+/* hero mark: a milestone with roads radiating */
+(function () {
+  const g = document.getElementById("heroMark");
+  for (let i = 0; i < 9; i += 1) { const a = (-90 + (i - 4) * 22) * Math.PI / 180; el("line", { x1: 60, y1: 104, x2: 60 + 58 * Math.cos(a), y2: 104 + 58 * Math.sin(a), stroke: rampCol(i * 22), "stroke-width": 4, "stroke-linecap": "round" }, g); }
+  el("rect", { x: 44, y: 70, width: 32, height: 62, rx: 3, fill: "#E9E1D2", stroke: "#1F1A17", "stroke-width": 2.5 }, g);
+  el("path", { d: "M44 76 Q60 58 76 76", fill: "#E9E1D2", stroke: "#1F1A17", "stroke-width": 2.5 }, g);
+  const t = el("text", { x: 60, y: 104, "text-anchor": "middle", style: "font:700 13px var(--display);fill:#1F1A17" }, g); t.textContent = "M·P";
+})();
+
+/* ---------- city chart ---------- */
+let cityMode = "foot";
+(function () { const row = document.getElementById("cityMode");
+  MODES.forEach(m => { const b = document.createElement("button"); b.className = "btn"; b.textContent = R.modes[m].label; b.setAttribute("aria-pressed", m === cityMode); b.onclick = () => { cityMode = m; row.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", x === b)); redraws.forEach(f => f()); }; row.appendChild(b); }); })();
+resp(document.getElementById("cityChart"), (W, sm) => {
+  const box = document.getElementById("cityChart"); const K = R.city_order; const rh = 22, m = { l: sm ? 118 : 178, r: 64, t: 8 };
+  const H = m.t + K.length * rh + 30; const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box);
+  const max = cityMode === "foot" ? 260 : cityMode === "cart" ? 130 : 70; const step = cityMode === "foot" ? 50 : cityMode === "cart" ? 25 : 10;
+  const x = v => m.l + (W - m.l - m.r) * v / max;
+  for (let v = 0; v <= max; v += step) { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - 22, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 6, v + (v === 0 ? "" : ""), "lab s m", "middle"); }
+  lbl(svg, W - m.r + 6, H - 6, "days", "lab s m");
+  K.forEach((k, i) => {
+    const c = R.city[k], v = c[cityMode], y0 = m.t + i * rh;
+    el("rect", { x: x(0), y: y0 + 4, width: Math.max(1, x(v) - x(0)), height: rh - 8, fill: rampCol(c.foot) }, svg);
+    if (cityMode !== "courier") { const lo = c[cityMode + "_lo"], hi = c[cityMode + "_hi"]; el("line", { x1: x(lo), x2: x(hi), y1: y0 + rh / 2, y2: y0 + rh / 2, stroke: css("--fg"), "stroke-width": 1.2 }, svg); [lo, hi].forEach(z => el("line", { x1: x(z), x2: x(z), y1: y0 + rh / 2 - 4, y2: y0 + rh / 2 + 4, stroke: css("--fg"), "stroke-width": 1.2 }, svg)); }
+    lbl(svg, m.l - 8, y0 + rh / 2 + 4, sm ? c.name.replace(/ \(.*\)/, "") : c.name, "lab", "end");
+    lbl(svg, x(cityMode === "courier" ? v : c[cityMode + "_hi"]) + 6, y0 + rh / 2 + 4, fmt(v), "lab b");
+    const hit = el("rect", { x: 0, y: y0, width: W, height: rh, fill: "transparent", style: "cursor:pointer" }, svg);
+    const h = `<b>${esc(c.name)}</b> (${esc(c.latin)})<br>on foot ${fmt(c.foot)} days (${fmt(c.foot_lo)} to ${fmt(c.foot_hi)})<br>cart ${fmt(c.cart)}, courier ${fmt(c.courier)}<br>${fmt(c.road_km)} km of road${c.sea.length ? ", plus a sea crossing" : ""}; ${fmt(c.straight_km)} km as the crow flies`;
+    hit.addEventListener("mousemove", e => showTip(h, e.clientX, e.clientY - 4)); hit.addEventListener("mouseleave", hideTip);
+    hit.addEventListener("click", e => { e.stopPropagation(); hideTip(); showCity(k); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+  });
+});
+
+/* ---------- days band chart ---------- */
+resp(document.getElementById("bandChart"), (W, sm) => {
+  const box = document.getElementById("bandChart"); const B = R.foot_bands; const H = 220, m = { l: 46, r: 8, t: 10, b: 40 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box); const max = 70000, x = i => m.l + (W - m.l - m.r) * i / B.length, bw = (W - m.l - m.r) / B.length, y = v => H - m.b - (H - m.t - m.b) * v / max;
+  for (let v = 0; v <= max; v += 10000) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: css("--rule") }, svg); lbl(svg, m.l - 6, y(v) + 4, v ? (v / 1000) + "k" : "0", "lab s m", "end"); }
+  B.forEach((b, i) => {
+    el("rect", { x: x(i) + 2, y: y(b.km), width: bw - 4, height: y(0) - y(b.km), fill: rampCol((b.a + (b.b ?? 160)) / 2) }, svg);
+    lbl(svg, x(i) + bw / 2, H - m.b + 15, b.b == null ? `${b.a}+` : `${b.a}`, "lab s m", "middle");
+    const hit = el("rect", { x: x(i), y: m.t, width: bw, height: H - m.t - m.b, fill: "transparent" }, svg);
+    const h = `<b>${b.b == null ? b.a + " days or more" : b.a + " to " + b.b + " days"}</b><br>${fmt(b.km)} km of road`;
+    hit.addEventListener("mousemove", e => showTip(h, e.clientX, e.clientY - 4)); hit.addEventListener("mouseleave", hideTip);
+  });
+  lbl(svg, m.l + (W - m.l - m.r) / 2, H - 6, "days on foot from Rome (start of each band)", "lab s m", "middle");
+  lbl(svg, m.l, 8, "km of road", "lab s m");
+});
+
+/* ---------- certainty chart ---------- */
+resp(document.getElementById("certChart"), (W, sm) => {
+  const box = document.getElementById("certChart"); const rows = [["Main road", R.type_cert["Main Road"]], ["Secondary road", R.type_cert["Secondary Road"]]];
+  const rh = 34, m = { l: sm ? 92 : 120, r: 10, t: 6 }; const H = m.t + rows.length * (rh + 12) + 24; const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box);
+  const max = 200000, x = v => m.l + (W - m.l - m.r) * v / max;
+  for (let v = 0; v <= max; v += 50000) { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - 22, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 6, v ? (v / 1000) + "k km" : "0", "lab s m", "middle"); }
+  rows.forEach(([lab, d], i) => { const y0 = m.t + i * (rh + 12); let acc = 0;
+    lbl(svg, m.l - 8, y0 + rh / 2 + 4, lab, "lab b", "end");
+    CERT.forEach(([k, l, c]) => { const v = d[k] || 0; const r = el("rect", { x: x(acc), y: y0, width: Math.max(0, x(acc + v) - x(acc)), height: rh, fill: c }, svg);
+      const h = `<b>${lab}, ${l.toLowerCase()}</b><br>${fmt(v)} km`; r.addEventListener("mousemove", e => showTip(h, e.clientX, e.clientY - 4)); r.addEventListener("mouseleave", hideTip); acc += v; });
+  });
+  const lg = document.createElement("div"); lg.className = "legend"; lg.innerHTML = CERT.map(([k, l, c]) => `<span><i style="background:${c};height:10px;width:14px"></i>${l}: ${fmt(R.cert[k].km)} km (${(R.cert[k].share_km * 100).toFixed(1)}%)</span>`).join(""); box.appendChild(lg);
+});
+
+/* ---------- builders chart ---------- */
+resp(document.getElementById("builderChart"), (W, sm) => {
+  const box = document.getElementById("builderChart"); const B = R.builders.slice(0, 10); const rh = 22, m = { l: sm ? 120 : 150, r: 60, t: 4 };
+  const H = m.t + B.length * rh + 24; const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box); const max = 6000, x = v => m.l + (W - m.l - m.r) * v / max;
+  for (let v = 0; v <= max; v += 2000) { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - 22, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 6, v ? fmt(v) + " km" : "0", "lab s m", "middle"); }
+  B.forEach((b, i) => { const y0 = m.t + i * rh; el("rect", { x: x(0), y: y0 + 4, width: x(b.km) - x(0), height: rh - 8, fill: css("--hot") }, svg);
+    lbl(svg, m.l - 8, y0 + rh / 2 + 4, b.name, "lab", "end"); lbl(svg, x(b.km) + 6, y0 + rh / 2 + 4, fmt(b.km), "lab b");
+    const hit = el("rect", { x: 0, y: y0, width: W, height: rh, fill: "transparent" }, svg); const h = `<b>${esc(b.name)}</b><br>${fmt(b.km)} km in ${b.n} sections`;
+    hit.addEventListener("mousemove", e => showTip(h, e.clientX, e.clientY - 4)); hit.addEventListener("mouseleave", hideTip); });
+});
+
+/* ---------- tables ---------- */
+function runTable() {
+  const d = document.getElementById("runTable"); const max = R.runs[0].km;
+  d.innerHTML = `<table class="rank"><thead><tr><th>Stretch</th><th class="num">Straight</th><th class="num hide-s">Off line</th><th class="num hide-s">Certain</th></tr></thead><tbody>` +
+    R.runs.slice(0, 10).map((r, i) => `<tr class="cl" data-i="${i}"><td>${esc(r.label)}<br><small>${esc(r.from)} to ${esc(r.to)}</small></td><td class="num">${f1(r.km)} km<br><span class="bar" style="width:${Math.round(r.km / max * 80)}px"></span></td><td class="num hide-s">${fmt(r.maxdev_m)} m</td><td class="num hide-s">${Math.round(r.share_certain * 100)}%</td></tr>`).join("") + `</tbody></table>`;
+  d.querySelectorAll("tr.cl").forEach(tr => tr.onclick = () => { showRun(+tr.dataset.i); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+}
+runTable();
+let provAll = false;
+function provTable() {
+  const d = document.getElementById("provTable"); const P = provAll ? R.provinces : R.provinces.slice(0, 12); const max = R.provinces[0].density;
+  d.innerHTML = `<table class="rank"><thead><tr><th>Province</th><th class="num">km per 1,000 km²</th><th class="num hide-s">Road km</th><th class="num hide-s">Certain</th></tr></thead><tbody>` +
+    P.map(p => `<tr class="cl" data-n="${esc(p.name)}"><td>${esc(p.name)}</td><td class="num">${f1(p.density)}<br><span class="bar" style="width:${Math.round(p.density / max * 90)}px"></span></td><td class="num hide-s">${fmt(p.km)}</td><td class="num hide-s">${Math.round(p.share_certain * 100)}%</td></tr>`).join("") + `</tbody></table>`;
+  d.querySelectorAll("tr.cl").forEach(tr => tr.onclick = () => { showProv(tr.dataset.n); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+}
+provTable();
+document.getElementById("provMore").onclick = e => { provAll = !provAll; e.target.textContent = provAll ? "Show fewer" : `Show all ${R.n_provinces}`; provTable(); };
+
+/* ---------- map ---------- */
+const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+const ESRI_ATT = 'Tiles &copy; Esri | Roads: <a href="https://doi.org/10.5281/zenodo.17122148">Itiner-e</a> CC BY 4.0 | Provinces: DARE';
+const LYDEF = { base: "plain", hills: true, hillK: 35, labels: true, labelK: 60, bounds: false, roads: true, width: 1.6, iso: true, isoK: 45, prov: false, cross: true, cities: true };
+const LY = { ...LYDEF };
+try { Object.assign(LY, JSON.parse(localStorage.getItem("roman_layers") || "{}")); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("roman_layers", JSON.stringify(LY)); } catch (e) {} };
+const map = L.map("map", { minZoom: 3, maxZoom: 13, zoomSnap: .5, maxBounds: [[10, -30], [68, 65]] }).setView([42, 14], small() ? 3.5 : 4.5);
+["hills:250", "iso:300", "prov:350", "labels:430", "roads:450", "route:500", "names:620"].forEach(s => { const [n, z] = s.split(":"); map.createPane(n); map.getPane(n).style.zIndex = z; });
+["hills", "labels", "names", "iso"].forEach(n => map.getPane(n).style.pointerEvents = "none");
+const canvas = L.canvas({ pane: "roads", padding: .3, tolerance: 5 });
+let base = null, hills = null, labels = null, bounds = null;
+function setTiles() {
+  [base, labels, hills, bounds].forEach(l => { if (l) map.removeLayer(l); });
+  const t = isDark() ? "Dark" : "Light";
+  const url = LY.base === "relief" ? ESRI + "World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}" : LY.base === "topo" ? ESRI + "World_Topo_Map/MapServer/tile/{z}/{y}/{x}" : LY.base === "satellite" ? ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}" : `${ESRI}Canvas/World_${t}_Gray_Base/MapServer/tile/{z}/{y}/{x}`;
+  base = L.tileLayer(url, { maxZoom: 16, maxNativeZoom: LY.base === "relief" ? 13 : 16, attribution: ESRI_ATT }).addTo(map);
+  hills = L.tileLayer(ESRI + "Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16, maxNativeZoom: 16, pane: "hills" });
+  labels = L.tileLayer(`${ESRI}Canvas/World_${t}_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, { maxZoom: 16, pane: "labels" });
+  bounds = L.tileLayer(ESRI + "Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16, pane: "labels" });
+  applyLayers();
+}
+function applyLayers() {
+  if (!base) return;
+  if (LY.hills) { hills.addTo(map); hills.setOpacity(Math.min(1, .1 + LY.hillK / 120)); } else map.removeLayer(hills);
+  if (LY.labels) { labels.addTo(map); labels.setOpacity(LY.labelK / 100); } else map.removeLayer(labels);
+  if (LY.bounds) bounds.addTo(map); else map.removeLayer(bounds);
+  if (roadLayer) { if (LY.roads) roadLayer.addTo(map); else map.removeLayer(roadLayer); }
+  if (isoLayer) { if (LY.iso && S.colour === "days") { isoLayer.addTo(map); isoLayer.setOpacity(LY.isoK / 100); } else map.removeLayer(isoLayer); }
+  if (provLayer) { if (LY.prov) provLayer.addTo(map); else map.removeLayer(provLayer); } else if (LY.prov) loadProv();
+  if (crossLayer) { if (LY.cross) crossLayer.addTo(map); else map.removeLayer(crossLayer); }
+  if (cityLayer) { if (LY.cities) cityLayer.addTo(map); else map.removeLayer(cityLayer); }
+  restyle(); legend();
+}
+(function layerControl() {
+  const Ctl = L.Control.extend({ options: { position: "topright" }, onAdd() {
+    const d = L.DomUtil.create("div"); L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
+    d.innerHTML = `<button class="lyrBtn" aria-expanded="false">Map layers</button>
+<div class="lyrPanel" hidden>
+ <div class="row"><label style="font-weight:600">Base map</label><div class="sub"><select data-k="base" aria-label="Base map"><option value="plain">Plain grey</option><option value="topo">Topographic</option><option value="relief">Shaded relief</option><option value="satellite">Satellite</option></select></div></div>
+ <div class="row"><label><input type="checkbox" data-k="hills"> Hill shading</label><div class="sub"><span>strength</span><input type="range" data-k="hillK" min="10" max="100" step="5" aria-label="Hill shading strength"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="labels"> Modern place names</label><div class="sub"><span>strength</span><input type="range" data-k="labelK" min="20" max="100" step="5" aria-label="Place name strength"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="bounds"> Modern borders and more places</label></div>
+ <div class="hd">Roman roads</div>
+ <div class="row"><label><input type="checkbox" data-k="roads"> Roads (Itiner-e)</label><div class="sub"><span>width</span><input type="range" data-k="width" min=".6" max="4" step=".2" aria-label="Road width"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="iso"> Days shading off the roads</label><div class="sub"><span>strength</span><input type="range" data-k="isoK" min="10" max="90" step="5" aria-label="Shading strength"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="cities"> Ancient city names</label></div>
+ <div class="row"><label><input type="checkbox" data-k="cross"> Sea crossings</label></div>
+ <div class="row"><label><input type="checkbox" data-k="prov"> Provinces, about AD 117 (DARE)</label></div>
+ <button class="reset">Reset layers</button>
+</div>`;
+    return d; } });
+  map.addControl(new Ctl());
+  const box = map.getContainer(), btn = box.querySelector(".lyrBtn"), pan = box.querySelector(".lyrPanel");
+  btn.onclick = () => { const o = pan.hidden; pan.hidden = !o; btn.setAttribute("aria-expanded", o); };
+  const sync = () => pan.querySelectorAll("[data-k]").forEach(i => { const k = i.dataset.k; if (i.type === "checkbox") i.checked = LY[k]; else i.value = LY[k]; });
+  pan.querySelectorAll("[data-k]").forEach(i => i.addEventListener(i.type === "range" ? "input" : "change", () => {
+    const k = i.dataset.k; LY[k] = i.type === "checkbox" ? i.checked : (k === "base" ? i.value : +i.value);
+    if (k === "hillK") LY.hills = true; if (k === "labelK") LY.labels = true; if (k === "width") LY.roads = true; if (k === "isoK") LY.iso = true;
+    sync(); saveLY(); if (k === "base") setTiles(); else applyLayers();
+  }));
+  pan.querySelector(".reset").onclick = () => { Object.assign(LY, LYDEF); saveLY(); sync(); setTiles(); };
+  sync();
+})();
+const Note = L.Control.extend({ options: { position: "bottomleft" }, onAdd() { const d = L.DomUtil.create("div", "mapnote"); d.id = "mapnote"; L.DomEvent.disableClickPropagation(d); return d; } });
+map.addControl(new Note());
+L.control.scale({ imperial: false, position: "bottomright" }).addTo(map);
+
+/* ---------- state ---------- */
+const S = { colour: "days", mode: "foot", start: null, startName: "Rome", sel: null, prov: null };
+let NET = null, RD = null, SEC = [], roadLayer = null, isoLayer = null, provLayer = null, crossLayer = null, cityLayer = null, routeLayer = L.layerGroup(), markLayer = L.layerGroup();
+let ADJ = null, T = {}, PREV = null, PREVE = null, GRID = null;
+const NSEC = () => SEC.length;
+const kmdOf = m => R.modes[m].kmd;
+function wOf(e, kmd) { if (e < SEC.length) return SEC[e].km / (kmd * SEC[e].pass); const c = NET.crossings[e - SEC.length]; return c[3] ? c[2] / kmd : NET.cross_days; }
+function buildAdj() {
+  const n = NET.nodes.length; ADJ = Array.from({ length: n }, () => []);
+  NET.edges.forEach((e, i) => { if (e[0] !== e[1]) { ADJ[e[0]].push([e[1], i]); ADJ[e[1]].push([e[0], i]); } });
+  NET.crossings.forEach((c, j) => { const i = NET.edges.length + j; ADJ[c[0]].push([c[1], i]); ADJ[c[1]].push([c[0], i]); });
+}
+function dijkstra(src, kmd, wantPrev) {
+  const n = NET.nodes.length, dist = new Float64Array(n).fill(Infinity), prev = wantPrev ? new Int32Array(n).fill(-1) : null, prevE = wantPrev ? new Int32Array(n).fill(-1) : null;
+  const hk = [], hv = []; const push = (k, v) => { hk.push(k); hv.push(v); let i = hk.length - 1; while (i > 0) { const p = (i - 1) >> 1; if (hk[p] <= hk[i]) break; [hk[p], hk[i]] = [hk[i], hk[p]]; [hv[p], hv[i]] = [hv[i], hv[p]]; i = p; } };
+  const pop = () => { const k = hk[0], v = hv[0]; const lk = hk.pop(), lv = hv.pop(); if (hk.length) { hk[0] = lk; hv[0] = lv; let i = 0; for (;;) { const l = 2 * i + 1, r = l + 1; let s = i; if (l < hk.length && hk[l] < hk[s]) s = l; if (r < hk.length && hk[r] < hk[s]) s = r; if (s === i) break; [hk[s], hk[i]] = [hk[i], hk[s]]; [hv[s], hv[i]] = [hv[i], hv[s]]; i = s; } } return [k, v]; };
+  dist[src] = 0; push(0, src);
+  while (hk.length) { const [d, u] = pop(); if (d > dist[u]) continue; for (const [v, e] of ADJ[u]) { const nd = d + wOf(e, kmd); if (nd < dist[v]) { dist[v] = nd; if (wantPrev) { prev[v] = u; prevE[v] = e; } push(nd, v); } } }
+  return { dist, prev, prevE };
+}
+function recompute() {
+  MODES.forEach(m => { const r = dijkstra(S.start, kmdOf(m), m === S.mode); T[m] = r.dist; if (m === S.mode) { PREV = r.prev; PREVE = r.prevE; } });
+}
+function secDays(i, m) { const s = SEC[i], w = s.km / (kmdOf(m) * s.pass); return Math.min(T[m][s.u] + w / 2, T[m][s.v] + w / 2); }
+function pointDays(code, dq, m) {
+  const e = code >> 8, f = (code & 255) / 255, s = SEC[e], kmd = kmdOf(m), w = s.km / (kmd * s.pass);
+  return Math.min(T[m][s.u] + f * w, T[m][s.v] + (1 - f) * w) + (dq / NET.grid.dist_scale) / (kmd * NET.off_factor);
+}
+const DATECOL = BANDS.map(b => b[4]);
+function secStyle(s) {
+  const z = map.getZoom(), k = LY.width * (z < 4 ? .55 : z < 5 ? .75 : z < 7 ? 1 : 1.4) * (s.type === 0 ? 1.25 : .8);
+  let color;
+  if (S.colour === "days") color = rampCol(secDays(s.i, S.mode));
+  else if (S.colour === "cert") color = CERTC[s.cert];
+  else if (S.colour === "type") color = s.type === 0 ? css("--hot") : (isDark() ? "#B9AFA2" : "#6E655C");
+  else color = s.band >= 0 ? DATECOL[s.band] : (isDark() ? "#5A524A" : "#C9C0B2");
+  const dim = S.prov && s.prov !== S.prov;
+  const wt = S.colour === "type" && s.type === 1 ? k * .8 : S.colour === "cert" && s.cert === 0 ? k * 1.7 : k;
+  return { color, weight: wt, opacity: dim ? .18 : (S.colour === "date" && s.band < 0 ? .7 : .92), dashArray: s.cert === 2 ? `${3 * LY.width},${2.5 * LY.width}` : null, lineCap: "round" };
+}
+function restyle() { if (!roadLayer) return; SEC.forEach(s => s.l.setStyle(secStyle(s))); if (S.colour === "cert") SEC.forEach(s => { if (s.cert === 0) s.l.bringToFront(); }); else if (S.colour === "type") SEC.forEach(s => { if (s.type === 0) s.l.bringToFront(); }); status(); }
+function status() {
+  const n = document.getElementById("mapnote"); if (!n) return;
+  const lab = { days: `Days ${R.modes[S.mode].label.toLowerCase().replace("courier (relay of horses)", "by courier").replace("horse-drawn cart", "by cart")} from ${S.startName}`, cert: "Certainty of each road's course", type: "Main and secondary roads", date: "Date of building, where known" }[S.colour];
+  n.innerHTML = `<b>${esc(lab)}</b>${S.colour === "days" ? "Click any road or any point on land." : "Click a road for its details."}`;
+}
+function legend() {
+  const d = document.getElementById("legend"); let h = "";
+  if (S.colour === "days") { const mx = RX[RX.length - 1]; h = `<span>0</span><span class="rampbar" style="background:${rampCSS()}"></span><span>${mx}+ days ${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} from ${esc(S.startName)}</span><span><i style="background:#9A9288"></i>not reachable by road</span>`; }
+  else if (S.colour === "cert") h = CERT.map(([k, l, c], i) => `<span style="color:${c}"><i class="${i === 2 ? "dash" : ""}" style="background:${c}"></i><span style="color:var(--muted)">${l} (${(R.cert[k].share_km * 100).toFixed(1)}% of km)</span></span>`).join("");
+  else if (S.colour === "type") h = `<span><i style="background:var(--hot);height:5px"></i>Main road (${Math.round(R.share_main * 100)}% of km)</span><span><i style="background:#6E655C;height:3px"></i>Secondary road</span>`;
+  else h = BANDS.map(b => `<span><i style="background:${b[4]}"></i>${esc(b[1])}</span>`).join("") + `<span><i style="background:#C9C0B2"></i>No date (${Math.round(R.dated.share_undated_km * 100)}% of km)</span>`;
+  h += `<span><i class="dash" style="color:var(--muted)"></i>dashed: hypothetical</span>`;
+  if (LY.cross) h += `<span><i style="background:#2E6FA8;height:2px"></i>sea crossing (one day)</span>`;
+  d.innerHTML = h;
+}
+// colour and mode buttons
+(function () {
+  const row = document.getElementById("colRow");
+  [["days", "Days from start"], ["cert", "Certainty"], ["type", "Main or secondary"], ["date", "Date built"]].forEach(([k, l]) => { const b = document.createElement("button"); b.className = "btn"; b.textContent = l; b.setAttribute("aria-pressed", k === S.colour); b.onclick = () => { S.colour = k; row.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", x === b)); applyLayers(); }; row.appendChild(b); });
+  const mr = document.getElementById("modeRow");
+  MODES.forEach(m => { const b = document.createElement("button"); b.className = "btn"; b.textContent = R.modes[m].label.replace(" (relay of horses)", ""); b.setAttribute("aria-pressed", m === S.mode); b.onclick = () => { S.mode = m; mr.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", x === b)); if (NET) { recompute(); drawIso(); restyle(); legend(); refreshSide(); } }; mr.appendChild(b); });
+})();
+
+/* ---------- loading ---------- */
+function decode(d) { const out = []; let x = 0, y = 0; for (let i = 0; i < d.length; i += 2) { x += d[i]; y += d[i + 1]; out.push([y / 1e4, x / 1e4]); } return out; }
+function loadImg(src) { return new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = src; }); }
+Promise.all([fetch("data/network.json").then(r => r.json()), fetch("data/roads_site.json").then(r => r.json()), fetch("data/places.json").then(r => r.json())]).then(([net, rd, places]) => {
+  NET = net; RD = rd; window.PLACES = places;
+  const C = rd.cols.reduce((o, c, i) => (o[c] = i, o), {});
+  roadLayer = L.layerGroup();
+  rd.rows.forEach((r, i) => {
+    const e = NET.edges[i];
+    const s = { i, type: r[C.type], cert: r[C.cert], band: r[C.band], year: r[C.year], name: r[C.name], cons: r[C.cons], itin: r[C.itin], bib: r[C.bib], cite: r[C.cite], prov: r[C.prov] >= 0 ? rd.prov[r[C.prov]] : null, km: e[2], slope: r[C.slope], pass: e[3], u: e[0], v: e[1] };
+    s.l = L.polyline(decode(rd.geo[i]), { renderer: canvas, interactive: true });
+    s.l.on("click", ev => { L.DomEvent.stopPropagation(ev); pickSection(i, ev.latlng); });
+    SEC.push(s); roadLayer.addLayer(s.l);
+  });
+  buildAdj();
+  S.start = NET.rome; recompute();
+  // crossings
+  crossLayer = L.layerGroup();
+  NET.crossings.forEach(c => { const a = NET.nodes[c[0]], b = NET.nodes[c[1]];
+    L.polyline([[a[1], a[0]], [b[1], b[0]]], { pane: "roads", color: "#2E6FA8", weight: 2, dashArray: "2,5", opacity: .9, interactive: false }).addTo(crossLayer);
+  });
+  // ancient city labels
+  cityLayer = L.layerGroup();
+  NET.cities.forEach(c => { const n = NET.nodes[c[3]]; L.marker([n[1], n[0]], { pane: "names", interactive: false, icon: L.divIcon({ className: ["rome", "london", "constantinople", "alexandria", "carthago"].includes(c[0]) ? "cityL" : "cityL minor", html: `${esc(c[1])}`, iconSize: [120, 16], iconAnchor: [60, -4] }) }).addTo(cityLayer);
+    L.circleMarker([n[1], n[0]], { pane: "route", radius: 3, color: css("--fg"), weight: 1.5, fillColor: css("--card"), fillOpacity: 1, interactive: false }).addTo(cityLayer); });
+  routeLayer.addTo(map); markLayer.addTo(map);
+  // start select
+  const sel = document.getElementById("startSel");
+  sel.innerHTML = NET.cities.map(c => `<option value="${c[3]}">${esc(c[1])} (${esc(c[2])})</option>`).join("") + `<option value="custom" disabled>A place you chose</option>`;
+  sel.value = String(NET.rome);
+  sel.onchange = () => { if (sel.value === "custom") return; const c = NET.cities.find(x => String(x[3]) === sel.value); setStart(+sel.value, c[1]); };
+  map.on("click", ev => pickPoint(ev.latlng));
+  const zl = () => map.getContainer().classList.toggle("zlow", map.getZoom() < 5.5); zl();
+  map.on("zoomend", () => { zl(); restyle(); });
+  setTiles(); intro(); search();
+  return Promise.all([loadImg("data/grid_edge.png"), loadImg("data/grid_dist.png")]);
+}).then(([ie, id]) => {
+  const g = NET.grid, cv = document.createElement("canvas"); cv.width = g.nx; cv.height = g.ny; const cx = cv.getContext("2d", { willReadFrequently: true });
+  cx.drawImage(ie, 0, 0); const a = cx.getImageData(0, 0, g.nx, g.ny).data; cx.clearRect(0, 0, g.nx, g.ny); cx.drawImage(id, 0, 0); const b = cx.getImageData(0, 0, g.nx, g.ny).data;
+  const code = new Int32Array(g.nx * g.ny), dq = new Uint8Array(g.nx * g.ny);
+  for (let i = 0; i < code.length; i += 1) { code[i] = (a[4 * i] << 16) | (a[4 * i + 1] << 8) | a[4 * i + 2]; dq[i] = b[4 * i]; }
+  GRID = { code, dq, cv, cx };
+  drawIso(); applyLayers();
+}).catch(err => { console.error(err); document.getElementById("side").innerHTML = "<p>The map data could not be loaded.</p>"; });
+
+const merc = lat => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+function cellOf(ll) { const g = NET.grid; if (ll.lng < g.lon0 || ll.lng > g.lon1 || ll.lat < g.lat0 || ll.lat > g.lat1) return -1;
+  const x = Math.floor((ll.lng - g.lon0) / (g.lon1 - g.lon0) * g.nx), y = Math.floor((merc(g.lat1) - merc(ll.lat)) / (merc(g.lat1) - merc(g.lat0)) * g.ny); return y * g.nx + x; }
+function drawIso() {
+  if (!GRID) return; const g = NET.grid, img = GRID.cx.createImageData(g.nx, g.ny), D = img.data;
+  for (let i = 0; i < GRID.code.length; i += 1) { const c = GRID.code[i]; if (c === 0xFFFFFF) continue; const d = pointDays(c, GRID.dq[i], S.mode); const rgb = rampRGB(d);
+    if (!rgb) { D[4 * i] = 150; D[4 * i + 1] = 146; D[4 * i + 2] = 136; D[4 * i + 3] = 110; continue; }
+    D[4 * i] = rgb[0]; D[4 * i + 1] = rgb[1]; D[4 * i + 2] = rgb[2]; const km = GRID.dq[i] / g.dist_scale; D[4 * i + 3] = Math.round(255 * (km < 12 ? 1 : Math.max(.2, 1 - (km - 12) / (NET.off_max - 12)))); }
+  GRID.cx.putImageData(img, 0, 0); const url = GRID.cv.toDataURL();
+  if (isoLayer) isoLayer.setUrl(url); else isoLayer = L.imageOverlay(url, [[g.lat0, g.lon0], [g.lat1, g.lon1]], { pane: "iso", opacity: LY.isoK / 100, interactive: false });
+}
+
+/* ---------- interaction ---------- */
+const side = document.getElementById("side");
+let sideState = { kind: "intro" };
+function refreshSide() { if (sideState.kind === "sec") pickSection(sideState.i, sideState.ll, true); else if (sideState.kind === "pt") pickPoint(sideState.ll, true); else if (sideState.kind === "city") showCity(sideState.k, true); else intro(); }
+function timesTable(f) { return `<table>${MODES.map(m => `<tr><td>${esc(R.modes[m].label)}<br><small>${R.modes[m].kmd} km a day</small></td><td class="num"><b>${days(f(m))}</b></td></tr>`).join("")}</table>`; }
+function intro() {
+  sideState = { kind: "intro" }; routeLayer.clearLayers(); markLayer.clearLayers(); S.prov = null; if (provLayer) provLayer.setStyle(provStyle);
+  side.innerHTML = `<h4>The network</h4><div class="big">${fmt(R.km_total)} km</div><p class="sub">${fmt(R.n_sections)} sections, ${fmt(R.n_nodes)} junctions</p>
+<p>Roads are coloured by days ${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} from ${esc(S.startName)}. Click any road or any point on land for the time from there, the route, or to start from it instead.</p>
+<h4>Days from Rome on foot</h4><table>${R.city_order.slice().filter(k => ["london", "constantinople", "alexandria", "lutetia", "athenae", "hierosolyma", "carthago"].includes(k)).map(k => `<tr><td><span class="go" data-city="${k}">${esc(R.city[k].name)}</span></td><td class="num">${fmt(R.city[k].foot)}</td></tr>`).join("")}</table>
+<p class="sub">Modelled times for a steady traveller on the roads, with four short sea crossings. The sea was usually quicker.</p>`;
+  wire();
+}
+function wire() { side.querySelectorAll("[data-city]").forEach(s => s.onclick = () => showCity(s.dataset.city)); side.querySelectorAll("[data-act]").forEach(b => b.onclick = () => { const a = b.dataset.act; if (a === "route") drawRoute(+b.dataset.n, b.dataset.e ? +b.dataset.e : null, b.dataset.f ? +b.dataset.f : null); if (a === "start") setStart(+b.dataset.n, b.dataset.name); if (a === "intro") intro(); if (a === "rome") { document.getElementById("startSel").value = String(NET.rome); setStart(NET.rome, "Rome"); } }); }
+function nearNode(s, f) { return f < .5 ? s.u : s.v; }
+function pickSection(i, ll, keep) {
+  const s = SEC[i]; sideState = { kind: "sec", i, ll }; if (!keep) { routeLayer.clearLayers(); }
+  markLayer.clearLayers(); L.polyline(s.l.getLatLngs(), { pane: "route", color: isDark() ? "#fff" : "#111", weight: 6, opacity: .35, interactive: false }).addTo(markLayer);
+  const nm = s.name >= 0 ? RD.name[s.name] : "Unnamed section", bd = s.band >= 0 ? BANDS[s.band][1] : null;
+  side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>Road section</h4><div class="big">${esc(nm)}</div>
+<p class="sub">${s.type === 0 ? "Main road" : "Secondary road"}, <span style="color:${CERTC[s.cert]};font-weight:500">${CERT[s.cert][1].toLowerCase()}</span>, ${f1(s.km)} km${s.prov ? ", " + esc(s.prov) : ""}</p>
+<h4>From ${esc(S.startName)} to the middle of this section</h4>${timesTable(m => secDays(i, m))}
+<div class="acts"><button class="btn" data-act="route" data-n="${T[S.mode][s.u] <= T[S.mode][s.v] ? s.u : s.v}">Show the route</button><button class="btn" data-act="start" data-n="${s.u}" data-name="${esc(NET.names[s.u])}">Start from here</button></div>
+<table>${s.cons >= 0 ? `<tr><td>Built under</td><td>${esc(RD.cons[s.cons])}</td></tr>` : ""}${s.year != null ? `<tr><td>Date used</td><td>${s.year < 0 ? -s.year + " BCE" : s.year + " CE"}${bd ? "<br><small>" + esc(bd) + "</small>" : ""}</td></tr>` : `<tr><td>Date</td><td><small>not given</small></td></tr>`}
+${s.itin >= 0 ? `<tr><td>Itinerary or name</td><td>${esc(RD.itin[s.itin])}</td></tr>` : ""}<tr><td>Average slope</td><td>${f1(s.slope)}°${s.pass < 1 ? ` <small>(slowed to ${Math.round(s.pass * 100)}%)</small>` : ""}</td></tr>
+${s.bib >= 0 ? `<tr><td>Sources</td><td><small>${esc(RD.bib[s.bib])}</small></td></tr>` : ""}${s.cite >= 0 ? `<tr><td>Digitised by</td><td><small>${esc(RD.cite[s.cite])}</small></td></tr>` : ""}</table>
+<p class="sub">Itiner-e section ${i}. Times are modelled.</p>`;
+  wire();
+  if (!keep && ll) L.popup({ maxWidth: 260 }).setLatLng(ll).setContent(`<b class="t">${esc(nm)}</b>${days(secDays(i, S.mode))} ${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} from ${esc(S.startName)}<br><small>${CERT[s.cert][1]} ${s.type === 0 ? "main" : "secondary"} road</small>`).openOn(map);
+}
+function pickPoint(ll, keep) {
+  if (!GRID) return; const c = cellOf(ll); markLayer.clearLayers(); if (!keep) routeLayer.clearLayers();
+  sideState = { kind: "pt", ll };
+  L.circleMarker(ll, { pane: "route", radius: 5, color: css("--fg"), weight: 2, fillColor: css("--hot"), fillOpacity: 1 }).addTo(markLayer);
+  if (c < 0 || GRID.code[c] === 0xFFFFFF) {
+    side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>This point</h4><div class="big">No road nearby</div><p class="sub">More than ${NET.off_max} km from any road in Itiner-e, at sea, or outside the map.</p>`; wire();
+    if (!keep) L.popup({ maxWidth: 240 }).setLatLng(ll).setContent(`<b class="t">No road nearby</b>More than ${NET.off_max} km from any mapped Roman road, or at sea.`).openOn(map);
+    return;
+  }
+  const code = GRID.code[c], dq = GRID.dq[c], e = code >> 8, f = (code & 255) / 255, s = SEC[e], off = dq / NET.grid.dist_scale;
+  const kmd = kmdOf(S.mode), w = s.km / (kmd * s.pass), viaU = T[S.mode][s.u] + f * w <= T[S.mode][s.v] + (1 - f) * w;
+  const nm = s.name >= 0 ? RD.name[s.name] : "an unnamed section", t = pointDays(code, dq, S.mode);
+  const here = NET.names[nearNode(s, f)];
+  side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>From ${esc(S.startName)} to this point</h4><div class="big">${days(t)}</div><p class="sub">${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"}; nearest road ${esc(nm)} (${CERT[s.cert][1].toLowerCase()}), ${f1(off)} km away, near ${esc(here)}</p>
+${timesTable(m => pointDays(code, dq, m))}
+<div class="acts"><button class="btn" data-act="route" data-n="${viaU ? s.u : s.v}" data-e="${e}" data-f="${f}">Show the route</button><button class="btn" data-act="start" data-n="${nearNode(s, f)}" data-name="${esc(here)}">Start from here</button>${S.start !== NET.rome ? `<button class="btn" data-act="rome">Back to Rome</button>` : ""}</div>
+<p class="sub">The last ${f1(off)} km off the road counted at half the road speed. ${isFinite(t) ? "" : "This road is not joined to the start by road: it is on an island, or the network has a gap."}</p>`;
+  wire();
+  if (!keep) L.popup({ maxWidth: 260 }).setLatLng(ll).setContent(`<b class="t">${days(t)}</b>${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} from ${esc(S.startName)}<br><small>near ${esc(here)}</small><br><button class="btn" id="popRoute">Show the route</button>`).openOn(map);
+  setTimeout(() => { const b = document.getElementById("popRoute"); if (b) b.onclick = () => drawRoute(viaU ? s.u : s.v); }, 0);
+}
+function drawRoute(n, e, f) {
+  routeLayer.clearLayers(); if (!isFinite(T[S.mode][n])) return;
+  const lines = []; let k = n, km = 0, sea = 0, guard = 0;
+  while (PREV[k] >= 0 && guard < 100000) { const ed = PREVE[k]; guard += 1;
+    if (ed < SEC.length) { lines.push(SEC[ed].l.getLatLngs()); km += SEC[ed].km; } else { const c = NET.crossings[ed - SEC.length], a = NET.nodes[c[0]], b = NET.nodes[c[1]]; lines.push([[a[1], a[0]], [b[1], b[0]]]); if (!c[3]) sea += 1; }
+    k = PREV[k]; }
+  L.polyline(lines, { pane: "route", color: isDark() ? "#000" : "#fff", weight: 8, opacity: .9, interactive: false }).addTo(routeLayer);
+  L.polyline(lines, { pane: "route", color: isDark() ? "#fff" : "#111", weight: 3.5, opacity: 1, interactive: false }).addTo(routeLayer);
+  const b = L.polyline(lines).getBounds(); if (b.isValid()) map.fitBounds(b.pad(.15), { maxZoom: 7 });
+  const nt = document.getElementById("mapnote"); if (nt) nt.innerHTML = `<b>${days(T[S.mode][n])}</b>from ${esc(S.startName)} to ${esc(NET.names[n])}: ${fmt(km)} km of road${sea ? `, ${sea} sea crossing${sea > 1 ? "s" : ""}` : ""}`;
+}
+function setStart(n, name) {
+  S.start = n; S.startName = name; const sel = document.getElementById("startSel");
+  if (!NET.cities.some(c => c[3] === n)) { sel.value = "custom"; sel.querySelector('option[value="custom"]').textContent = name; }
+  recompute(); drawIso(); restyle(); legend(); routeLayer.clearLayers(); markLayer.clearLayers(); map.closePopup(); intro();
+  const p = NET.nodes[n]; L.circleMarker([p[1], p[0]], { pane: "route", radius: 7, color: "#fff", weight: 2.5, fillColor: "#111", fillOpacity: 1 }).addTo(markLayer);
+}
+function showCity(k, keep) {
+  if (!NET) return; if (S.start !== NET.rome) { document.getElementById("startSel").value = String(NET.rome); setStart(NET.rome, "Rome"); }
+  const c = R.city[k], n = NET.cities.find(x => x[0] === k)[3];
+  sideState = { kind: "city", k };
+  side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>Rome to ${esc(c.name)}</h4><div class="big">${fmt(T[S.mode][n])} days</div><p class="sub">${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} to ${esc(c.latin)}; ${fmt(c.road_km)} km of road${c.sea.length ? " and a sea crossing" : ""}, ${fmt(c.straight_km)} km as the crow flies</p>
+${timesTable(m => T[m][n])}<p class="sub">On foot at 25 to 20 km a day: ${fmt(c.foot_lo)} to ${fmt(c.foot_hi)} days. ${Math.round(c.route_share_certain * 100)}% of the route is on roads graded certain.</p>`;
+  wire(); drawRoute(n);
+}
+function showRun(i) {
+  const r = R.runs[i]; routeLayer.clearLayers(); markLayer.clearLayers();
+  L.polyline([[r.lat0, r.lon0], [r.lat1, r.lon1]], { pane: "route", color: css("--hot"), weight: 9, opacity: .35, interactive: false }).addTo(markLayer);
+  map.fitBounds(L.latLngBounds([[r.lat0, r.lon0], [r.lat1, r.lon1]]).pad(.35), { maxZoom: 11 });
+  side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>Straight run</h4><div class="big">${f1(r.km)} km</div><p class="sub">${esc(r.label)}</p>
+<table><tr><td>From</td><td>${esc(r.from)}</td></tr><tr><td>To</td><td>${esc(r.to)}</td></tr><tr><td>Furthest from the line</td><td>${fmt(r.maxdev_m)} m</td></tr><tr><td>Graded certain</td><td>${Math.round(r.share_certain * 100)}%</td></tr><tr><td>Sections</td><td><small>${esc(r.sections)}</small></td></tr></table>
+<p class="sub">Switch the base map to satellite in Map layers to see the line on the ground.</p>`; wire();
+}
+const provStyle = f => ({ color: isDark() ? "#E2D7C7" : "#3B342E", weight: S.prov === f.properties.name ? 2.5 : .8, opacity: .8, fillColor: rampDensity(f.properties.density), fillOpacity: S.prov ? (S.prov === f.properties.name ? .25 : .03) : .16 });
+function rampDensity(d) { const t = Math.min(1, d / 140); const a = hex("#F3E3C3"), b = hex("#7A1F2B"); return `rgb(${a.map((x, j) => Math.round(x + (b[j] - x) * t)).join(",")})`; }
+function loadProv(then) {
+  if (provLayer) { if (then) then(); return; }
+  fetch("data/provinces.geojson").then(r => r.json()).then(G => {
+    provLayer = L.geoJSON(G, { pane: "prov", style: provStyle, onEachFeature: (f, l) => l.bindTooltip(`<b>${esc(f.properties.name)}</b><br>${f1(f.properties.density)} km per 1,000 km²`, { sticky: true }) });
+    if (LY.prov) provLayer.addTo(map); if (then) then();
+  });
+}
+function showProv(name) {
+  LY.prov = true; saveLY(); const pan = map.getContainer().querySelector('[data-k="prov"]'); if (pan) pan.checked = true;
+  loadProv(() => { provLayer.addTo(map); S.prov = name; provLayer.setStyle(provStyle); restyle(); let b = null; provLayer.eachLayer(l => { if (l.feature.properties.name === name) b = l.getBounds(); }); if (b) map.fitBounds(b.pad(.1), { maxZoom: 8 });
+    const p = R.provinces.find(x => x.name === name);
+    side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>Province, about AD 117</h4><div class="big">${esc(name)}</div><p class="sub">${f1(p.density)} km of road per 1,000 km²</p><table><tr><td>Road</td><td class="num">${fmt(p.km)} km</td></tr><tr><td>Land area</td><td class="num">${fmt(p.area_km2)} km²</td></tr><tr><td>Graded certain</td><td class="num">${Math.round(p.share_certain * 100)}%</td></tr></table><p class="sub">Outline from DARE. Other provinces are dimmed.</p>`; wire(); });
+}
+function search() {
+  const q = document.getElementById("q"), sug = document.getElementById("sug"); let items = [], sel = -1;
+  const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const pool = [];
+  NET.cities.forEach(c => pool.push({ n: c[1], s: c[2], t: "node", k: c[3], r: 0 }));
+  const seen = new Set(); NET.names.forEach((nm, i) => { if (/^road junction/.test(nm) || seen.has(nm)) return; seen.add(nm); pool.push({ n: nm, s: "Roman place on the network", t: "node", k: i, r: 2 }); });
+  PLACES.forEach(p => pool.push({ n: p[0], s: p[1], t: "pt", k: [p[3], p[2]], r: 1 }));
+  pool.forEach(p => p.q = norm(p.n));
+  function show() { sug.innerHTML = items.map((it, i) => `<li role="option" aria-selected="${i === sel}" data-i="${i}">${esc(it.n)} <span>${esc(it.s)}</span></li>`).join(""); sug.style.display = items.length ? "block" : "none"; sug.querySelectorAll("li").forEach(li => li.onmousedown = e => { e.preventDefault(); go(items[+li.dataset.i]); }); }
+  function go(it) { q.value = it.n; sug.style.display = "none"; let ll; if (it.t === "node") { const p = NET.nodes[it.k]; ll = L.latLng(p[1], p[0]); } else ll = L.latLng(it.k[0], it.k[1]); map.setView(ll, Math.max(map.getZoom(), 7)); pickPoint(ll); }
+  q.addEventListener("input", () => { const v = norm(q.value.trim()); sel = -1; if (v.length < 2) { items = []; show(); return; }
+    items = pool.filter(p => p.q.startsWith(v)).sort((a, b) => a.r - b.r || a.n.length - b.n.length).slice(0, 10);
+    if (items.length < 10) items = items.concat(pool.filter(p => !p.q.startsWith(v) && p.q.includes(v)).sort((a, b) => a.r - b.r).slice(0, 10 - items.length)); show(); });
+  q.addEventListener("keydown", e => { if (e.key === "ArrowDown") { sel = Math.min(items.length - 1, sel + 1); show(); e.preventDefault(); } else if (e.key === "ArrowUp") { sel = Math.max(0, sel - 1); show(); e.preventDefault(); } else if (e.key === "Enter" && items.length) go(items[Math.max(0, sel)]); else if (e.key === "Escape") { sug.style.display = "none"; } });
+  q.addEventListener("blur", () => setTimeout(() => sug.style.display = "none", 150));
+}
+// theme toggle
+document.getElementById("theme").onclick = () => { const r = document.documentElement; r.dataset.theme = isDark() ? "light" : "dark"; setTiles(); redraws.forEach(f => f()); };
+</script>
+<!-- map-fullscreen v1 -->
+<style id="mfs-style">
+.mfs-btn{position:absolute;top:10px;right:10px;z-index:1001;width:34px;height:34px;border:2px solid rgba(0,0,0,.25);border-radius:4px;background:#fff;color:#222;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.mfs-btn:hover{background:#f2f2f2}
+.mfs-btn svg{width:18px;height:18px}
+.mfs-host.mfs-btn-left .mfs-btn{right:auto;left:54px}
+.mfs-fake{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;z-index:100000!important;border-radius:0!important}
+html.mfs-lock,html.mfs-lock body{overflow:hidden!important}
+:fullscreen.mfs-host{width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;margin:0!important;border-radius:0!important}
+</style>
+<script id="mfs-script">
+(function(){
+  var ICON_OPEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+  var ICON_CLOSE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+  function poke(){setTimeout(function(){window.dispatchEvent(new Event('resize'));},60);setTimeout(function(){window.dispatchEvent(new Event('resize'));},400);}
+  function realFS(){return document.fullscreenElement||document.webkitFullscreenElement;}
+  function add(el){
+    if(el.__mfs)return; el.__mfs=1;
+    var cs=getComputedStyle(el); if(cs.position==='static')el.style.position='relative';
+    el.classList.add('mfs-host');
+    // avoid clashing with a top-right Leaflet control (e.g. "Map layers")
+    var tr=el.querySelector('.leaflet-top.leaflet-right');
+    if(tr&&tr.children.length){ el.classList.add('mfs-btn-left'); }
+    var b=document.createElement('button'); b.type='button'; b.className='mfs-btn';
+    b.title='Full screen map'; b.setAttribute('aria-label','Full screen map'); b.innerHTML=ICON_OPEN;
+    ['click','dblclick','mousedown','touchstart','wheel'].forEach(function(t){b.addEventListener(t,function(e){e.stopPropagation();},{passive:t!=='click'});});
+    function setIcon(on){b.innerHTML=on?ICON_CLOSE:ICON_OPEN;b.title=on?'Exit full screen':'Full screen map';b.setAttribute('aria-label',b.title);}
+    function exitFake(){el.classList.remove('mfs-fake');document.documentElement.classList.remove('mfs-lock');setIcon(false);poke();}
+    b.addEventListener('click',function(e){
+      e.preventDefault();
+      if(el.classList.contains('mfs-fake')){exitFake();return;}
+      if(realFS()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return;}
+      var req=el.requestFullscreen||el.webkitRequestFullscreen;
+      if(req){ try{ var p=req.call(el); if(p&&p.catch)p.catch(function(){el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke();}); }catch(err){el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke();} }
+      else { el.classList.add('mfs-fake');document.documentElement.classList.add('mfs-lock');setIcon(true);poke(); }
+    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&el.classList.contains('mfs-fake'))exitFake();});
+    ['fullscreenchange','webkitfullscreenchange'].forEach(function(t){document.addEventListener(t,function(){setIcon(realFS()===el);poke();});});
+    el.appendChild(b);
+  }
+  function scan(){
+    var els=document.querySelectorAll('[data-fullscreen-map], .leaflet-container, .maplibregl-map, .mapboxgl-map');
+    els.forEach(function(el){
+      if(el.closest('.mfs-host')&&!el.classList.contains('mfs-host'))return;
+      var r=el.getBoundingClientRect(); if(r.width<200||r.height<150)return;
+      add(el);
+    });
+  }
+  function start(){scan(); var n=0; var t=setInterval(function(){scan(); if(++n>20)clearInterval(t);},500);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start); else start();
+})();
+</script>
+<!-- /map-fullscreen -->
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+stroke,km,maxdev_m,n_vertices,lon0,lat0,lon1,lat1,share_certain,road,from,to,sections,cons,spacing_km
+6351,56.12,124.1,49,3.14534,49.87911,2.36477,49.86795,0.0,,Viromandis,Samarobriva,Viromandis-Samarobriva;Viromandis-Augusta Viromanduorum,,1.1692469693535634
+7411,49.36,109.4,120,11.70852,45.65513,12.32883,45.74629,0.0,Via Postumia,road junction near Vicetia,Iulia Concordia,Vicetia-Iulia Concordia,Spurius Postumius Albinus Magnus (148 BCE),0.41479460369921306
+7091,41.99,20.5,19,13.19167,41.31546,12.84216,41.58709,1.0,Via Appia,Tarracinae,Velitrae,Tarracinae-Rome,Appius Claudius Caecus (312 BCE),2.3326875492333743
+6514,40.49,37.0,29,6.12908,50.91175,6.70306,50.94099,0.377,Via Belgica,Coriovallum,Colonia Claudia Ara Agrippinensium,Colonia Claudia Ara Agrippinensium-Iuliacum;Coriovallum-Iuliacum,,1.4459653737735487
+7043,33.72,59.5,92,11.72005,44.35176,11.34627,44.49429,0.0,Via Aemilia,Ad Silarum,Bononia,Ariminum-Placentia,Marcus Aemilius Lepidus (189-187 CE),0.37051309334574883
+6368,32.5,96.4,19,2.79028,50.28598,3.21361,50.17815,0.0,,Nemetacum,Camaracum,Nemetacum-Camaracum;Camaracum-Bapaume,Septimius Severus (202-204 CE),1.8054760345788903
+6040,30.08,25.9,17,5.0693,47.37815,5.25482,47.61772,0.0,,Castrum Divionense,Andematunnum,Cabilonnum-Andematunnum,Claudius (43 CE),1.8800873844555093
+6354,29.99,169.9,58,2.34857,49.60798,2.54771,49.37158,0.0,,Samarobriva,Saint Just en Chauseeée,Saint Just en Chauseeée-Saint Martin Longeau;Paillart-Saint Just en Chauseeée,,0.5261554141614098
+6814,28.36,128.1,73,3.90897,50.32844,4.25533,50.45477,1.0,Via Belgica,Bagacum,Furfooz,Bagacum-Atuatuca,,0.3938463861139755
+7043,27.82,171.1,35,9.97965,44.88972,9.7058,45.04743,0.0,Via Aemilia,Veleia,Placentia,Ariminum-Placentia,Marcus Aemilius Lepidus (189-187 CE),0.8182244563594551
+7043,27.5,132.4,52,10.74848,44.65757,10.43644,44.76578,0.0,Via Aemilia,Regium Lepidum,Parma,Ariminum-Placentia,Marcus Aemilius Lepidus (189-187 CE),0.539127672449718
+6371,27.24,62.6,15,2.85128,50.1022,3.21361,50.17815,0.0,,Camaracum,Camaracum,Camaracum-Bapaume;Samarobriva Ambianorum-Camaracum,,1.9460660273999018
+6369,27.13,96.0,39,2.76228,50.30301,2.48853,50.4729,0.0,,Nemetacum,Tarvenna,Tarvenna-Nemetacum,Septimius Severus (202-204 CE),0.7139993248070977
+1873,27.03,105.9,36,36.55404,32.72133,36.46658,32.95361,1.0,,Dionysias,Omra,Dionysias-Phaena,Marcus Aurelius (162 CE),0.7722942703068733
+7043,26.9,116.8,64,12.1125,44.19278,11.81985,44.31255,0.0,Via Aemilia,Ariminum,Faventia,Ariminum-Placentia,Marcus Aemilius Lepidus (189-187 CE),0.42692004169881603
+693,26.06,44.3,15,9.05939,34.71892,9.19159,34.92697,0.0,,Capsa,Nara,Capsa-Nara,,1.8612157843407757
+5072,25.96,168.1,16,-0.15815,50.90377,-0.05888,51.12858,0.0,,road junction near Novus Portus,Upper Harfield,Londinium-Hassocks;Preston-Hassocks,,1.7308098352584187
+6346,25.4,176.1,48,2.41599,49.50165,2.08245,49.43172,0.0,,Viromandis,Caesaromagus,Caesaromagus-Viromandis;Samarobriva-Caesaromagus,,0.5403649640373659
+4819,24.76,148.7,18,-2.50129,52.696,-2.13513,52.69359,0.0,Watling Street,*Viroconium,Pennocrucium,Letocetum-Viroconium,,1.4563185074871896
+6369,24.64,85.6,51,2.48853,50.4729,2.25678,50.63798,0.0,,Tarvenna,Tarvenna,Tarvenna-Nemetacum,Septimius Severus (202-204 CE),0.49271768917633246
+4137,24.44,98.9,14,-3.04785,39.15697,-2.81432,39.28138,0.0,,Tomelloso,Tomelloso,Tomelloso-San Clemente;Tomelloso-Los Quintilos,,1.8802773815535962
+6092,23.97,183.4,19,1.73857,48.27548,1.51228,48.42944,0.0,,Allaines,Autricum,Cenabum-Autricum,,1.3314579487101401
+7043,23.51,121.9,62,11.29442,44.5094,11.02911,44.60316,0.0,Via Aemilia,Ariminum,Mutina,Ariminum-Placentia,Marcus Aemilius Lepidus (189-187 CE),0.38547239827933566
+6086,23.36,121.5,17,1.32511,47.63952,1.34308,47.84924,0.0,,*Blesum,Ouindinon,Besum-Verdes;Dunense Castrum-Blesum,,1.4597985853771078
+5715,23.32,182.2,33,4.20648,43.73322,3.94049,43.65076,0.0,Via Domitia,Nemausus,Foro Domiti,Foro Domiti-Nemausus,Gnaeus Domitius Ahenobarbus (118 BCE),0.7287278649256752
+7431,22.69,170.8,14,12.97604,45.94094,13.0967,46.12693,0.0,,‘Apicilia’,Ad Tricesimum,Iulia Concordia-Ad Silanos,Augustus (3 BCE),1.7451165286299841
+7268,22.5,131.5,66,10.70787,45.27742,10.49058,45.14546,0.0,Via Postumia,Mantua,Verona,Cremona-Verona;Verona-Bedriacum,Spurius Postumius Albinus Magnus (148 BCE),0.34621382528499767
+6812,22.27,58.1,13,3.25503,50.18355,3.54074,50.26413,1.0,,Camaracum,Hermoniacum,Camaracum-Bagacum,,1.8560312474036131
+6353,22.21,12.8,15,3.05372,49.54984,2.82683,49.68456,0.0,,Samarobriva,Viromandis,Samarobriva-Augusta Suessionum,,1.5865728450070566
+6353,22.17,181.0,17,2.82683,49.68456,2.56779,49.79205,0.0,,Viromandis,Samarobriva,Samarobriva-Augusta Suessionum,,1.385756551702466
+6039,21.9,132.5,19,5.01099,47.13148,5.04614,47.32704,0.0,,Vidubia,Castrum Divionense,Cabilonnum-Andematunnum,Claudius (43 CE),1.2168327629645879
+7268,21.87,16.8,48,10.94344,45.41477,10.73352,45.28504,0.0,Via Postumia,Verona,Mantua,Verona-Bedriacum,Spurius Postumius Albinus Magnus (148 BCE),0.46541262682778767
+5698,21.83,163.4,21,4.75023,43.63564,5.02063,43.64043,0.0,,Arelate,Ugernum,Arelate-Petit Merle;Arelate-Maritima,Augustus (3 BCE),1.0912831324027799
+2654,21.68,198.7,14,37.81753,35.39589,38.04604,35.45256,0.0,,Seriane,Seriane,Seriane-Ressafa,Vespasian (75 CE),1.6679723022171469
+2713,21.57,159.1,29,37.60672,37.45971,37.37466,37.40036,0.0,,Rhabaine,Sicos Basilisses,Germanicea-Samosata,Septimius Severus (193-211 CE),0.7703338726955519
+6640,21.48,147.2,31,6.15377,49.16003,6.13324,49.35274,1.0,,Divodurum Mettis,Divodurum Mettis,Colonia Augusta Treverorum-Divodurum Mettis,Claudius (43 CE),0.7161508476286209
+1865,21.28,137.6,18,36.48275,32.51796,36.70744,32.49408,1.0,,Bostra,Tricomia,Bostra-Tricomia,Marcus Aurelius (162 CE),1.251752771149773
+6061,21.2,146.7,25,3.03497,48.17354,2.75309,48.14572,0.0,,Pont sur Yonne,Cenabum,Cenabum-Agedincum,,0.88323038604267
+6813,21.18,64.8,17,4.0733,50.28843,4.37009,50.27803,0.0,,Bagacum,Furfooz,Bagacum-Furfooz,,1.3240301220699549
+1064,21.16,173.9,52,31.54344,24.68813,31.74346,24.7438,0.0,,Oasis Magna Dush,Oasis Magna Dush,Oasis Magna Dush-Edfu Apollonopolis Magna,,0.4148423299682695
+1045,20.72,78.6,5,29.54306,30.95809,29.353,30.86815,1.0,,Alexandria,Alexandria,Alexandria-Paraetonium,,5.181218188257023
+4229,20.7,174.3,18,-5.2801,39.89614,-5.52185,39.88699,0.0,,Augustobriga,Augustobriga,Caesarobriga-Augustobriga;Augustobriga-Augusta Emerita,,1.2177390237060897
+6353,20.4,155.4,18,2.52971,49.80258,2.28711,49.89756,0.0,,Samarobriva,Samarobriva Ambianorum,Samarobriva-Augusta Suessionum;Samarobriva-Briga,,1.1998078203487534
+6229,20.26,170.6,19,1.60675,46.98854,1.68712,46.81479,0.0,,Leprosum,Alerta,Leprosum-Alerta;Leprosum-Gabris,,1.1256856021642898
+6081,20.06,55.6,15,2.65984,48.53896,2.49298,48.68139,0.0,,Metlosedum,Lutetia,Lutetia-Metlosedum,Postumus (261 CE),1.432578518731663
+740,20.04,149.7,14,8.29124,34.15589,8.48376,34.23977,0.0,,Thiges,Thiges,Thiges-Thusoros,Domitian (82-83 CE),1.5413121272435193
+3922,19.73,174.2,19,-6.64012,38.61112,-6.82856,38.70989,0.0,,Emerita Augusta,Badajoz,Zafra-Badajoz,,1.0960577883108216
+6210,19.48,157.2,31,-0.4793,49.20007,-0.71615,49.28157,0.0,,Augustodurum,Augustodurum,Augustodurum-Aregenoua;Caen-Thue et Mue;Crouciaconnum-Augustodurum,Claudius (46 CE),0.6494580090168991
+5207,19.45,107.0,15,-2.27166,51.47349,-2.11904,51.62013,0.0,Fosse Way,Lindinis,Kingscote,Lindinis-Korinion,,1.3892042549926134
+5960,19.43,88.2,23,0.12179,46.28837,0.18675,46.11949,0.0,,Rauranum,Rauranum,Rauranum-Sarrum,,0.883150523476655
+5956,19.3,159.2,38,-0.48109,45.7365,-0.23444,45.75441,0.0,,Mediolanum,Condate,Mediolanum-Semanicomago,,0.5215467688332236
+7045,19.21,58.6,16,12.21943,44.14521,12.21141,44.31801,0.0,Via Popillia,Ariminum,Ravenna,Ravenna-Caesena,Publius Popillius Laenas (132 BCE),1.2807585574074836
+4719,18.94,170.4,37,-2.45702,37.59251,-2.24256,37.59515,0.0,,Basti,Basti,Eliocroca-Basti,,0.5261521464267589
+6814,18.8,119.1,38,4.42293,50.502,4.66852,50.56579,1.0,Via Belgica,Sauvenière,Sauvenière,Bagacum-Atuatuca,,0.508172413034918
+5717,18.79,61.2,27,4.5882,43.8175,4.35668,43.84003,0.0,Via Domitia,Ugernum,Nemausus,Nemausus-Ugernum;Nemausus-Condatomagus,Gnaeus Domitius Ahenobarbus (118 BCE),0.7226889448125529
+297,18.5,177.4,25,5.9682,36.16966,6.17127,36.19602,0.0,,Gemella,Cirta,Gemella-Cirta,Caracalla (215 CE),0.7708221306494557
+4804,18.41,173.8,13,0.02604,50.88558,0.10222,51.04396,0.0,,Lewes,Lewes,Londinium-Lewes,,1.5345254925966583
+5160,18.41,182.6,28,-3.66774,51.51235,-3.41923,51.4548,0.0,,*Nidum,Tamium?,Isca-Nidum,,0.6819148504157897
+6345,18.29,125.0,32,2.2862,49.88597,2.22069,49.72709,0.0,,Samarobriva Ambianorum,Samarobriva,Samarobriva-Caesaromagus,,0.589991139291146
+7091,18.28,63.0,42,12.64565,41.74091,12.50351,41.8665,1.0,Via Appia,Aricia,Sep. Geta,Tarracinae-Rome,Appius Claudius Caecus (312 BCE),0.4458229195147832
+5985,18.24,170.8,13,0.41501,46.54297,0.59467,46.4356,0.0,,Limonum,Limonum,Poitiers-Limoges,,1.5199998940317174
+1689,18.22,172.1,11,34.91318,32.53254,34.9406,32.69521,1.0,,Caesarea,Caesarea Maritima,Caesarea Maritima-Ptolemais,Pertinax (193 CE),1.8221593290571558
+6813,17.97,157.9,10,3.80096,50.29751,4.05277,50.28891,0.0,,Bagacum,Bagacum,Bagacum-Furfooz,,1.996574132739595
+6514,17.94,86.4,18,6.70306,50.94099,6.95809,50.93531,0.637,Via Belgica,Colonia Claudia Ara Agrippinensium,Claudia Ara Agrippinensium,Colonia Claudia Ara Agrippinensium-Iuliacum,,1.0551319902366871
+7043,17.87,37.3,18,10.18951,44.82997,9.97965,44.88972,0.0,Via Aemilia,Parma,Veleia,Ariminum-Placentia,Marcus Aemilius Lepidus (189-187 CE),1.050967396758483
+6061,17.8,43.5,11,2.56905,48.09639,2.33378,48.06866,0.0,,Cenabum,Aquae Segetae,Cenabum-Agedincum,,1.7798555169514967
+5769,17.56,171.3,13,-0.96055,44.15182,-0.99279,43.99554,0.0,,Coequosa,Coequosa,Aquis Terebellicis-Burdigala,,1.4629416701989697
+4973,17.55,53.0,21,-0.08378,52.19053,-0.01861,52.03795,0.0,Ermine Street,Toft,Braughing,Durobrivae-Braughing,,0.8777046710182586
+7034,17.53,189.4,32,14.07184,42.59885,13.9702,42.73773,0.0,,Aternum,Aternum,Aternum-Castrum Truentinum,,0.5656078608112423
+6073,17.45,23.9,15,5.29468,46.9661,5.46589,47.0707,0.0,,Vesontio,Vesontio,Cabilonnum-Vesontio,,1.2467438741303507
+7260,17.29,184.6,13,7.6654,45.0496,7.52671,44.92908,0.0,,Augusta Taurinorum,Augusta Taurinorum,Augusta Taurinorum-Forum Germanici,,1.4410296861077958
+3890,17.28,179.0,12,-5.95637,40.8897,-5.7634,40.94253,0.0,,Bletisama,Salmantica,Salmantica-Mirobriga,,1.5711297187231354
+6306,17.23,103.5,10,0.3759,48.86967,0.50943,48.9972,0.0,,Noiodounon,Breviodurum,Breviodurum-Noviodounon,,1.9143714333900417
+7271,17.18,158.8,30,8.2879,45.34077,8.07965,45.38909,0.0,,Vercellae,Eporedia,Vercellae-Eporedia,Augustus-Claudius (12 BCE-47 CE),0.5922830089862925
+903,16.95,141.9,10,31.85493,24.7572,32.02023,24.78243,0.0,,Oasis Magna Dush,Oasis Magna Dush,Oasis Magna Dush-Edfu Apollonopolis Magna,,1.8833655558402
+2065,16.93,158.6,10,26.57656,42.33636,26.51691,42.48218,0.0,,Deultum,Kabyle,Kabyle-Hadrianoupolis,,1.8805641553933572
+1048,16.9,123.4,10,26.94168,31.10222,26.80271,31.00777,0.0,,Qara,Qara,Paraetonium-Siwa Amonium,,1.8777832913744688
+1045,16.7,152.2,3,29.68655,31.04423,29.54306,30.95809,1.0,,Alexandria,Alexandria,Alexandria-Paraetonium,,8.35195093614409
+4974,16.68,179.4,12,-0.04347,51.7924,-0.05908,51.64276,0.0,Ermine Street,Brauhing,Brauhing,Londinium-Brauhing,,1.5167779979076241
+6250,16.63,131.5,14,2.47628,47.06752,2.67399,47.00344,0.0,,Avaricum,Avaricum,Avaricum-Saint Parize le Châtel,,1.2791799134254827
+6303,16.62,110.2,14,1.2417,47.90405,1.46393,47.9032,0.0,,Ouindinon,Verdes,Ouindinon-Ouzouer le Marché,,1.2780838205122471
+5765,16.58,191.8,11,-1.11863,43.7223,-1.30563,43.66027,0.0,,Aquae Terebellicae,Aquis Terebellicis,Oiasso-Aquis Terebellicis,,1.657649518260358
+6209,16.51,176.8,42,-0.64149,49.28319,-0.41692,49.30496,0.0,,Augustodurum,Augustodurum,Augustodurum-Trouville sur Mer,,0.402776048038009
+6336,16.5,181.9,12,1.60127,49.20322,1.7904,49.28497,0.0,,Petromantulum,Petromantulum,Caesaromagus-Mediolanum Aulercorum;Mediolanum-Petromantulum,,1.5001412023876517
+7405,16.49,116.5,16,9.36184,45.15929,9.15547,45.18605,0.0,,Laus Pompeia,Ticinum,Ticinum-Cremona,,1.0995661358232203
+4829,16.47,182.4,12,-0.30248,51.63108,-0.15909,51.51303,0.0,Watling Street,Sulloniacis,Londinium,Verulamium-Londinium,,1.4975076699020606
+2524,16.42,199.7,16,17.21906,47.95813,17.12068,48.0902,0.0,,Ad Flexum,Gerulata,Carnuntum-Ad Flexum,Antoninus Pius (138-161 CE),1.094435654944586
+6208,16.33,127.8,14,-1.35673,48.6883,-1.34103,48.54182,0.0,,Ingena,Ingena Abrincas,Namnetum-Ingena Abrincas;Condate Redonum-Ingena Abrincas;Ingena Abrincas-Mayenne,,1.2561654709912713
+5715,16.32,155.2,36,3.60547,43.46155,3.42767,43.39246,0.0,Via Domitia,Forum Domitii,Cessero,Foro Domiti-Cessarone,Gnaeus Domitius Ahenobarbus (118 BCE),0.4661537864619368
+4807,16.16,192.5,19,1.04812,51.12832,1.07307,51.27275,0.0,,Portus Lemanis,*Durovernum,Duruvernum-Portus Lemanis,,0.8978971416004681
+7237,16.14,162.5,24,12.38797,45.54716,12.31914,45.68414,0.0,Via Claudia Augusta,Altinum,Tarvisium,Altinum-Villorba,,0.7019112468361177
+4804,16.08,199.1,11,0.01645,51.29139,-0.02574,51.43348,0.0,,Londinium,Londinium,Londinium-Lewes,,1.6078202318556118
+4225,16.01,192.0,28,-4.76968,41.2614,-4.58408,41.22726,0.0,,Medina del Campo,Cauca,Cauca-Medina del Campo,,0.5930921506509187
+4943,15.98,25.8,9,-2.27846,51.39619,-2.04952,51.40677,0.0,,Aquae Sulis,Lindinis,Wickham-Batheaston,,1.9969285453784016
+886,15.95,179.7,21,11.06584,31.92542,11.21319,31.99545,0.0,,Tabuinati,Tabuinati,Sabratha-Tabuinati,,0.7974098041499978
+699,15.94,178.0,43,10.70618,35.29362,10.55362,35.22301,0.0,,Thysdrus,Thysdrus,Thysdrus-Capsa,,0.37954298715759427
+2770,15.69,185.2,9,35.43509,36.982,35.60796,36.95468,1.0,,Adana,Mopsouhestia,Adana-Mopsouhestia,Severus Alexander (222-223 CE),1.9611817586847904
+1962,15.68,81.2,11,25.67476,42.42886,25.85556,42.47352,0.0,,Augusta Traiana,Augusta Traiana,Augusta Traiana-Kabyle,Tetrarchy (293-305 CE),1.5679338023501719
+7047,15.67,179.3,13,11.9327,45.2682,11.87617,45.40343,0.0,Via Annia,Patavium,Patavium,Patavium-Hatria,Titus Annius Rufus (131 BCE),1.3057588216494707
+5256,15.6,146.5,12,14.04732,48.17477,14.21442,48.25972,0.0,,Ovilava,Lentia,Ovilava-Lentia,Septimius Severus and Caracalla (201 CE),1.4183359189470939
+3877,15.41,114.8,9,-2.19999,41.68218,-2.3594,41.7527,0.0,,Numantia,Numantia,Numantia-Bilbilis Augusta,,1.9256845085760956
+5322,15.28,169.8,12,16.0852,47.72291,16.24432,47.80878,0.0,,Poidikon,Aquae,Aquae-Poidikon,,1.3889382166206785
+6813,15.27,197.5,12,3.59034,50.32327,3.80096,50.29751,0.189,,Fanum Martis,Bagacum,Bagacum-Fanum Martis;Camaracum-Bagacum;Bagacum-Furfooz,,1.3885542135651425
+705,15.26,118.6,20,8.14334,34.0391,8.06499,34.16022,0.0,,Thiges,Thiges,Tusuros-Ad Speculum,,0.8030402927872311
+699,15.23,74.0,15,10.32533,35.0868,10.21705,34.98229,0.0,,Capsa,Capsa,Thysdrus-Capsa,,1.088120866181254
+6821,15.22,122.1,19,5.37313,50.35939,5.32446,50.49262,0.466,,Tintange,Amanium,Amanium-Vervigium;Vervigium-Tintange,,0.8454540087095178
+2872,15.19,161.2,11,28.36696,40.11089,28.45631,40.22931,0.0,,Thyateira,Miletouteichos?,Apollonia ad Rhyndacum-Thyateira,Gordian III (238-244 CE),1.5193238898189294
+4997,15.16,176.3,16,1.30857,51.26238,1.31225,51.1261,0.0,,Rutupiae,Portus Dubris,Portus Dubris-Rutupiae,,1.0109191060698093
+979,15.15,166.2,10,32.95356,29.32709,32.88006,29.44763,0.0,,Via Hadriana,Via Hadriana,Pharan- Cleopatris Clysma,,1.6829134274776598
+2694,15.09,137.3,23,37.94357,37.44559,38.11329,37.45904,1.0,,Samosata,Pons *Singae,Doliche-Samosata,,0.6859612852308761
