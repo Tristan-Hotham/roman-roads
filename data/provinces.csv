@@ -1,0 +1,54 @@
+province,km,km_certain,km_main,area_km2,italy,density,share_certain
+"Italia, regio I (Latium et Campania)",1972.0,154.9,899.5,13649.0,True,144.48,0.079
+Cyprus,1274.4,118.9,0.0,9741.0,False,130.83,0.093
+Iudaea,2272.4,893.5,874.4,17430.0,False,130.37,0.393
+Lycia et Pamphylia,5006.4,257.5,1122.6,38907.0,False,128.68,0.051
+Belgica,9960.6,273.1,3013.7,90367.0,False,110.22,0.027
+Achaia,8044.6,299.7,2268.1,79743.0,False,100.88,0.037
+"Italia, regio II (Apulia et Calabria)",2604.2,0.0,1426.6,26855.0,True,96.97,0.0
+Lugdunensis,15154.2,0.0,4208.3,160625.0,False,94.35,0.0
+Thracia,9516.7,119.0,1999.1,108363.0,False,87.82,0.013
+Pannonia Inferior,2500.6,6.7,1190.4,28667.0,False,87.23,0.003
+Germania Inferior,3709.3,491.4,1367.1,43598.0,False,85.08,0.132
+"Italia, regio III (Lucania et Bruttii)",2319.7,0.0,1392.7,27949.0,True,83.0,0.0
+Moesia Inferior,3734.5,7.9,1237.6,45786.0,False,81.57,0.002
+Cilicia,3199.1,199.7,1251.6,40454.0,False,79.08,0.062
+Lusitania,9337.3,91.2,2336.8,120136.0,False,77.72,0.01
+Asia,10062.6,110.4,4120.8,134196.0,False,74.98,0.011
+Britannia,10620.6,0.0,4782.0,144658.0,False,73.42,0.0
+Germania Superior,7045.5,0.0,2234.4,98763.0,False,71.34,0.0
+"Italia, regio X (Venetia et Histria)",3908.7,33.7,1745.9,55403.0,True,70.55,0.009
+Syria,7226.4,1097.2,3792.1,103017.0,False,70.15,0.152
+Tarraconensis,27342.2,9.0,6525.6,393129.0,False,69.55,0.0
+Moesia Superior,4523.9,34.9,1554.8,65067.0,False,69.53,0.008
+Pannonia Superior,4840.4,26.4,1673.0,70649.0,False,68.51,0.005
+Dalmatia,6208.0,0.0,3122.0,91404.0,False,67.92,0.0
+"Italia, regio IV (Samnium)",1199.2,23.1,687.4,17675.0,True,67.85,0.019
+Numidia,7581.2,109.4,1241.7,112420.0,False,67.44,0.014
+"Italia, regio V (Picenum)",370.8,0.0,244.0,5586.0,True,66.38,0.0
+Raetia,3555.3,0.0,2016.3,55383.0,False,64.2,0.0
+Sicilia,1733.7,0.0,1587.2,27044.0,False,64.11,0.0
+Narbonensis,5979.7,0.0,2490.1,94597.0,False,63.21,0.0
+"Italia, regio IX (Liguria)",937.9,0.0,517.6,15205.0,True,61.69,0.0
+Baetica,4480.2,123.2,1904.2,74619.0,False,60.04,0.027
+Aquitania,10059.0,0.0,3867.6,169104.0,False,59.48,0.0
+Macedonia,4280.7,49.7,1624.7,72910.0,False,58.71,0.012
+"Italia, regio VIII (Aemilia)",1335.3,0.0,600.7,23275.0,True,57.37,0.0
+Galatia et Cappadocia,14442.9,1090.3,6732.9,257781.0,False,56.03,0.075
+Alpes Graiae et Poeninae,688.6,0.0,325.4,12753.0,False,53.99,0.0
+Noricum,3783.0,0.0,1809.3,71387.0,False,52.99,0.0
+Bithynia et Pontus,3467.4,182.3,1346.8,65447.0,False,52.98,0.053
+Dacia,4840.3,6.9,1037.0,91887.0,False,52.68,0.001
+Alpes Cottiae,345.0,0.0,151.0,6663.0,False,51.78,0.0
+"Italia, regio VII (Etruria)",1581.3,47.8,1254.5,30881.0,True,51.21,0.03
+Sardinia et Corsica,1729.4,0.0,129.6,33941.0,False,50.95,0.0
+Mauretania Caesariensis,9944.6,142.7,1605.5,203831.0,False,48.79,0.014
+"Italia, regio XI (Transpadana)",1462.9,0.0,845.4,30292.0,True,48.29,0.0
+Africa Proconsularis,13613.5,303.1,2853.6,292047.0,False,46.61,0.022
+Alpes Maritimae,359.3,0.0,123.9,8145.0,False,44.11,0.0
+Arabia,4234.9,1272.1,1053.1,109232.0,False,38.77,0.3
+"Italia, regio VI (Umbria)",421.8,0.0,370.6,13397.0,True,31.48,0.0
+Aegyptus,12721.5,191.2,6222.8,520437.0,False,24.44,0.015
+Mauretania Tingitana,1165.7,5.7,490.2,51497.0,False,22.64,0.005
+Creta et Cyrene,3968.7,19.5,652.7,202513.0,False,19.6,0.005
+Armenia Mesopotamia,770.6,74.7,547.5,200792.0,False,3.84,0.097

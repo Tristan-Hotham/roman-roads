@@ -1,0 +1,2598 @@
+{
+ "meta": {
+  "itinere_doi": "10.5281/zenodo.17122148",
+  "itinere_paper_doi": "10.1038/s41597-025-06140-z",
+  "itinere_version": "static version 2024 (Zenodo record version 1.3)",
+  "page": "https://maps.tristanhotham.com/roman-roads/",
+  "repo": "https://github.com/Tristan-Hotham/roman-roads",
+  "year": 2026
+ },
+ "n_sections": 14769,
+ "km_total": 299171.3101427936,
+ "n_nodes": 10315,
+ "km_main": 103477.95734388019,
+ "km_secondary": 195693.35279891343,
+ "n_main": 5698,
+ "n_secondary": 9071,
+ "share_main": 0.34588195403660354,
+ "share_secondary": 0.6541180459633966,
+ "cert": {
+  "Certain": {
+   "km": 8180.751231026192,
+   "n": 1040,
+   "share_km": 0.027344705035792182,
+   "share_n": 0.07041776694427516
+  },
+  "Conjectured": {
+   "km": 268709.51010096003,
+   "n": 12952,
+   "share_km": 0.89817940755317,
+   "share_n": 0.8769720360213962
+  },
+  "Hypothetical": {
+   "km": 22281.048810807373,
+   "n": 777,
+   "share_km": 0.07447588741103782,
+   "share_n": 0.05261019703432866
+  }
+ },
+ "type_cert": {
+  "Secondary Road": {
+   "Certain": 2557.9039103811224,
+   "Conjectured": 171369.79692164226,
+   "Hypothetical": 21765.651966890047
+  },
+  "Main Road": {
+   "Certain": 5622.847320645069,
+   "Conjectured": 97339.71317931778,
+   "Hypothetical": 515.3968439173269
+  }
+ },
+ "main_certain_share": 0.054338599881316764,
+ "secondary_certain_share": 0.013070980050147748,
+ "secondary_hyp_share": 0.11122325646520835,
+ "median_section_km": 13.0009949638,
+ "longest_section": {
+  "name": "Dedris-Cydamus Ghadames",
+  "km": 493.275102649,
+  "cert": "Hypothetical"
+ },
+ "n_digitisers": 124,
+ "earth_circ_times": 7.465285343550682,
+ "wiki": {
+  "total_km": 400000,
+  "paved_km": 80500,
+  "revid": 1383149720,
+  "tiberius_km": 296
+ },
+ "share_of_wiki": 0.7479282753569839,
+ "pass": {
+  "median_absdiff": 0.001189108837166497,
+  "max_absdiff": 0.05845955142874307,
+  "slope_threshold": 3.43037800787,
+  "n_below1": 3845,
+  "km_below1": 81677.59866916633,
+  "share_km_below1": 0.2730128053728877,
+  "min": 0.156427,
+  "slope_max": 33.5741616599,
+  "median_absdiff_r": "0.001"
+ },
+ "straightline_conj": {
+  "n": 306,
+  "km": 141.32652764598254
+ },
+ "dated": {
+  "n": 3176,
+  "km": 57985.14588239857,
+  "share_km": 0.1938192063093297,
+  "share_n": 0.21504502674520956,
+  "n_cons": 3191,
+  "n_lowdate": 477,
+  "n_update": 198,
+  "share_undated_km": 0.8061807936906703
+ },
+ "date_bands": [
+  {
+   "key": "rep",
+   "label": "Before 27 BCE (Republic)",
+   "n": 413,
+   "km": 7468.72943917116
+  },
+  {
+   "key": "jc",
+   "label": "27 BCE to 68 CE (Augustus to Nero)",
+   "n": 787,
+   "km": 10844.903442824248
+  },
+  {
+   "key": "hi",
+   "label": "69 to 192 CE (Flavians to Antonines)",
+   "n": 832,
+   "km": 15636.992103451537
+  },
+  {
+   "key": "late",
+   "label": "193 CE and later",
+   "n": 1144,
+   "km": 24034.520896951624
+  }
+ ],
+ "builders": [
+  {
+   "name": "Claudius",
+   "km": 5924.576174883782,
+   "n": 507
+  },
+  {
+   "name": "Trajan",
+   "km": 4066.874475181954,
+   "n": 198
+  },
+  {
+   "name": "Hadrian",
+   "km": 3931.5251917842143,
+   "n": 223
+  },
+  {
+   "name": "Caracalla",
+   "km": 3174.284179347754,
+   "n": 154
+  },
+  {
+   "name": "Tetrarchy",
+   "km": 3087.715391173925,
+   "n": 160
+  },
+  {
+   "name": "Septimius Severus",
+   "km": 3021.3789175553943,
+   "n": 151
+  },
+  {
+   "name": "Augustus",
+   "km": 2135.6372962975447,
+   "n": 128
+  },
+  {
+   "name": "Septimius Severus and Caracalla",
+   "km": 1701.2891786745117,
+   "n": 103
+  },
+  {
+   "name": "Vespasian",
+   "km": 1587.6695636826735,
+   "n": 92
+  },
+  {
+   "name": "Maximinus Thrax",
+   "km": 1423.3684222107197,
+   "n": 67
+  },
+  {
+   "name": "Domitian",
+   "km": 1313.7350328973248,
+   "n": 60
+  },
+  {
+   "name": "Manius Aquilius",
+   "km": 1216.2951628163519,
+   "n": 114
+  }
+ ],
+ "named_roads": [
+  {
+   "name": "Via Egnatia",
+   "km": 1165.0453095704502,
+   "n": 66
+  },
+  {
+   "name": "Via Hadriana",
+   "km": 853.13209851083,
+   "n": 18
+  },
+  {
+   "name": "Via Claudia Augusta",
+   "km": 630.485396559789,
+   "n": 22
+  },
+  {
+   "name": "Via Domitia",
+   "km": 622.9278409279551,
+   "n": 40
+  },
+  {
+   "name": "Via Appia",
+   "km": 576.2407374078061,
+   "n": 38
+  },
+  {
+   "name": "Via Popillia Capua-Rhegium",
+   "km": 511.62822501358403,
+   "n": 32
+  },
+  {
+   "name": "Via Postumia",
+   "km": 462.1153724125821,
+   "n": 25
+  },
+  {
+   "name": "Via Sebaste",
+   "km": 461.66336575223295,
+   "n": 38
+  },
+  {
+   "name": "Via Nova Traiana",
+   "km": 454.64915944474205,
+   "n": 38
+  },
+  {
+   "name": "Via Julia Augusta",
+   "km": 421.674388719862,
+   "n": 15
+  },
+  {
+   "name": "Ermine Street",
+   "km": 420.8014103567872,
+   "n": 68
+  },
+  {
+   "name": "Via Aquitania",
+   "km": 395.2190793310239,
+   "n": 13
+  },
+  {
+   "name": "Via Cassia",
+   "km": 373.55390847652,
+   "n": 10
+  },
+  {
+   "name": "Fosse Way",
+   "km": 372.04039336184906,
+   "n": 34
+  },
+  {
+   "name": "Watling Street",
+   "km": 352.0292917408823,
+   "n": 58
+  },
+  {
+   "name": "Via Aemilia Scauri",
+   "km": 319.9421417013,
+   "n": 8
+  },
+  {
+   "name": "Via Traiana",
+   "km": 318.286149308501,
+   "n": 23
+  },
+  {
+   "name": "Via Aurelia",
+   "km": 317.34627272797803,
+   "n": 15
+  },
+  {
+   "name": "Via Flaminia",
+   "km": 306.76804829513003,
+   "n": 6
+  },
+  {
+   "name": "Via Maris",
+   "km": 294.68526612686003,
+   "n": 8
+  }
+ ],
+ "n_named": 131,
+ "itin": {
+  "km_peutinger": 75485.88453762993,
+  "km_antonine": 68861.24109016468,
+  "km_any": 112484.534032553,
+  "share_any": 0.3759870355846103
+ },
+ "runs": [
+  {
+   "km": 56.123854528971044,
+   "maxdev_m": 124.13411262878705,
+   "n_vertices": 49,
+   "share_certain": 0.0,
+   "road": null,
+   "from": "Viromandis",
+   "to": "Samarobriva",
+   "sections": "Viromandis-Samarobriva;Viromandis-Augusta Viromanduorum",
+   "lon0": 3.145341390846157,
+   "lat0": 49.879111713518895,
+   "lon1": 2.3647692899427533,
+   "lat1": 49.86794949979083,
+   "label": "Between Saint-Quentin and Amiens"
+  },
+  {
+   "km": 49.360557840206354,
+   "maxdev_m": 109.4474830598296,
+   "n_vertices": 120,
+   "share_certain": 0.0,
+   "road": "Via Postumia",
+   "from": "near Vicetia",
+   "to": "Iulia Concordia",
+   "sections": "Vicetia-Iulia Concordia",
+   "lon0": 11.708521038067452,
+   "lat0": 45.6551333532314,
+   "lon1": 12.328832473270072,
+   "lat1": 45.746286775180266,
+   "label": "Via Postumia, between Vicenza and Concordia"
+  },
+  {
+   "km": 41.988375886200735,
+   "maxdev_m": 20.46712537712456,
+   "n_vertices": 19,
+   "share_certain": 1.0,
+   "road": "Via Appia",
+   "from": "Tarracinae",
+   "to": "Velitrae",
+   "sections": "Tarracinae-Rome",
+   "lon0": 13.191674518409966,
+   "lat0": 41.31546200545739,
+   "lon1": 12.842158891606989,
+   "lat1": 41.587090314746845,
+   "label": "Via Appia, across the Pontine plain to Terracina"
+  },
+  {
+   "km": 40.487030465659366,
+   "maxdev_m": 36.95434917181777,
+   "n_vertices": 29,
+   "share_certain": 0.37714088943654317,
+   "road": "Via Belgica",
+   "from": "Coriovallum",
+   "to": "Colonia Claudia Ara Agrippinensium",
+   "sections": "Colonia Claudia Ara Agrippinensium-Iuliacum;Coriovallum-Iuliacum",
+   "lon0": 6.129075275479307,
+   "lat0": 50.91174622991337,
+   "lon1": 6.70306100111166,
+   "lat1": 50.940991386523685,
+   "label": "Via Belgica, between Heerlen and Cologne"
+  },
+  {
+   "km": 33.71669149446314,
+   "maxdev_m": 59.45065859724083,
+   "n_vertices": 92,
+   "share_certain": 0.0,
+   "road": "Via Aemilia",
+   "from": "Ad Silarum",
+   "to": "Bononia",
+   "sections": "Ariminum-Placentia",
+   "lon0": 11.720045552695186,
+   "lat0": 44.35175950336049,
+   "lon1": 11.34627143368427,
+   "lat1": 44.49429249008781,
+   "label": "Via Aemilia, east of Bologna"
+  },
+  {
+   "km": 32.498568622420024,
+   "maxdev_m": 96.42774428348591,
+   "n_vertices": 19,
+   "share_certain": 0.0,
+   "road": null,
+   "from": "Nemetacum",
+   "to": "Camaracum",
+   "sections": "Nemetacum-Camaracum;Camaracum-Bapaume",
+   "lon0": 2.7902819765572464,
+   "lat0": 50.28597757684924,
+   "lon1": 3.213610803918775,
+   "lat1": 50.178154302242255,
+   "label": "Nemetacum to Camaracum"
+  },
+  {
+   "km": 30.08139815128815,
+   "maxdev_m": 25.936566119590715,
+   "n_vertices": 17,
+   "share_certain": 0.0,
+   "road": null,
+   "from": "Castrum Divionense",
+   "to": "Andematunnum",
+   "sections": "Cabilonnum-Andematunnum",
+   "lon0": 5.069301848029106,
+   "lat0": 47.37814573300585,
+   "lon1": 5.254821448889927,
+   "lat1": 47.61772402548963,
+   "label": "Castrum Divionense to Andematunnum"
+  },
+  {
+   "km": 29.99085860720036,
+   "maxdev_m": 169.89876305259622,
+   "n_vertices": 58,
+   "share_certain": 0.0,
+   "road": null,
+   "from": "Samarobriva",
+   "to": "Saint Just en Chauseeée",
+   "sections": "Saint Just en Chauseeée-Saint Martin Longeau;Paillart-Saint Just en Chauseeée",
+   "lon0": 2.348573875400769,
+   "lat0": 49.60797971087909,
+   "lon1": 2.5477135870723733,
+   "lat1": 49.371578837343414,
+   "label": "Samarobriva to Saint Just en Chauseeée"
+  },
+  {
+   "km": 28.356939800206234,
+   "maxdev_m": 128.10979322484854,
+   "n_vertices": 73,
+   "share_certain": 1.0,
+   "road": "Via Belgica",
+   "from": "Bagacum",
+   "to": "Furfooz",
+   "sections": "Bagacum-Atuatuca",
+   "lon0": 3.9089697033207464,
+   "lat0": 50.32844325798368,
+   "lon1": 4.255328486721972,
+   "lat1": 50.454773369392974,
+   "label": "Via Belgica, Bagacum to Furfooz"
+  },
+  {
+   "km": 27.819631516221474,
+   "maxdev_m": 171.11681754787557,
+   "n_vertices": 35,
+   "share_certain": 0.0,
+   "road": "Via Aemilia",
+   "from": "Veleia",
+   "to": "Placentia",
+   "sections": "Ariminum-Placentia",
+   "lon0": 9.979651156175843,
+   "lat0": 44.88971865123708,
+   "lon1": 9.705798035012988,
+   "lat1": 45.04743036252037,
+   "label": "Via Aemilia, Veleia to Placentia"
+  },
+  {
+   "km": 27.495511294935618,
+   "maxdev_m": 132.3584372186317,
+   "n_vertices": 52,
+   "share_certain": 0.0,
+   "road": "Via Aemilia",
+   "from": "Regium Lepidum",
+   "to": "Parma",
+   "sections": "Ariminum-Placentia",
+   "lon0": 10.748484443950566,
+   "lat0": 44.65757061478871,
+   "lon1": 10.4364413681831,
+   "lat1": 44.76577898063652,
+   "label": "Via Aemilia, Regium Lepidum to Parma"
+  },
+  {
+   "km": 27.244924383598626,
+   "maxdev_m": 62.573040260110766,
+   "n_vertices": 15,
+   "share_certain": 0.0,
+   "road": null,
+   "from": "Camaracum",
+   "to": "Camaracum",
+   "sections": "Camaracum-Bapaume;Samarobriva Ambianorum-Camaracum",
+   "lon0": 2.851280897335724,
+   "lat0": 50.10219931354691,
+   "lon1": 3.213610803918775,
+   "lat1": 50.178154302242255,
+   "label": "Camaracum to Camaracum"
+  }
+ ],
+ "runs_certain": [
+  {
+   "km": 41.988375886200735,
+   "maxdev_m": 20.46712537712456,
+   "n_vertices": 19,
+   "share_certain": 1.0,
+   "road": "Via Appia",
+   "from": "Tarracinae",
+   "to": "Velitrae",
+   "sections": "Tarracinae-Rome",
+   "lon0": 13.191674518409966,
+   "lat0": 41.31546200545739,
+   "lon1": 12.842158891606989,
+   "lat1": 41.587090314746845,
+   "label": "Via Appia, across the Pontine plain to Terracina"
+  },
+  {
+   "km": 28.356939800206234,
+   "maxdev_m": 128.10979322484854,
+   "n_vertices": 73,
+   "share_certain": 1.0,
+   "road": "Via Belgica",
+   "from": "Bagacum",
+   "to": "Furfooz",
+   "sections": "Bagacum-Atuatuca",
+   "lon0": 3.9089697033207464,
+   "lat0": 50.32844325798368,
+   "lon1": 4.255328486721972,
+   "lat1": 50.454773369392974,
+   "label": "Via Belgica, Bagacum to Furfooz"
+  },
+  {
+   "km": 27.030299460740565,
+   "maxdev_m": 105.93588665839825,
+   "n_vertices": 36,
+   "share_certain": 1.0,
+   "road": null,
+   "from": "Dionysias",
+   "to": "Omra",
+   "sections": "Dionysias-Phaena",
+   "lon0": 36.55403831962871,
+   "lat0": 32.72132549017995,
+   "lon1": 36.466579933058725,
+   "lat1": 32.95360576638453,
+   "label": "Dionysias to Omra"
+  },
+  {
+   "km": 22.27237496884336,
+   "maxdev_m": 58.13195896888263,
+   "n_vertices": 13,
+   "share_certain": 1.0,
+   "road": null,
+   "from": "Camaracum",
+   "to": "Hermoniacum",
+   "sections": "Camaracum-Bagacum",
+   "lon0": 3.2550295848271564,
+   "lat0": 50.18355471150192,
+   "lon1": 3.540744385293364,
+   "lat1": 50.26413397815893,
+   "label": "Camaracum to Hermoniacum"
+  },
+  {
+   "km": 21.48452542885863,
+   "maxdev_m": 147.2064432575553,
+   "n_vertices": 31,
+   "share_certain": 1.0,
+   "road": null,
+   "from": "Divodurum Mettis",
+   "to": "Divodurum Mettis",
+   "sections": "Colonia Augusta Treverorum-Divodurum Mettis",
+   "lon0": 6.153773262151792,
+   "lat0": 49.160028836851716,
+   "lon1": 6.1332448786341,
+   "lat1": 49.352741590225314,
+   "label": "Divodurum Mettis to Divodurum Mettis"
+  },
+  {
+   "km": 21.279797109546138,
+   "maxdev_m": 137.59990957236892,
+   "n_vertices": 18,
+   "share_certain": 1.0,
+   "road": null,
+   "from": "Bostra",
+   "to": "Tricomia",
+   "sections": "Bostra-Tricomia",
+   "lon0": 36.48274613103707,
+   "lat0": 32.51796041969474,
+   "lon1": 36.70743829732849,
+   "lat1": 32.494084347502955,
+   "label": "Bostra to Tricomia"
+  },
+  {
+   "km": 20.72487275302809,
+   "maxdev_m": 78.58918550084103,
+   "n_vertices": 5,
+   "share_certain": 1.0,
+   "road": null,
+   "from": "Alexandria",
+   "to": "Alexandria",
+   "sections": "Alexandria-Paraetonium",
+   "lon0": 29.54305801966963,
+   "lat0": 30.95809409617593,
+   "lon1": 29.35300381735094,
+   "lat1": 30.868146394633083,
+   "label": "Alexandria to Alexandria"
+  },
+  {
+   "km": 18.802379282291966,
+   "maxdev_m": 119.10438074368875,
+   "n_vertices": 38,
+   "share_certain": 1.0,
+   "road": "Via Belgica",
+   "from": "Sauvenière",
+   "to": "Sauvenière",
+   "sections": "Bagacum-Atuatuca",
+   "lon0": 4.422933496114675,
+   "lat0": 50.5019987981593,
+   "lon1": 4.668524987821834,
+   "lat1": 50.56578616802528,
+   "label": "Via Belgica, Sauvenière to Sauvenière"
+  }
+ ],
+ "n_runs_30": 7,
+ "n_runs_20": 46,
+ "n_runs_cert_20": 7,
+ "n_runs_sparse_dropped": 276,
+ "provinces": [
+  {
+   "name": "Italia, regio I (Latium et Campania)",
+   "km": 1971.9905212148037,
+   "area_km2": 13649.114878632392,
+   "density": 144.4775385620018,
+   "share_certain": 0.07855102630871247,
+   "km_main": 899.5305182692927,
+   "italy": true
+  },
+  {
+   "name": "Cyprus",
+   "km": 1274.4325098224563,
+   "area_km2": 9740.916381156749,
+   "density": 130.83291755668634,
+   "share_certain": 0.09331295805135192,
+   "km_main": 0.0,
+   "italy": false
+  },
+  {
+   "name": "Iudaea",
+   "km": 2272.396864085038,
+   "area_km2": 17429.796678899587,
+   "density": 130.3742611545199,
+   "share_certain": 0.39319284380787844,
+   "km_main": 874.3717132541642,
+   "italy": false
+  },
+  {
+   "name": "Lycia et Pamphylia",
+   "km": 5006.364467030071,
+   "area_km2": 38906.83562085506,
+   "density": 128.67570407978724,
+   "share_certain": 0.05142606749358618,
+   "km_main": 1122.5676409258883,
+   "italy": false
+  },
+  {
+   "name": "Belgica",
+   "km": 9960.64836533574,
+   "area_km2": 90367.2425628974,
+   "density": 110.22410425329656,
+   "share_certain": 0.027413420144632078,
+   "km_main": 3013.6622176316505,
+   "italy": false
+  },
+  {
+   "name": "Achaia",
+   "km": 8044.613798415539,
+   "area_km2": 79743.13043435162,
+   "density": 100.88159010810658,
+   "share_certain": 0.03724864467057107,
+   "km_main": 2268.1092090407733,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio II (Apulia et Calabria)",
+   "km": 2604.232213347376,
+   "area_km2": 26855.07386572082,
+   "density": 96.97356359431019,
+   "share_certain": 0.0,
+   "km_main": 1426.5841134252353,
+   "italy": true
+  },
+  {
+   "name": "Lugdunensis",
+   "km": 15154.185474324398,
+   "area_km2": 160624.72991466656,
+   "density": 94.34528221386087,
+   "share_certain": 0.0,
+   "km_main": 4208.327837652088,
+   "italy": false
+  },
+  {
+   "name": "Thracia",
+   "km": 9516.679118339413,
+   "area_km2": 108363.1103273786,
+   "density": 87.82212959362579,
+   "share_certain": 0.01250607760296942,
+   "km_main": 1999.1030269374378,
+   "italy": false
+  },
+  {
+   "name": "Pannonia Inferior",
+   "km": 2500.6241190634883,
+   "area_km2": 28667.350709990584,
+   "density": 87.2289924646584,
+   "share_certain": 0.002696929664489402,
+   "km_main": 1190.3688833687738,
+   "italy": false
+  },
+  {
+   "name": "Germania Inferior",
+   "km": 3709.2864482431087,
+   "area_km2": 43598.00274369919,
+   "density": 85.079274618358,
+   "share_certain": 0.13248098650103915,
+   "km_main": 1367.101138625968,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio III (Lucania et Bruttii)",
+   "km": 2319.6597855696773,
+   "area_km2": 27949.312045336726,
+   "density": 82.99523729982852,
+   "share_certain": 0.0,
+   "km_main": 1392.6757065809918,
+   "italy": true
+  },
+  {
+   "name": "Moesia Inferior",
+   "km": 3734.5279931584646,
+   "area_km2": 45785.90533926777,
+   "density": 81.56501363216658,
+   "share_certain": 0.0021255093284451103,
+   "km_main": 1237.6447685416072,
+   "italy": false
+  },
+  {
+   "name": "Cilicia",
+   "km": 3199.0650479564147,
+   "area_km2": 40454.392501088005,
+   "density": 79.0783114063665,
+   "share_certain": 0.062438275869781755,
+   "km_main": 1251.5587117554162,
+   "italy": false
+  },
+  {
+   "name": "Lusitania",
+   "km": 9337.349265634486,
+   "area_km2": 120136.1396233773,
+   "density": 77.72306730436618,
+   "share_certain": 0.009763590718793803,
+   "km_main": 2336.76534762933,
+   "italy": false
+  },
+  {
+   "name": "Asia",
+   "km": 10062.649968867436,
+   "area_km2": 134196.36666526707,
+   "density": 74.9845187237239,
+   "share_certain": 0.010972201608283173,
+   "km_main": 4120.805220469332,
+   "italy": false
+  },
+  {
+   "name": "Britannia",
+   "km": 10620.615778151274,
+   "area_km2": 144657.88556504363,
+   "density": 73.41885122035634,
+   "share_certain": 0.0,
+   "km_main": 4781.951930705564,
+   "italy": false
+  },
+  {
+   "name": "Germania Superior",
+   "km": 7045.524244400263,
+   "area_km2": 98762.6201078246,
+   "density": 71.33796406685319,
+   "share_certain": 0.0,
+   "km_main": 2234.3758999564097,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio X (Venetia et Histria)",
+   "km": 3908.723975190558,
+   "area_km2": 55403.26260469785,
+   "density": 70.55042954923601,
+   "share_certain": 0.008609197459321606,
+   "km_main": 1745.8986226306083,
+   "italy": true
+  },
+  {
+   "name": "Syria",
+   "km": 7226.414813447001,
+   "area_km2": 103017.01848382398,
+   "density": 70.14777674410867,
+   "share_certain": 0.15183560488791914,
+   "km_main": 3792.0913655276017,
+   "italy": false
+  },
+  {
+   "name": "Tarraconensis",
+   "km": 27342.20281855997,
+   "area_km2": 393128.95135314565,
+   "density": 69.55021431122893,
+   "share_certain": 0.0003285335889704697,
+   "km_main": 6525.563114217603,
+   "italy": false
+  },
+  {
+   "name": "Moesia Superior",
+   "km": 4523.874977088069,
+   "area_km2": 65067.40097251619,
+   "density": 69.52598243472039,
+   "share_certain": 0.007716583024031548,
+   "km_main": 1554.844242463703,
+   "italy": false
+  },
+  {
+   "name": "Pannonia Superior",
+   "km": 4840.407302040009,
+   "area_km2": 70649.30289900949,
+   "density": 68.51316436850323,
+   "share_certain": 0.005460818824065462,
+   "km_main": 1673.0282828601478,
+   "italy": false
+  },
+  {
+   "name": "Dalmatia",
+   "km": 6208.042324351069,
+   "area_km2": 91403.62412663885,
+   "density": 67.91899537538998,
+   "share_certain": 0.0,
+   "km_main": 3122.0048280835995,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio IV (Samnium)",
+   "km": 1199.226180796922,
+   "area_km2": 17675.421580253915,
+   "density": 67.84710482586944,
+   "share_certain": 0.019237880919975234,
+   "km_main": 687.3714170113662,
+   "italy": true
+  },
+  {
+   "name": "Numidia",
+   "km": 7581.243569475866,
+   "area_km2": 112420.48380155624,
+   "density": 67.43649656283473,
+   "share_certain": 0.014428316062287493,
+   "km_main": 1241.713210776897,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio V (Picenum)",
+   "km": 370.7747165430428,
+   "area_km2": 5585.850605899321,
+   "density": 66.37748531109312,
+   "share_certain": 0.0,
+   "km_main": 244.0166776883926,
+   "italy": true
+  },
+  {
+   "name": "Raetia",
+   "km": 3555.3447451696775,
+   "area_km2": 55383.31124534077,
+   "density": 64.19523616816569,
+   "share_certain": 0.0,
+   "km_main": 2016.2967830858681,
+   "italy": false
+  },
+  {
+   "name": "Sicilia",
+   "km": 1733.7019269081563,
+   "area_km2": 27044.441413728222,
+   "density": 64.10566594391184,
+   "share_certain": 0.0,
+   "km_main": 1587.160746733717,
+   "italy": false
+  },
+  {
+   "name": "Narbonensis",
+   "km": 5979.735864316974,
+   "area_km2": 94596.71804657976,
+   "density": 63.21293156674347,
+   "share_certain": 0.0,
+   "km_main": 2490.074724389818,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio IX (Liguria)",
+   "km": 937.9446834717784,
+   "area_km2": 15205.341755745483,
+   "density": 61.68520895739598,
+   "share_certain": 0.0,
+   "km_main": 517.5756317696461,
+   "italy": true
+  },
+  {
+   "name": "Baetica",
+   "km": 4480.170273910796,
+   "area_km2": 74618.8724437231,
+   "density": 60.040712586346054,
+   "share_certain": 0.02749708806126123,
+   "km_main": 1904.2107077069616,
+   "italy": false
+  },
+  {
+   "name": "Aquitania",
+   "km": 10058.97931095019,
+   "area_km2": 169104.16392364062,
+   "density": 59.483924449621156,
+   "share_certain": 0.0,
+   "km_main": 3867.552839274422,
+   "italy": false
+  },
+  {
+   "name": "Macedonia",
+   "km": 4280.715309007097,
+   "area_km2": 72910.17420645796,
+   "density": 58.712180509753,
+   "share_certain": 0.011621557085098051,
+   "km_main": 1624.7406426073612,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio VIII (Aemilia)",
+   "km": 1335.328919152604,
+   "area_km2": 23274.958654222497,
+   "density": 57.3719136944783,
+   "share_certain": 0.0,
+   "km_main": 600.6598057182551,
+   "italy": true
+  },
+  {
+   "name": "Galatia et Cappadocia",
+   "km": 14442.876298367135,
+   "area_km2": 257780.8911218143,
+   "density": 56.02772275134296,
+   "share_certain": 0.07549113965546686,
+   "km_main": 6732.911039817841,
+   "italy": false
+  },
+  {
+   "name": "Alpes Graiae et Poeninae",
+   "km": 688.5676036279002,
+   "area_km2": 12752.504964055572,
+   "density": 53.99469402824846,
+   "share_certain": 0.0,
+   "km_main": 325.40423219070226,
+   "italy": false
+  },
+  {
+   "name": "Noricum",
+   "km": 3782.9895234163114,
+   "area_km2": 71387.14869163446,
+   "density": 52.99258469836634,
+   "share_certain": 0.0,
+   "km_main": 1809.3299494646437,
+   "italy": false
+  },
+  {
+   "name": "Bithynia et Pontus",
+   "km": 3467.3527048606975,
+   "area_km2": 65446.91343441971,
+   "density": 52.979621542200256,
+   "share_certain": 0.05256502332066807,
+   "km_main": 1346.7855238810205,
+   "italy": false
+  },
+  {
+   "name": "Dacia",
+   "km": 4840.266500377829,
+   "area_km2": 91886.62746043656,
+   "density": 52.676506191958055,
+   "share_certain": 0.0014242725100016432,
+   "km_main": 1036.9777111266199,
+   "italy": false
+  },
+  {
+   "name": "Alpes Cottiae",
+   "km": 345.00915968078493,
+   "area_km2": 6663.242195574193,
+   "density": 51.777970776740524,
+   "share_certain": 0.0,
+   "km_main": 150.976156704989,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio VII (Etruria)",
+   "km": 1581.322571531413,
+   "area_km2": 30880.971494804646,
+   "density": 51.20702150829197,
+   "share_certain": 0.03022204520604865,
+   "km_main": 1254.5185915000782,
+   "italy": true
+  },
+  {
+   "name": "Sardinia et Corsica",
+   "km": 1729.4277886536183,
+   "area_km2": 33940.82122913913,
+   "density": 50.95421165498662,
+   "share_certain": 0.0,
+   "km_main": 129.5920421568182,
+   "italy": false
+  },
+  {
+   "name": "Mauretania Caesariensis",
+   "km": 9944.615072590896,
+   "area_km2": 203830.89404388258,
+   "density": 48.78855641211056,
+   "share_certain": 0.014351994254526474,
+   "km_main": 1605.52058183792,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio XI (Transpadana)",
+   "km": 1462.90571951994,
+   "area_km2": 30292.420033587787,
+   "density": 48.292797930897954,
+   "share_certain": 0.0,
+   "km_main": 845.3911230840763,
+   "italy": true
+  },
+  {
+   "name": "Africa Proconsularis",
+   "km": 13613.486298171674,
+   "area_km2": 292046.5176492313,
+   "density": 46.61410246473968,
+   "share_certain": 0.0222611108189344,
+   "km_main": 2853.5683752703044,
+   "italy": false
+  },
+  {
+   "name": "Alpes Maritimae",
+   "km": 359.2840156465171,
+   "area_km2": 8144.962968727523,
+   "density": 44.11119080909064,
+   "share_certain": 0.0,
+   "km_main": 123.9070919484669,
+   "italy": false
+  },
+  {
+   "name": "Arabia",
+   "km": 4234.9127701864345,
+   "area_km2": 109231.73399800871,
+   "density": 38.76998574666623,
+   "share_certain": 0.3003827257970353,
+   "km_main": 1053.1060705159905,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio VI (Umbria)",
+   "km": 421.7501589014558,
+   "area_km2": 13396.800421446836,
+   "density": 31.48140941371935,
+   "share_certain": 0.0,
+   "km_main": 370.6316805946758,
+   "italy": true
+  },
+  {
+   "name": "Aegyptus",
+   "km": 12721.456982607187,
+   "area_km2": 520437.204896992,
+   "density": 24.44378853568913,
+   "share_certain": 0.015032622177254864,
+   "km_main": 6222.822289664383,
+   "italy": false
+  },
+  {
+   "name": "Mauretania Tingitana",
+   "km": 1165.73833510498,
+   "area_km2": 51497.244349286964,
+   "density": 22.63690707794389,
+   "share_certain": 0.004879380675935104,
+   "km_main": 490.20218333455,
+   "italy": false
+  },
+  {
+   "name": "Creta et Cyrene",
+   "km": 3968.6787433964146,
+   "area_km2": 202513.12558949867,
+   "density": 19.597143305373045,
+   "share_certain": 0.004924502339537906,
+   "km_main": 652.7475367471235,
+   "italy": false
+  },
+  {
+   "name": "Armenia Mesopotamia",
+   "km": 770.5855606839255,
+   "area_km2": 200791.6498247277,
+   "density": 3.837737083970247,
+   "share_certain": 0.09694553011105655,
+   "km_main": 547.5170027984701,
+   "italy": false
+  }
+ ],
+ "n_provinces": 53,
+ "italia": {
+  "km": 18113.859445239574,
+  "area_km2": 260168.5279403483,
+  "density": 69.62356126868941
+ },
+ "empire_density": 58.09008822778235,
+ "km_outside_provinces": 15732.406642129272,
+ "share_outside": 0.052586615456609934,
+ "top_prov": [
+  {
+   "name": "Italia, regio I (Latium et Campania)",
+   "km": 1971.9905212148037,
+   "area_km2": 13649.114878632392,
+   "density": 144.4775385620018,
+   "share_certain": 0.07855102630871247,
+   "km_main": 899.5305182692927,
+   "italy": true
+  },
+  {
+   "name": "Cyprus",
+   "km": 1274.4325098224563,
+   "area_km2": 9740.916381156749,
+   "density": 130.83291755668634,
+   "share_certain": 0.09331295805135192,
+   "km_main": 0.0,
+   "italy": false
+  },
+  {
+   "name": "Iudaea",
+   "km": 2272.396864085038,
+   "area_km2": 17429.796678899587,
+   "density": 130.3742611545199,
+   "share_certain": 0.39319284380787844,
+   "km_main": 874.3717132541642,
+   "italy": false
+  },
+  {
+   "name": "Lycia et Pamphylia",
+   "km": 5006.364467030071,
+   "area_km2": 38906.83562085506,
+   "density": 128.67570407978724,
+   "share_certain": 0.05142606749358618,
+   "km_main": 1122.5676409258883,
+   "italy": false
+  },
+  {
+   "name": "Belgica",
+   "km": 9960.64836533574,
+   "area_km2": 90367.2425628974,
+   "density": 110.22410425329656,
+   "share_certain": 0.027413420144632078,
+   "km_main": 3013.6622176316505,
+   "italy": false
+  },
+  {
+   "name": "Achaia",
+   "km": 8044.613798415539,
+   "area_km2": 79743.13043435162,
+   "density": 100.88159010810658,
+   "share_certain": 0.03724864467057107,
+   "km_main": 2268.1092090407733,
+   "italy": false
+  },
+  {
+   "name": "Italia, regio II (Apulia et Calabria)",
+   "km": 2604.232213347376,
+   "area_km2": 26855.07386572082,
+   "density": 96.97356359431019,
+   "share_certain": 0.0,
+   "km_main": 1426.5841134252353,
+   "italy": true
+  },
+  {
+   "name": "Lugdunensis",
+   "km": 15154.185474324398,
+   "area_km2": 160624.72991466656,
+   "density": 94.34528221386087,
+   "share_certain": 0.0,
+   "km_main": 4208.327837652088,
+   "italy": false
+  },
+  {
+   "name": "Thracia",
+   "km": 9516.679118339413,
+   "area_km2": 108363.1103273786,
+   "density": 87.82212959362579,
+   "share_certain": 0.01250607760296942,
+   "km_main": 1999.1030269374378,
+   "italy": false
+  },
+  {
+   "name": "Pannonia Inferior",
+   "km": 2500.6241190634883,
+   "area_km2": 28667.350709990584,
+   "density": 87.2289924646584,
+   "share_certain": 0.002696929664489402,
+   "km_main": 1190.3688833687738,
+   "italy": false
+  }
+ ],
+ "top_prov_noit": [
+  {
+   "name": "Cyprus",
+   "km": 1274.4325098224563,
+   "area_km2": 9740.916381156749,
+   "density": 130.83291755668634,
+   "share_certain": 0.09331295805135192,
+   "km_main": 0.0,
+   "italy": false
+  },
+  {
+   "name": "Iudaea",
+   "km": 2272.396864085038,
+   "area_km2": 17429.796678899587,
+   "density": 130.3742611545199,
+   "share_certain": 0.39319284380787844,
+   "km_main": 874.3717132541642,
+   "italy": false
+  },
+  {
+   "name": "Lycia et Pamphylia",
+   "km": 5006.364467030071,
+   "area_km2": 38906.83562085506,
+   "density": 128.67570407978724,
+   "share_certain": 0.05142606749358618,
+   "km_main": 1122.5676409258883,
+   "italy": false
+  },
+  {
+   "name": "Belgica",
+   "km": 9960.64836533574,
+   "area_km2": 90367.2425628974,
+   "density": 110.22410425329656,
+   "share_certain": 0.027413420144632078,
+   "km_main": 3013.6622176316505,
+   "italy": false
+  },
+  {
+   "name": "Achaia",
+   "km": 8044.613798415539,
+   "area_km2": 79743.13043435162,
+   "density": 100.88159010810658,
+   "share_certain": 0.03724864467057107,
+   "km_main": 2268.1092090407733,
+   "italy": false
+  },
+  {
+   "name": "Lugdunensis",
+   "km": 15154.185474324398,
+   "area_km2": 160624.72991466656,
+   "density": 94.34528221386087,
+   "share_certain": 0.0,
+   "km_main": 4208.327837652088,
+   "italy": false
+  }
+ ],
+ "bottom_prov": [
+  {
+   "name": "Italia, regio VI (Umbria)",
+   "km": 421.7501589014558,
+   "area_km2": 13396.800421446836,
+   "density": 31.48140941371935,
+   "share_certain": 0.0,
+   "km_main": 370.6316805946758,
+   "italy": true
+  },
+  {
+   "name": "Aegyptus",
+   "km": 12721.456982607187,
+   "area_km2": 520437.204896992,
+   "density": 24.44378853568913,
+   "share_certain": 0.015032622177254864,
+   "km_main": 6222.822289664383,
+   "italy": false
+  },
+  {
+   "name": "Mauretania Tingitana",
+   "km": 1165.73833510498,
+   "area_km2": 51497.244349286964,
+   "density": 22.63690707794389,
+   "share_certain": 0.004879380675935104,
+   "km_main": 490.20218333455,
+   "italy": false
+  },
+  {
+   "name": "Creta et Cyrene",
+   "km": 3968.6787433964146,
+   "area_km2": 202513.12558949867,
+   "density": 19.597143305373045,
+   "share_certain": 0.004924502339537906,
+   "km_main": 652.7475367471235,
+   "italy": false
+  },
+  {
+   "name": "Armenia Mesopotamia",
+   "km": 770.5855606839255,
+   "area_km2": 200791.6498247277,
+   "density": 3.837737083970247,
+   "share_certain": 0.09694553011105655,
+   "km_main": 547.5170027984701,
+   "italy": false
+  }
+ ],
+ "prov_by": {
+  "Italia, regio I (Latium et Campania)": {
+   "name": "Italia, regio I (Latium et Campania)",
+   "km": 1971.9905212148037,
+   "area_km2": 13649.114878632392,
+   "density": 144.4775385620018,
+   "share_certain": 0.07855102630871247,
+   "km_main": 899.5305182692927,
+   "italy": true
+  },
+  "Cyprus": {
+   "name": "Cyprus",
+   "km": 1274.4325098224563,
+   "area_km2": 9740.916381156749,
+   "density": 130.83291755668634,
+   "share_certain": 0.09331295805135192,
+   "km_main": 0.0,
+   "italy": false
+  },
+  "Iudaea": {
+   "name": "Iudaea",
+   "km": 2272.396864085038,
+   "area_km2": 17429.796678899587,
+   "density": 130.3742611545199,
+   "share_certain": 0.39319284380787844,
+   "km_main": 874.3717132541642,
+   "italy": false
+  },
+  "Lycia et Pamphylia": {
+   "name": "Lycia et Pamphylia",
+   "km": 5006.364467030071,
+   "area_km2": 38906.83562085506,
+   "density": 128.67570407978724,
+   "share_certain": 0.05142606749358618,
+   "km_main": 1122.5676409258883,
+   "italy": false
+  },
+  "Belgica": {
+   "name": "Belgica",
+   "km": 9960.64836533574,
+   "area_km2": 90367.2425628974,
+   "density": 110.22410425329656,
+   "share_certain": 0.027413420144632078,
+   "km_main": 3013.6622176316505,
+   "italy": false
+  },
+  "Achaia": {
+   "name": "Achaia",
+   "km": 8044.613798415539,
+   "area_km2": 79743.13043435162,
+   "density": 100.88159010810658,
+   "share_certain": 0.03724864467057107,
+   "km_main": 2268.1092090407733,
+   "italy": false
+  },
+  "Italia, regio II (Apulia et Calabria)": {
+   "name": "Italia, regio II (Apulia et Calabria)",
+   "km": 2604.232213347376,
+   "area_km2": 26855.07386572082,
+   "density": 96.97356359431019,
+   "share_certain": 0.0,
+   "km_main": 1426.5841134252353,
+   "italy": true
+  },
+  "Lugdunensis": {
+   "name": "Lugdunensis",
+   "km": 15154.185474324398,
+   "area_km2": 160624.72991466656,
+   "density": 94.34528221386087,
+   "share_certain": 0.0,
+   "km_main": 4208.327837652088,
+   "italy": false
+  },
+  "Thracia": {
+   "name": "Thracia",
+   "km": 9516.679118339413,
+   "area_km2": 108363.1103273786,
+   "density": 87.82212959362579,
+   "share_certain": 0.01250607760296942,
+   "km_main": 1999.1030269374378,
+   "italy": false
+  },
+  "Pannonia Inferior": {
+   "name": "Pannonia Inferior",
+   "km": 2500.6241190634883,
+   "area_km2": 28667.350709990584,
+   "density": 87.2289924646584,
+   "share_certain": 0.002696929664489402,
+   "km_main": 1190.3688833687738,
+   "italy": false
+  },
+  "Germania Inferior": {
+   "name": "Germania Inferior",
+   "km": 3709.2864482431087,
+   "area_km2": 43598.00274369919,
+   "density": 85.079274618358,
+   "share_certain": 0.13248098650103915,
+   "km_main": 1367.101138625968,
+   "italy": false
+  },
+  "Italia, regio III (Lucania et Bruttii)": {
+   "name": "Italia, regio III (Lucania et Bruttii)",
+   "km": 2319.6597855696773,
+   "area_km2": 27949.312045336726,
+   "density": 82.99523729982852,
+   "share_certain": 0.0,
+   "km_main": 1392.6757065809918,
+   "italy": true
+  },
+  "Moesia Inferior": {
+   "name": "Moesia Inferior",
+   "km": 3734.5279931584646,
+   "area_km2": 45785.90533926777,
+   "density": 81.56501363216658,
+   "share_certain": 0.0021255093284451103,
+   "km_main": 1237.6447685416072,
+   "italy": false
+  },
+  "Cilicia": {
+   "name": "Cilicia",
+   "km": 3199.0650479564147,
+   "area_km2": 40454.392501088005,
+   "density": 79.0783114063665,
+   "share_certain": 0.062438275869781755,
+   "km_main": 1251.5587117554162,
+   "italy": false
+  },
+  "Lusitania": {
+   "name": "Lusitania",
+   "km": 9337.349265634486,
+   "area_km2": 120136.1396233773,
+   "density": 77.72306730436618,
+   "share_certain": 0.009763590718793803,
+   "km_main": 2336.76534762933,
+   "italy": false
+  },
+  "Asia": {
+   "name": "Asia",
+   "km": 10062.649968867436,
+   "area_km2": 134196.36666526707,
+   "density": 74.9845187237239,
+   "share_certain": 0.010972201608283173,
+   "km_main": 4120.805220469332,
+   "italy": false
+  },
+  "Britannia": {
+   "name": "Britannia",
+   "km": 10620.615778151274,
+   "area_km2": 144657.88556504363,
+   "density": 73.41885122035634,
+   "share_certain": 0.0,
+   "km_main": 4781.951930705564,
+   "italy": false
+  },
+  "Germania Superior": {
+   "name": "Germania Superior",
+   "km": 7045.524244400263,
+   "area_km2": 98762.6201078246,
+   "density": 71.33796406685319,
+   "share_certain": 0.0,
+   "km_main": 2234.3758999564097,
+   "italy": false
+  },
+  "Italia, regio X (Venetia et Histria)": {
+   "name": "Italia, regio X (Venetia et Histria)",
+   "km": 3908.723975190558,
+   "area_km2": 55403.26260469785,
+   "density": 70.55042954923601,
+   "share_certain": 0.008609197459321606,
+   "km_main": 1745.8986226306083,
+   "italy": true
+  },
+  "Syria": {
+   "name": "Syria",
+   "km": 7226.414813447001,
+   "area_km2": 103017.01848382398,
+   "density": 70.14777674410867,
+   "share_certain": 0.15183560488791914,
+   "km_main": 3792.0913655276017,
+   "italy": false
+  },
+  "Tarraconensis": {
+   "name": "Tarraconensis",
+   "km": 27342.20281855997,
+   "area_km2": 393128.95135314565,
+   "density": 69.55021431122893,
+   "share_certain": 0.0003285335889704697,
+   "km_main": 6525.563114217603,
+   "italy": false
+  },
+  "Moesia Superior": {
+   "name": "Moesia Superior",
+   "km": 4523.874977088069,
+   "area_km2": 65067.40097251619,
+   "density": 69.52598243472039,
+   "share_certain": 0.007716583024031548,
+   "km_main": 1554.844242463703,
+   "italy": false
+  },
+  "Pannonia Superior": {
+   "name": "Pannonia Superior",
+   "km": 4840.407302040009,
+   "area_km2": 70649.30289900949,
+   "density": 68.51316436850323,
+   "share_certain": 0.005460818824065462,
+   "km_main": 1673.0282828601478,
+   "italy": false
+  },
+  "Dalmatia": {
+   "name": "Dalmatia",
+   "km": 6208.042324351069,
+   "area_km2": 91403.62412663885,
+   "density": 67.91899537538998,
+   "share_certain": 0.0,
+   "km_main": 3122.0048280835995,
+   "italy": false
+  },
+  "Italia, regio IV (Samnium)": {
+   "name": "Italia, regio IV (Samnium)",
+   "km": 1199.226180796922,
+   "area_km2": 17675.421580253915,
+   "density": 67.84710482586944,
+   "share_certain": 0.019237880919975234,
+   "km_main": 687.3714170113662,
+   "italy": true
+  },
+  "Numidia": {
+   "name": "Numidia",
+   "km": 7581.243569475866,
+   "area_km2": 112420.48380155624,
+   "density": 67.43649656283473,
+   "share_certain": 0.014428316062287493,
+   "km_main": 1241.713210776897,
+   "italy": false
+  },
+  "Italia, regio V (Picenum)": {
+   "name": "Italia, regio V (Picenum)",
+   "km": 370.7747165430428,
+   "area_km2": 5585.850605899321,
+   "density": 66.37748531109312,
+   "share_certain": 0.0,
+   "km_main": 244.0166776883926,
+   "italy": true
+  },
+  "Raetia": {
+   "name": "Raetia",
+   "km": 3555.3447451696775,
+   "area_km2": 55383.31124534077,
+   "density": 64.19523616816569,
+   "share_certain": 0.0,
+   "km_main": 2016.2967830858681,
+   "italy": false
+  },
+  "Sicilia": {
+   "name": "Sicilia",
+   "km": 1733.7019269081563,
+   "area_km2": 27044.441413728222,
+   "density": 64.10566594391184,
+   "share_certain": 0.0,
+   "km_main": 1587.160746733717,
+   "italy": false
+  },
+  "Narbonensis": {
+   "name": "Narbonensis",
+   "km": 5979.735864316974,
+   "area_km2": 94596.71804657976,
+   "density": 63.21293156674347,
+   "share_certain": 0.0,
+   "km_main": 2490.074724389818,
+   "italy": false
+  },
+  "Italia, regio IX (Liguria)": {
+   "name": "Italia, regio IX (Liguria)",
+   "km": 937.9446834717784,
+   "area_km2": 15205.341755745483,
+   "density": 61.68520895739598,
+   "share_certain": 0.0,
+   "km_main": 517.5756317696461,
+   "italy": true
+  },
+  "Baetica": {
+   "name": "Baetica",
+   "km": 4480.170273910796,
+   "area_km2": 74618.8724437231,
+   "density": 60.040712586346054,
+   "share_certain": 0.02749708806126123,
+   "km_main": 1904.2107077069616,
+   "italy": false
+  },
+  "Aquitania": {
+   "name": "Aquitania",
+   "km": 10058.97931095019,
+   "area_km2": 169104.16392364062,
+   "density": 59.483924449621156,
+   "share_certain": 0.0,
+   "km_main": 3867.552839274422,
+   "italy": false
+  },
+  "Macedonia": {
+   "name": "Macedonia",
+   "km": 4280.715309007097,
+   "area_km2": 72910.17420645796,
+   "density": 58.712180509753,
+   "share_certain": 0.011621557085098051,
+   "km_main": 1624.7406426073612,
+   "italy": false
+  },
+  "Italia, regio VIII (Aemilia)": {
+   "name": "Italia, regio VIII (Aemilia)",
+   "km": 1335.328919152604,
+   "area_km2": 23274.958654222497,
+   "density": 57.3719136944783,
+   "share_certain": 0.0,
+   "km_main": 600.6598057182551,
+   "italy": true
+  },
+  "Galatia et Cappadocia": {
+   "name": "Galatia et Cappadocia",
+   "km": 14442.876298367135,
+   "area_km2": 257780.8911218143,
+   "density": 56.02772275134296,
+   "share_certain": 0.07549113965546686,
+   "km_main": 6732.911039817841,
+   "italy": false
+  },
+  "Alpes Graiae et Poeninae": {
+   "name": "Alpes Graiae et Poeninae",
+   "km": 688.5676036279002,
+   "area_km2": 12752.504964055572,
+   "density": 53.99469402824846,
+   "share_certain": 0.0,
+   "km_main": 325.40423219070226,
+   "italy": false
+  },
+  "Noricum": {
+   "name": "Noricum",
+   "km": 3782.9895234163114,
+   "area_km2": 71387.14869163446,
+   "density": 52.99258469836634,
+   "share_certain": 0.0,
+   "km_main": 1809.3299494646437,
+   "italy": false
+  },
+  "Bithynia et Pontus": {
+   "name": "Bithynia et Pontus",
+   "km": 3467.3527048606975,
+   "area_km2": 65446.91343441971,
+   "density": 52.979621542200256,
+   "share_certain": 0.05256502332066807,
+   "km_main": 1346.7855238810205,
+   "italy": false
+  },
+  "Dacia": {
+   "name": "Dacia",
+   "km": 4840.266500377829,
+   "area_km2": 91886.62746043656,
+   "density": 52.676506191958055,
+   "share_certain": 0.0014242725100016432,
+   "km_main": 1036.9777111266199,
+   "italy": false
+  },
+  "Alpes Cottiae": {
+   "name": "Alpes Cottiae",
+   "km": 345.00915968078493,
+   "area_km2": 6663.242195574193,
+   "density": 51.777970776740524,
+   "share_certain": 0.0,
+   "km_main": 150.976156704989,
+   "italy": false
+  },
+  "Italia, regio VII (Etruria)": {
+   "name": "Italia, regio VII (Etruria)",
+   "km": 1581.322571531413,
+   "area_km2": 30880.971494804646,
+   "density": 51.20702150829197,
+   "share_certain": 0.03022204520604865,
+   "km_main": 1254.5185915000782,
+   "italy": true
+  },
+  "Sardinia et Corsica": {
+   "name": "Sardinia et Corsica",
+   "km": 1729.4277886536183,
+   "area_km2": 33940.82122913913,
+   "density": 50.95421165498662,
+   "share_certain": 0.0,
+   "km_main": 129.5920421568182,
+   "italy": false
+  },
+  "Mauretania Caesariensis": {
+   "name": "Mauretania Caesariensis",
+   "km": 9944.615072590896,
+   "area_km2": 203830.89404388258,
+   "density": 48.78855641211056,
+   "share_certain": 0.014351994254526474,
+   "km_main": 1605.52058183792,
+   "italy": false
+  },
+  "Italia, regio XI (Transpadana)": {
+   "name": "Italia, regio XI (Transpadana)",
+   "km": 1462.90571951994,
+   "area_km2": 30292.420033587787,
+   "density": 48.292797930897954,
+   "share_certain": 0.0,
+   "km_main": 845.3911230840763,
+   "italy": true
+  },
+  "Africa Proconsularis": {
+   "name": "Africa Proconsularis",
+   "km": 13613.486298171674,
+   "area_km2": 292046.5176492313,
+   "density": 46.61410246473968,
+   "share_certain": 0.0222611108189344,
+   "km_main": 2853.5683752703044,
+   "italy": false
+  },
+  "Alpes Maritimae": {
+   "name": "Alpes Maritimae",
+   "km": 359.2840156465171,
+   "area_km2": 8144.962968727523,
+   "density": 44.11119080909064,
+   "share_certain": 0.0,
+   "km_main": 123.9070919484669,
+   "italy": false
+  },
+  "Arabia": {
+   "name": "Arabia",
+   "km": 4234.9127701864345,
+   "area_km2": 109231.73399800871,
+   "density": 38.76998574666623,
+   "share_certain": 0.3003827257970353,
+   "km_main": 1053.1060705159905,
+   "italy": false
+  },
+  "Italia, regio VI (Umbria)": {
+   "name": "Italia, regio VI (Umbria)",
+   "km": 421.7501589014558,
+   "area_km2": 13396.800421446836,
+   "density": 31.48140941371935,
+   "share_certain": 0.0,
+   "km_main": 370.6316805946758,
+   "italy": true
+  },
+  "Aegyptus": {
+   "name": "Aegyptus",
+   "km": 12721.456982607187,
+   "area_km2": 520437.204896992,
+   "density": 24.44378853568913,
+   "share_certain": 0.015032622177254864,
+   "km_main": 6222.822289664383,
+   "italy": false
+  },
+  "Mauretania Tingitana": {
+   "name": "Mauretania Tingitana",
+   "km": 1165.73833510498,
+   "area_km2": 51497.244349286964,
+   "density": 22.63690707794389,
+   "share_certain": 0.004879380675935104,
+   "km_main": 490.20218333455,
+   "italy": false
+  },
+  "Creta et Cyrene": {
+   "name": "Creta et Cyrene",
+   "km": 3968.6787433964146,
+   "area_km2": 202513.12558949867,
+   "density": 19.597143305373045,
+   "share_certain": 0.004924502339537906,
+   "km_main": 652.7475367471235,
+   "italy": false
+  },
+  "Armenia Mesopotamia": {
+   "name": "Armenia Mesopotamia",
+   "km": 770.5855606839255,
+   "area_km2": 200791.6498247277,
+   "density": 3.837737083970247,
+   "share_certain": 0.09694553011105655,
+   "km_main": 547.5170027984701,
+   "italy": false
+  }
+ },
+ "cert_top_prov": [
+  "Arabia",
+  "Syria",
+  "Galatia et Cappadocia",
+  "Iudaea"
+ ],
+ "modes": {
+  "foot": {
+   "label": "On foot",
+   "kmd": 22.5,
+   "lo": 20,
+   "hi": 25
+  },
+  "cart": {
+   "label": "Horse-drawn cart",
+   "kmd": 45.0,
+   "lo": 40,
+   "hi": 50
+  },
+  "courier": {
+   "label": "Courier (relay of horses)",
+   "kmd": 80.0,
+   "lo": 80,
+   "hi": 80
+  }
+ },
+ "offroad_factor": 0.5,
+ "offroad_max_km": 50,
+ "crossing_days": 1.0,
+ "city": {
+  "rome": {
+   "name": "Rome",
+   "latin": "Roma",
+   "node_name": "Roma",
+   "foot": 0.0,
+   "cart": 0.0,
+   "courier": 0.0,
+   "foot_lo": 0.0,
+   "foot_hi": 0.0,
+   "cart_lo": 0.0,
+   "cart_hi": 0.0,
+   "road_km": 0.0,
+   "sea": [],
+   "straight_km": 0.0,
+   "detour": null,
+   "foot_nohyp": 0.0,
+   "foot_nosea": 0.0,
+   "foot_flat": 0.0,
+   "foot_weeks": 0.0,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 0.0,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0
+  },
+  "london": {
+   "name": "London",
+   "latin": "Londinium",
+   "node_name": "Londinium",
+   "foot": 80.6738830485158,
+   "cart": 40.8369415242579,
+   "courier": 23.408279607395084,
+   "foot_lo": 72.70649474366424,
+   "foot_hi": 90.63311842958034,
+   "cart_lo": 36.85324737183212,
+   "cart_hi": 45.81655921479017,
+   "road_km": 1671.7148938672885,
+   "sea": [
+    "channel"
+   ],
+   "straight_km": 1432.6929915625478,
+   "detour": 1.1668339998257788,
+   "foot_nohyp": null,
+   "foot_nosea": null,
+   "foot_flat": 74.65495964695734,
+   "foot_weeks": 11.524840435502258,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 1670.1087187018943,
+    "Hypothetical": 1.606175165394
+   },
+   "route_share_certain": 0.0
+  },
+  "constantinople": {
+   "name": "Constantinople (Istanbul)",
+   "latin": "Byzantium",
+   "node_name": "Byzantium",
+   "foot": 75.18325258714556,
+   "cart": 38.09162629357277,
+   "courier": 21.864039790134697,
+   "foot_lo": 67.76492732843103,
+   "foot_hi": 84.45615916053879,
+   "cart_lo": 34.38246366421551,
+   "cart_hi": 42.728079580269394,
+   "road_km": 1585.50102089995,
+   "sea": [
+    "otranto"
+   ],
+   "straight_km": 1375.8726860775819,
+   "detour": 1.1523602706439275,
+   "foot_nohyp": 75.18325258714556,
+   "foot_nosea": 106.86850674298908,
+   "foot_flat": 71.02563757785013,
+   "foot_weeks": 10.740464655306509,
+   "route_cert_km": {
+    "Certain": 143.380331013666,
+    "Conjectured": 1442.1206898862838,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.09043219091229696
+  },
+  "alexandria": {
+   "name": "Alexandria",
+   "latin": "Alexandria",
+   "node_name": "Alexandria",
+   "foot": 179.8861335130559,
+   "cart": 90.44306675652794,
+   "courier": 51.31172505054698,
+   "foot_lo": 161.99752016175032,
+   "foot_hi": 202.24690020218787,
+   "cart_lo": 81.49876008087514,
+   "cart_hi": 101.62345010109394,
+   "road_km": 3806.67285557316,
+   "sea": [
+    "otranto"
+   ],
+   "straight_km": 1952.175275060253,
+   "detour": 1.9499646902636183,
+   "foot_nohyp": 180.18429555876622,
+   "foot_nosea": 211.57138766889946,
+   "foot_flat": 169.33094432161516,
+   "foot_weeks": 25.6980190732937,
+   "route_cert_km": {
+    "Certain": 660.082061387608,
+    "Conjectured": 3053.6728984857536,
+    "Hypothetical": 92.91789569980001
+   },
+   "route_share_certain": 0.17340131039136045
+  },
+  "eboracum": {
+   "name": "York",
+   "latin": "Eboracum",
+   "node_name": "Eburacum",
+   "foot": 94.33147616878944,
+   "cart": 47.66573808439472,
+   "courier": 27.24947767247206,
+   "foot_lo": 84.99832855191053,
+   "foot_hi": 105.99791068988824,
+   "cart_lo": 42.999164275955266,
+   "cart_hi": 53.49895534494412,
+   "road_km": 1979.0107390734452,
+   "sea": [
+    "channel"
+   ],
+   "straight_km": 1674.1051394857268,
+   "detour": 1.1821304961057484,
+   "foot_nohyp": null,
+   "foot_nosea": null,
+   "foot_flat": 88.31255276723097,
+   "foot_weeks": 13.475925166969919,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 1970.590757977818,
+    "Hypothetical": 8.41998109562717
+   },
+   "route_share_certain": 0.0
+  },
+  "lutetia": {
+   "name": "Paris",
+   "latin": "Lutetia",
+   "node_name": "Lutetia",
+   "foot": 66.7490959239048,
+   "cart": 33.3745479619524,
+   "courier": 18.773183228598224,
+   "foot_lo": 60.074186331514284,
+   "foot_hi": 75.0927329143929,
+   "cart_lo": 30.037093165757142,
+   "cart_hi": 37.54636645719645,
+   "road_km": 1386.5460185719153,
+   "sea": [],
+   "straight_km": 1105.5425390834005,
+   "detour": 1.2541769941494005,
+   "foot_nohyp": 66.7490959239048,
+   "foot_nosea": 66.7490959239048,
+   "foot_flat": 61.099353444182455,
+   "foot_weeks": 9.5355851319864,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 1386.5460185719153,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.0
+  },
+  "lugdunum": {
+   "name": "Lyon",
+   "latin": "Lugdunum",
+   "node_name": "Lugdunum",
+   "foot": 49.57076378950058,
+   "cart": 24.78538189475029,
+   "courier": 13.941777315797042,
+   "foot_lo": 44.613687410550526,
+   "foot_hi": 55.76710926318817,
+   "cart_lo": 22.306843705275263,
+   "cart_hi": 27.883554631594084,
+   "road_km": 989.8135180972282,
+   "sea": [],
+   "straight_km": 749.8351136011612,
+   "detour": 1.3200415666632972,
+   "foot_nohyp": 49.57076378950058,
+   "foot_nosea": 49.57076378950058,
+   "foot_flat": 42.1288916680441,
+   "foot_weeks": 7.081537684214369,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 989.8135180972282,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.0
+  },
+  "colonia": {
+   "name": "Cologne",
+   "latin": "Colonia Agrippina",
+   "node_name": "Claudia Ara Agrippinensium",
+   "foot": 70.93497274925963,
+   "cart": 35.467486374629814,
+   "courier": 19.95046108572928,
+   "foot_lo": 63.84147547433372,
+   "foot_hi": 79.80184434291712,
+   "cart_lo": 31.92073773716686,
+   "cart_hi": 39.90092217145856,
+   "road_km": 1455.5160003111216,
+   "sea": [],
+   "straight_km": 1090.6537313533793,
+   "detour": 1.3345353877852588,
+   "foot_nohyp": 70.93497274925963,
+   "foot_nosea": 70.93497274925963,
+   "foot_flat": 64.12448299240879,
+   "foot_weeks": 10.133567535608519,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 1455.5160003111216,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.0
+  },
+  "treveri": {
+   "name": "Trier",
+   "latin": "Augusta Treverorum",
+   "node_name": "Augusta Treverorum",
+   "foot": 65.55091100916887,
+   "cart": 32.775455504584436,
+   "courier": 18.436193721328742,
+   "foot_lo": 58.99581990825197,
+   "foot_hi": 73.74477488531497,
+   "cart_lo": 29.497909954125983,
+   "cart_hi": 36.872387442657484,
+   "road_km": 1348.9823547330477,
+   "sea": [],
+   "straight_km": 983.9049393538489,
+   "detour": 1.3710494792504577,
+   "foot_nohyp": 65.55091100916887,
+   "foot_nosea": 65.55091100916887,
+   "foot_flat": 58.87872529903288,
+   "foot_weeks": 9.364415858452697,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 1348.9823547330477,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.0
+  },
+  "tarraco": {
+   "name": "Tarragona",
+   "latin": "Tarraco",
+   "node_name": "Tarraco",
+   "foot": 70.45776813418348,
+   "cart": 35.22888406709174,
+   "courier": 19.816247287739106,
+   "foot_lo": 63.41199132076514,
+   "foot_hi": 79.26498915095642,
+   "cart_lo": 31.70599566038257,
+   "cart_hi": 39.63249457547821,
+   "road_km": 1449.7999257284023,
+   "sea": [],
+   "straight_km": 938.5978754261852,
+   "detour": 1.5446443718723504,
+   "foot_nohyp": 70.45776813418348,
+   "foot_nosea": 70.45776813418348,
+   "foot_flat": 64.14592087955431,
+   "foot_weeks": 10.065395447740498,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 1449.7999257284023,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.0
+  },
+  "emerita": {
+   "name": "Mérida",
+   "latin": "Emerita Augusta",
+   "node_name": "Augusta Emerita",
+   "foot": 107.8514727359139,
+   "cart": 53.92573636795695,
+   "courier": 30.33322670697578,
+   "foot_lo": 97.06632546232245,
+   "foot_hi": 121.33290682790312,
+   "cart_lo": 48.53316273116123,
+   "cart_hi": 60.66645341395156,
+   "road_km": 2231.1618143280666,
+   "sea": [],
+   "straight_km": 1624.8160635157774,
+   "detour": 1.373178087309328,
+   "foot_nohyp": 107.8514727359139,
+   "foot_nosea": 107.8514727359139,
+   "foot_flat": 97.78151237124567,
+   "foot_weeks": 15.4073532479877,
+   "route_cert_km": {
+    "Certain": 17.635585038084997,
+    "Conjectured": 2213.526229289982,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.007904216056779415
+  },
+  "gades": {
+   "name": "Cádiz",
+   "latin": "Gades",
+   "node_name": "Gades",
+   "foot": 115.88868828210116,
+   "cart": 57.94434414105058,
+   "courier": 32.59369357934098,
+   "foot_lo": 104.29981945389109,
+   "foot_hi": 130.37477431736392,
+   "cart_lo": 52.149909726945545,
+   "cart_hi": 65.18738715868196,
+   "road_km": 2451.1427342666043,
+   "sea": [],
+   "straight_km": 1719.7760943705132,
+   "detour": 1.4252685232049305,
+   "foot_nohyp": 115.88868828210116,
+   "foot_nosea": 115.88868828210116,
+   "foot_flat": 108.54150897397366,
+   "foot_weeks": 16.555526897443023,
+   "route_cert_km": {
+    "Certain": 110.7005220017,
+    "Conjectured": 2340.4422122649044,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.0451628215909761
+  },
+  "carthago": {
+   "name": "Carthage",
+   "latin": "Carthago",
+   "node_name": "Carthago",
+   "foot": 209.59171987746348,
+   "cart": 105.29585993873174,
+   "courier": 59.66642121553664,
+   "foot_lo": 188.7325478897171,
+   "foot_hi": 235.66568486214655,
+   "cart_lo": 94.86627394485855,
+   "cart_hi": 118.33284243107327,
+   "road_km": 4489.665457420894,
+   "sea": [
+    "gibraltar"
+   ],
+   "straight_km": 590.3297601215554,
+   "detour": 7.605351721546992,
+   "foot_nohyp": 303.0812423285402,
+   "foot_nosea": 329.1836323800923,
+   "foot_flat": 197.34790561325806,
+   "foot_weeks": 29.941674268209066,
+   "route_cert_km": {
+    "Certain": 192.121015502936,
+    "Conjectured": 3866.217329584958,
+    "Hypothetical": 431.327112333
+   },
+   "route_share_certain": 0.04279183322788167
+  },
+  "mediolanum": {
+   "name": "Milan",
+   "latin": "Mediolanum",
+   "node_name": "Mediolanium",
+   "foot": 28.39533546908587,
+   "cart": 14.197667734542936,
+   "courier": 7.9861881006804,
+   "foot_lo": 25.55580192217728,
+   "foot_hi": 31.9447524027216,
+   "cart_lo": 12.77790096108864,
+   "cart_hi": 15.9723762013608,
+   "road_km": 606.6984115082879,
+   "sea": [],
+   "straight_km": 477.37996651034314,
+   "detour": 1.2708920651682665,
+   "foot_nohyp": 28.39533546908587,
+   "foot_nosea": 28.39533546908587,
+   "foot_flat": 26.822999762056355,
+   "foot_weeks": 4.056476495583696,
+   "route_cert_km": {
+    "Certain": 0.0,
+    "Conjectured": 606.6984115082879,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.0
+  },
+  "aquileia": {
+   "name": "Aquileia",
+   "latin": "Aquileia",
+   "node_name": "Aquileia",
+   "foot": 31.952585951720916,
+   "cart": 15.976292975860458,
+   "courier": 8.986664798921506,
+   "foot_lo": 28.75732735654882,
+   "foot_hi": 35.946659195686024,
+   "cart_lo": 14.37866367827441,
+   "cart_hi": 17.973329597843012,
+   "road_km": 674.9601845113499,
+   "sea": [],
+   "straight_km": 436.9517515181608,
+   "detour": 1.5447018627714482,
+   "foot_nohyp": 32.12394736507602,
+   "foot_nosea": 31.952585951720916,
+   "foot_flat": 29.998230422726675,
+   "foot_weeks": 4.564655135960131,
+   "route_cert_km": {
+    "Certain": 33.6509765164,
+    "Conjectured": 610.1629930839499,
+    "Hypothetical": 31.146214910999998
+   },
+   "route_share_certain": 0.04985623935841824
+  },
+  "sirmium": {
+   "name": "Sremska Mitrovica",
+   "latin": "Sirmium",
+   "node_name": "Sirmium",
+   "foot": 57.68400704783385,
+   "cart": 28.842003523916926,
+   "courier": 16.223626982203267,
+   "foot_lo": 51.915606343050456,
+   "foot_hi": 64.89450792881307,
+   "cart_lo": 25.957803171525228,
+   "cart_hi": 32.447253964406535,
+   "road_km": 1242.8129134018352,
+   "sea": [],
+   "straight_km": 669.0282784333207,
+   "detour": 1.8576388374975115,
+   "foot_nohyp": 57.88704292816599,
+   "foot_nosea": 57.68400704783385,
+   "foot_flat": 54.567797640129335,
+   "foot_weeks": 8.240572435404836,
+   "route_cert_km": {
+    "Certain": 33.6509765164,
+    "Conjectured": 1164.4208326636053,
+    "Hypothetical": 44.74110422183
+   },
+   "route_share_certain": 0.027076461914360334
+  },
+  "athenae": {
+   "name": "Athens",
+   "latin": "Athenae",
+   "node_name": "Skambonidai",
+   "foot": 66.95466027321999,
+   "cart": 33.977330136609986,
+   "courier": 19.549748201843112,
+   "foot_lo": 60.359194245897974,
+   "foot_hi": 75.19899280737245,
+   "cart_lo": 30.679597122948987,
+   "cart_hi": 38.099496403686224,
+   "road_km": 1351.6193384058515,
+   "sea": [
+    "otranto"
+   ],
+   "straight_km": 1051.6589719929832,
+   "detour": 1.285225890142332,
+   "foot_nohyp": 66.95466027321999,
+   "foot_nosea": 113.02053650725311,
+   "foot_flat": 58.412637867200175,
+   "foot_weeks": 9.564951467602855,
+   "route_cert_km": {
+    "Certain": 154.02551679540292,
+    "Conjectured": 1197.5938216104485,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.11395628371007636
+  },
+  "ephesus": {
+   "name": "Ephesus",
+   "latin": "Ephesus",
+   "node_name": "Ephesos",
+   "foot": 88.40221604975727,
+   "cart": 44.701108024878636,
+   "courier": 25.581873263994247,
+   "foot_lo": 79.66199444478157,
+   "foot_hi": 99.32749305597699,
+   "cart_lo": 40.33099722239078,
+   "cart_hi": 50.16374652798849,
+   "road_km": 1863.8620281731964,
+   "sea": [
+    "otranto"
+   ],
+   "straight_km": 1338.906579283647,
+   "detour": 1.3920777274620724,
+   "foot_nohyp": 88.40221604975727,
+   "foot_nosea": 124.8438708139829,
+   "foot_flat": 83.3972379011055,
+   "foot_weeks": 12.628888007108182,
+   "route_cert_km": {
+    "Certain": 148.540640185402,
+    "Conjectured": 1715.3213879877944,
+    "Hypothetical": 0.0
+   },
+   "route_share_certain": 0.07969508361677889
+  },
+  "antiochia": {
+   "name": "Antioch (Antakya)",
+   "latin": "Antiochia",
+   "node_name": "Antiochia",
+   "foot": 127.86674862359307,
+   "cart": 64.43337431179653,
+   "courier": 36.68127305038556,
+   "foot_lo": 115.18007376123381,
+   "foot_hi": 143.72509220154222,
+   "cart_lo": 58.0900368806169,
+   "cart_hi": 72.36254610077111,
+   "road_km": 2665.975839453499,
+   "sea": [
+    "otranto"
+   ],
+   "straight_km": 2132.193050278862,
+   "detour": 1.2503444934804686,
+   "foot_nohyp": 128.1649106693034,
+   "foot_nosea": 159.55200277943663,
+   "foot_flat": 118.69355991428924,
+   "foot_weeks": 18.26667837479901,
+   "route_cert_km": {
+    "Certain": 321.00674659155794,
+    "Conjectured": 2252.0511971621418,
+    "Hypothetical": 92.91789569980001
+   },
+   "route_share_certain": 0.12040872308031172
+  },
+  "hierosolyma": {
+   "name": "Jerusalem",
+   "latin": "Hierosolyma",
+   "node_name": "Ierusalem",
+   "foot": 156.89629719110962,
+   "cart": 78.94814859555481,
+   "courier": 44.845833584999625,
+   "foot_lo": 141.30666747199865,
+   "foot_hi": 176.38333433999847,
+   "cart_lo": 71.15333373599933,
+   "cart_hi": 88.69166716999923,
+   "road_km": 3303.2915265391052,
+   "sea": [
+    "otranto"
+   ],
+   "straight_km": 2305.3081147734697,
+   "detour": 1.4329067361408658,
+   "foot_nohyp": 157.67229430260673,
+   "foot_nosea": 188.5815513469532,
+   "foot_flat": 146.10395582561895,
+   "foot_weeks": 22.41375674158709,
+   "route_cert_km": {
+    "Certain": 526.3613489069361,
+    "Conjectured": 2650.214469990469,
+    "Hypothetical": 126.71570764170002
+   },
+   "route_share_certain": 0.15934450371033726
+  },
+  "lepcis": {
+   "name": "Leptis Magna",
+   "latin": "Lepcis Magna",
+   "node_name": "Lepcis Magna",
+   "foot": 231.0081652781728,
+   "cart": 116.0040826390864,
+   "courier": 65.68979648448612,
+   "foot_lo": 208.0073487503553,
+   "foot_hi": 259.75918593794444,
+   "cart_lo": 104.50367437517765,
+   "cart_hi": 130.37959296897222,
+   "road_km": 4980.307386340355,
+   "sea": [
+    "gibraltar"
+   ],
+   "straight_km": 1041.300464154288,
+   "detour": 4.7827764970653375,
+   "foot_nohyp": 265.0313066011579,
+   "foot_nosea": 291.13369665271,
+   "foot_flat": 219.49542891967062,
+   "foot_weeks": 33.0011664683104,
+   "route_cert_km": {
+    "Certain": 157.040687326789,
+    "Conjectured": 4333.335356271188,
+    "Hypothetical": 489.93134274238
+   },
+   "route_share_certain": 0.031532328256988595
+  }
+ },
+ "city_order": [
+  "mediolanum",
+  "aquileia",
+  "lugdunum",
+  "sirmium",
+  "treveri",
+  "lutetia",
+  "athenae",
+  "tarraco",
+  "colonia",
+  "constantinople",
+  "london",
+  "ephesus",
+  "eboracum",
+  "emerita",
+  "gades",
+  "antiochia",
+  "hierosolyma",
+  "alexandria",
+  "carthago",
+  "lepcis"
+ ],
+ "n_cities": 20,
+ "farthest": {
+  "node": 1132,
+  "name": "Murzuq",
+  "lon": 13.914447000000049,
+  "lat": 25.91790900000011,
+  "days": {
+   "foot": 266.04605882438085,
+   "cart": 133.52302941219043,
+   "courier": 75.54420404435717
+  }
+ },
+ "max_foot": 266.04605882438085,
+ "km_reachable": 295108.2286943517,
+ "km_unreachable": 4063.081448441956,
+ "share_unreachable": 0.013581119949311514,
+ "unjoined": [
+  {
+   "km": 1647.06448999353,
+   "lon": 8.999573881993843,
+   "lat": 40.06327802238424,
+   "n": 39
+  },
+  {
+   "km": 1368.33616457788,
+   "lon": 33.43150598279789,
+   "lat": 35.176819952543035,
+   "n": 128
+  },
+  {
+   "km": 818.935867102807,
+   "lon": 24.96228591186096,
+   "lat": 35.30084329628622,
+   "n": 41
+  },
+  {
+   "km": 156.3424246414,
+   "lon": 9.355055236768338,
+   "lat": 41.963037199578395,
+   "n": 3
+  },
+  {
+   "km": 64.7855088603,
+   "lon": 14.380565033960156,
+   "lat": 44.90334383376379,
+   "n": 1
+  },
+  {
+   "km": 7.292108912970001,
+   "lon": 23.03355644558481,
+   "lat": 36.240554465378025,
+   "n": 1
+  },
+  {
+   "km": 0.144509995958,
+   "lon": 5.039130352668613,
+   "lat": 52.079532567705314,
+   "n": 1
+  },
+  {
+   "km": 0.132510930764,
+   "lon": 5.711865276861476,
+   "lat": 50.80362437596027,
+   "n": 1
+  },
+  {
+   "km": 0.0478634263473,
+   "lon": 4.432876405412168,
+   "lat": 52.175237996282064,
+   "n": 1
+  }
+ ],
+ "foot_bands": [
+  {
+   "a": 0,
+   "b": 10,
+   "km": 3931.1095711097755
+  },
+  {
+   "a": 10,
+   "b": 20,
+   "km": 4563.5262693292025
+  },
+  {
+   "a": 20,
+   "b": 30,
+   "km": 6610.76437962891
+  },
+  {
+   "a": 30,
+   "b": 40,
+   "km": 8350.06346460088
+  },
+  {
+   "a": 40,
+   "b": 50,
+   "km": 19574.741810860127
+  },
+  {
+   "a": 50,
+   "b": 60,
+   "km": 30878.898432839596
+  },
+  {
+   "a": 60,
+   "b": 75,
+   "km": 48997.64175519576
+  },
+  {
+   "a": 75,
+   "b": 90,
+   "km": 33044.49759978244
+  },
+  {
+   "a": 90,
+   "b": 120,
+   "km": 60501.23809900136
+  },
+  {
+   "a": 120,
+   "b": null,
+   "km": 78655.7473120036
+  }
+ ],
+ "km_within": {
+  "foot": {
+   "7": 2490.1464918774955,
+   "30": 15105.400220067888
+  },
+  "cart": {
+   "7": 5559.354915695181,
+   "30": 72688.28802202985
+  },
+  "courier": {
+   "7": 11161.533741560192,
+   "30": 191434.6826722302
+  }
+ },
+ "share_within": {
+  "foot": {
+   "7": 0.008323480251796056,
+   "30": 0.05049080479293996
+  },
+  "cart": {
+   "7": 0.018582513520570262,
+   "30": 0.2429654367169631
+  },
+  "courier": {
+   "7": 0.037308168808809994,
+   "30": 0.6398831578497918
+  }
+ },
+ "crossings": [
+  {
+   "key": "channel",
+   "label": "English Channel",
+   "a": "Gesoriacum (Boulogne)",
+   "b": "Dubris (Dover)",
+   "km": 49.46719725085513,
+   "bridge": false,
+   "names": [
+    "Gesoriacum",
+    "Portus Dubris"
+   ]
+  },
+  {
+   "key": "messina",
+   "label": "Strait of Messina",
+   "a": "Rhegium",
+   "b": "Messana",
+   "km": 11.289493039714104,
+   "bridge": false,
+   "names": [
+    "Rhegion",
+    "Zancle"
+   ]
+  },
+  {
+   "key": "otranto",
+   "label": "Strait of Otranto",
+   "a": "Brundisium",
+   "b": "Dyrrachium",
+   "km": 147.60588055031948,
+   "bridge": false,
+   "names": [
+    "Brundisium",
+    "Dyrrachion"
+   ]
+  },
+  {
+   "key": "gibraltar",
+   "label": "Strait of Gibraltar",
+   "a": "Baelo Claudia",
+   "b": "Tingi",
+   "km": 36.046459847858884,
+   "bridge": false,
+   "names": [
+    "Baelo",
+    "Tingi"
+   ]
+  },
+  {
+   "key": "euripus",
+   "label": "Euripus (bridge)",
+   "a": "Aulis",
+   "b": "Chalcis",
+   "km": 6.30793940988144,
+   "bridge": true,
+   "names": [
+    "Oropos",
+    "Chalcis"
+   ]
+  }
+ ],
+ "n_crossings": 4,
+ "share_reach_30_foot": 0.05118596755806763,
+ "alex_vs_london": 2.229793914901501,
+ "carthage_vs_alex": 29.705586364407566
+}

@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Roads of the Roman Empire</title>
+<meta name="description" content="Every road in Itiner-e, the new open map of the roads of the Roman Empire: {{km_total|int}} km, how much of it is certain, and a travel-time model of how many days it took to reach anywhere from Rome.">
+<meta property="og:title" content="Roads of the Roman Empire: {{km_total|int}} km of road, and how many days from Rome">
+<meta property="og:description" content="Only {{cert.Certain.share_km|pct1}} of the network is mapped as certain. On foot, the model puts London {{city.london.foot|int}} days from Rome, Constantinople {{city.constantinople.foot|int}} and Alexandria, the long way round by road, {{city.alexandria.foot|int}}.">
+<meta property="og:image" content="https://maps.tristanhotham.com/roman-roads/header.png">
+<meta property="og:url" content="https://maps.tristanhotham.com/roman-roads/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Milestone and parchment: warm paper, ink, Pompeian red; roads coloured by days from Rome. */
+:root{
+  --bg:#F6F1E7; --panel:#ECE5D8; --fg:#1F1A17; --muted:#6B625A; --rule:#E2D9C9; --card:#FCFAF5; --border:#CFC4B2;
+  --hot:#A8322D; --cool:#1C3A5E; --gold:#B7802A; --teal:#2F6F62; --sea:#E9EEEE;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#15120F; --panel:#211C18; --fg:#EEE7DC; --muted:#A99E92; --rule:#2E2722; --card:#1A1613; --border:#3D352E;
+  --hot:#E0675D; --cool:#8DB0D8; --gold:#E2AA4E; --teal:#6FBFAE; --sea:#141A1C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#15120F; --panel:#211C18; --fg:#EEE7DC; --muted:#A99E92; --rule:#2E2722; --card:#1A1613; --border:#3D352E;
+  --hot:#E0675D; --cool:#8DB0D8; --gold:#E2AA4E; --teal:#6FBFAE; --sea:#141A1C; color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 18px/1.62 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:hidden}
+.wrap{max-width:700px;margin:0 auto;padding-block:28px 64px}
+.wrap .bleed{width:min(1180px,calc(100vw - 32px));margin-left:calc((100% - min(1180px,100vw - 32px))/2);margin-right:0}
+a{color:inherit;text-decoration-color:var(--hot);text-underline-offset:3px}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kicker b{background:var(--hot);color:#fff;padding:5px 8px;font-weight:500}
+header.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:end;border-bottom:6px double var(--fg);padding-bottom:22px;margin-top:18px}
+h1{font:900 clamp(44px,11vw,96px)/.9 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 .a{color:var(--hot)}
+.mark{width:clamp(78px,16vw,128px);height:auto;display:block}
+.dek{grid-column:1/-1;font-size:21px;line-height:1.42;margin:8px 0 0;max-width:58ch}
+.byline{font:400 13px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+h2{font:800 34px/1.04 var(--display);letter-spacing:-.01em;margin:54px 0 10px;text-wrap:balance}
+h2 .n{font:500 13px/1 var(--mono);color:var(--hot);display:block;letter-spacing:.1em;margin-bottom:10px}
+h3{font:600 20px/1.25 var(--display);margin:28px 0 6px}
+p{margin:0 0 16px}
+.lede::first-letter{font:900 72px/.8 var(--display);float:left;margin:6px 10px 0 0;color:var(--hot)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px}
+.stats div{background:var(--card);padding:14px 12px}
+.stats b{display:block;font:900 clamp(22px,4.4vw,32px)/1 var(--display);letter-spacing:-.01em}
+.stats b.h{color:var(--hot)} .stats b.c{color:var(--cool)} .stats b.g{color:var(--gold)} .stats b.t{color:var(--teal)}
+.stats span{font:400 12px/1.35 var(--mono);color:var(--muted);display:block;margin-top:6px}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.figure{margin:26px 0 30px}
+.fig-h{font:600 19px/1.25 var(--display);margin:0 0 4px}
+.fig-sub{font:400 13px/1.45 var(--mono);color:var(--muted);margin:0 0 12px}
+.src{font:400 12px/1.45 var(--mono);color:var(--muted);margin-top:10px}
+.chart{width:100%;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);fill:var(--fg)}
+.lab{font-size:12px}.lab.m{fill:var(--muted)}.lab.b{font-weight:500}.lab.s{font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font:400 12px/1.45 var(--mono);padding:8px 10px;border-radius:3px;max-width:290px;z-index:1000;transform:translate(-50%,calc(-100% - 12px));display:none}
+.tip b{font-weight:500}
+.controls{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.scrollrow{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px;max-width:100%}
+.scrollrow .btn{flex:0 0 auto;white-space:nowrap}
+.ctl-l{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px;flex:0 0 auto;align-self:center}
+.btn{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:36px}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+select.sel{font:500 12px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:8px 6px;min-height:36px;max-width:100%}
+.searchbox{position:relative;flex:1 1 260px;min-width:0}
+input[type=search]{font:400 15px/1 var(--mono);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 11px;min-height:40px;width:100%}
+.suggest{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--border);z-index:1001;font:400 13px/1.3 var(--mono);display:none;max-height:340px;overflow:auto}
+.suggest li{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.suggest li span{color:var(--muted)}
+.suggest li[aria-selected="true"],.suggest li:hover{background:var(--panel)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px;align-items:start}
+@media (max-width:900px){.mapgrid{grid-template-columns:1fr}}
+.side{background:var(--card);border:1px solid var(--border);padding:12px 12px 10px;font:400 13px/1.45 var(--mono);max-height:660px;overflow:auto}
+@media (max-width:900px){.side{max-height:none}}
+.side h4{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.side h4:first-child{margin-top:2px}
+.side .big{font:800 24px/1.1 var(--display);margin:2px 0 4px}
+.side .sub{color:var(--muted);font-size:12px;margin:0 0 8px}
+.side table{width:100%;border-collapse:collapse;margin:4px 0 6px}
+.side td{padding:4px 4px 4px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.side td.num{text-align:right;white-space:nowrap}
+.side td small{color:var(--muted)}
+.side .acts{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.side .acts .btn{min-height:30px;padding:6px 8px;font-size:11.5px}
+.chip{display:inline-block;font:500 11px/1 var(--mono);padding:4px 7px;border-radius:999px;color:#fff;margin:0 4px 4px 0}
+.back{font:400 12px var(--mono);background:none;border:0;color:var(--muted);padding:0;cursor:pointer;text-decoration:underline;margin-bottom:6px}
+.go{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px}
+.lmap{height:640px;border:1px solid var(--border);background:var(--sea);border-radius:2px}
+@media (max-width:600px){.lmap{height:min(64vh,470px)}}
+.leaflet-container{font:400 12px/1.4 var(--mono);background:var(--sea)}
+.lyrBtn{background:var(--card,var(--bg));color:var(--fg);border:1px solid var(--border);border-radius:3px;font:600 12px/1 var(--mono);padding:8px 10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lyrBtn[aria-expanded="true"]{background:var(--fg);color:var(--bg)}
+.lyrPanel{background:var(--card,var(--bg));color:var(--fg);border:1px solid var(--border);border-radius:3px;padding:10px 12px 8px;margin-top:6px;width:250px;box-shadow:0 2px 10px rgba(0,0,0,.15);font:400 12px/1.3 var(--mono);max-height:min(70vh,520px);overflow:auto}
+.lyrPanel[hidden]{display:none}
+.lyrPanel .row{margin:0 0 9px}
+.lyrPanel label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.lyrPanel input[type=range]{width:100%;accent-color:var(--fg)}
+.lyrPanel select{font:400 12px var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:2px;padding:2px 4px;width:100%;min-height:0}
+.lyrPanel .sub{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:11px;margin-top:3px}
+.lyrPanel .sub span{flex:0 0 58px}
+.lyrPanel .hd{font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 7px;border-top:1px solid var(--rule);padding-top:9px}
+.lyrPanel .reset{font:400 11px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.mapnote{background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--border);border-radius:3px;padding:6px 9px;font:400 12px/1.35 var(--mono);max-width:min(300px,62vw);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.mapnote b{font:900 18px/1.1 var(--display);display:block;margin-bottom:2px}
+@media (max-width:600px){.mapnote{display:none}}
+.cityL{font:600 10.5px/1.15 var(--mono);color:var(--fg);white-space:nowrap;text-shadow:0 0 3px var(--bg),0 0 3px var(--bg),0 0 2px var(--bg);pointer-events:none;text-align:center}
+.zlow .cityL.minor{display:none}
+.cityL small{display:block;font-weight:400;color:var(--muted)}
+.leaflet-bar a,.leaflet-bar a:hover{background:var(--card);color:var(--fg);border-bottom-color:var(--border)}
+.leaflet-control-attribution{background:color-mix(in srgb,var(--card) 85%,transparent)!important;color:var(--muted)}
+.leaflet-control-attribution a{color:var(--fg)}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--card);color:var(--fg)}
+.leaflet-popup-content{font:400 12.5px/1.45 var(--mono);margin:10px 12px}
+.leaflet-popup-content b.t{font:800 16px/1.2 var(--display);display:block;margin-bottom:3px}
+.leaflet-popup-content table{border-collapse:collapse;margin:4px 0}
+.leaflet-popup-content td{padding:2px 8px 2px 0}
+.leaflet-popup-content .btn{min-height:28px;padding:5px 7px;font-size:11px;margin:4px 4px 0 0}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font:400 12px/1.3 var(--mono);color:var(--muted);margin-top:8px;align-items:center}
+.legend span{display:inline-flex;align-items:center}
+.legend i{display:inline-block;width:18px;height:4px;margin-right:6px;border-radius:2px}
+.legend i.dash{background-image:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px)!important;background-color:transparent!important}
+.legend .rampbar{display:inline-block;width:min(320px,70vw);height:10px;border-radius:2px;margin:0 6px}
+.pull{font:600 26px/1.25 var(--display);border-left:6px solid var(--hot);padding:4px 0 4px 18px;margin:30px 0}
+.note{background:var(--panel);border:1px solid var(--rule);padding:14px 16px;font-size:16px;margin:22px 0}
+.note h3{margin-top:0}
+table.rank{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--mono);margin:8px 0 18px}
+table.rank th{font:500 11px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:2px solid var(--fg);padding:6px 6px 6px 0}
+table.rank td{border-bottom:1px solid var(--rule);padding:6px 6px 6px 0;vertical-align:top}
+table.rank td.num,table.rank th.num{text-align:right;white-space:nowrap}
+table.rank tr.cl{cursor:pointer}
+table.rank tr.cl:hover td{background:var(--panel)}
+table.rank .bar{display:inline-block;height:9px;background:var(--hot);border-radius:1px;vertical-align:0}
+table.rank small{color:var(--muted)}
+@media (max-width:600px){table.rank .hide-s{display:none}}
+details{margin:14px 0}
+summary{font:500 13px/1.4 var(--mono);cursor:pointer;color:var(--fg);padding:8px 0}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.cta a{font:500 13px/1 var(--mono);text-decoration:none;border:1px solid var(--fg);padding:11px 14px;border-radius:3px}
+.cta a.p{background:var(--hot);border-color:var(--hot);color:#fff}
+footer{border-top:6px double var(--fg);margin-top:56px;padding-top:16px;font:400 13px/1.55 var(--mono);color:var(--muted)}
+footer p{margin:0 0 10px}
+.theme{position:fixed;right:12px;bottom:12px;z-index:1002}
+@media print{.theme,.controls{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker"><b>Data study</b><span>History</span><span>Roman Empire, 2026</span></div>
+<header class="hero">
+  <h1>Roads of the <span class="a">Roman Empire</span></h1>
+  <svg class="mark" viewBox="0 0 120 140" aria-hidden="true"><g id="heroMark"></g></svg>
+  <p class="dek">A team of archaeologists has published Itiner-e, the most detailed open map yet of the roads of the Roman Empire: {{km_total|int}} km of them, section by section. I mapped every one, asked how much of the network we really know, and built a travel-time model to answer an old question: how many days was it from Rome to anywhere?</p>
+</header>
+<div class="byline">Dr Tristan Hotham · Independent researcher · 2026 · Data: Itiner-e (de Soto, Pažout, Brughmans et al.), CC BY 4.0; DARE provinces; Natural Earth</div>
+
+<div class="stats">
+  <div><b class="h">{{km_total|int}} km</b><span>of Roman road in Itiner-e, in {{n_sections|int}} sections</span></div>
+  <div><b class="c">{{cert.Certain.share_km|pct1}}</b><span>of that length is mapped as certain; {{cert.Conjectured.share_km|pct}} is conjectured</span></div>
+  <div><b class="g">{{city.london.foot|int}} days</b><span>from Rome to London on foot, in the model ({{city.london.courier|int}} for a courier)</span></div>
+  <div><b class="t">{{city.alexandria.foot|int}} days</b><span>to Alexandria by road, the long way round the eastern Mediterranean</span></div>
+</div>
+
+<p class="lede">Every Roman road began, in a sense, at the golden milestone that Augustus set up in the Forum. For centuries the best maps of the network were printed atlases. Itiner-e, released in 2025 by teams at Aarhus University and the Autonomous University of Barcelona with many collaborators, puts it all in one open dataset: {{n_sections|int}} road sections, digitised from atlases, surveys, excavation reports, milestones and aerial and satellite images, with {{km_total|int}} km of road from Scotland to the Sahara and from Portugal to the Euphrates. That is {{earth_circ_times|f1}} times round the Earth.</p>
+<p>Each section has a name, a type (main or secondary road), a grade of how sure we are of its course, and, when known, the period it was built and the ancient itinerary it appears in. I used it to ask three things. How much of the network is known for certain? Where was it densest, and where does it run straightest? And, by building a graph of the whole network and walking it with stated speeds, how many days did it take to get from Rome to anywhere else?</p>
+
+<h2><span class="n">01 · The map</span>Every road, and how far it is from Rome</h2>
+<div class="bleed" id="atlas">
+<div class="controls">
+  <div class="scrollrow" id="colRow"><span class="ctl-l">Colour</span></div>
+</div>
+<div class="controls">
+  <div class="scrollrow" id="modeRow"><span class="ctl-l">Travel</span></div>
+  <label class="ctl-l" for="startSel">From</label><select class="sel" id="startSel" aria-label="Start city"></select>
+</div>
+<div class="controls">
+  <div class="searchbox"><input type="search" id="q" placeholder="Search a place, ancient or modern (Londinium, York, Petra)" aria-label="Search a place" autocomplete="off"><ul class="suggest" id="sug" role="listbox"></ul></div>
+</div>
+<div class="mapgrid">
+  <div><div id="map" class="lmap" role="application" aria-label="Map of Roman roads"></div>
+    <div class="legend" id="legend"></div></div>
+  <div class="side" id="side" aria-live="polite"></div>
+</div>
+<p class="src">Roads: Itiner-e static version 2024 (de Soto, Pažout, Brughmans et al. 2025, doi:10.5281/zenodo.17122148), CC BY 4.0, lines lightly simplified. Travel times are modelled, not recorded (see section 02). Click any road, or anywhere on land, for how long it took from the chosen start.</p>
+</div>
+
+<h2><span class="n">02 · How many days from Rome</span>London in {{city.london.foot|int}} days, Alexandria in {{city.alexandria.foot|int}}</h2>
+<p>To turn a map into travel times I treated the network as a graph: the {{n_nodes|int}} points where sections meet are the junctions, and the {{n_sections|int}} sections are the links between them. Wikipedia's article on Roman roads gives the speeds: people on foot covered 20 to 25 km a day, horse-drawn carts 40 to 50 km, and a relay of horses could carry a letter about 80 km in a day. I used the middle of each range, {{modes.foot.kmd|f1}}, {{modes.cart.kmd|int}} and {{modes.courier.kmd|int}} km a day.</p>
+<p>Hills slow everyone down. Itiner-e gives every section a passability value that falls as the road gets steeper. It is not explained in the field description, but it matches Tobler's hiking function, a standard rule for walking speed on slopes, for every section with an average slope above about {{pass.slope_threshold|f1}} degrees (median difference {{pass.median_absdiff_r|raw}}), and is 1 on gentler ground. I divided each section's time by it: {{pass.share_km_below1|pct}} of the network is slowed. Where the roads stop at the sea, four short crossings join them, each counted as one day whatever the traveller: the Channel, the Strait of Messina, the Strait of Otranto and the Strait of Gibraltar. Then a shortest-path search from the Forum gives a time to every junction in the empire.</p>
+<div class="figure"><p class="fig-h">Days from Rome by road</p><p class="fig-sub">Modelled travel time from the Forum to {{n_cities|int}} cities. Lines show the range for the low and high ends of each speed. Click a city to see its route on the map.</p>
+<div class="controls"><div class="scrollrow" id="cityMode"><span class="ctl-l">Travel</span></div></div>
+<div class="chart" id="cityChart"></div></div>
+<p>On foot, London is {{city.london.foot|int}} days from Rome ({{city.london.foot_lo|int}} to {{city.london.foot_hi|int}} days at 25 or 20 km a day): {{city.london.road_km|int}} km of road, through Gaul to Boulogne, across the Channel and up from Dover. A cart would take {{city.london.cart|int}} days and a courier {{city.london.courier|int}}. Constantinople, then still Byzantium, is {{city.constantinople.foot|int}} days, across the Strait of Otranto and along the Via Egnatia; by land the whole way, round the head of the Adriatic, it is {{city.constantinople.foot_nosea|int}}.</p>
+<p>Alexandria is the surprise. It is only {{city.alexandria.straight_km|int}} km from Rome as the crow flies, but there is no road across the sea, so the model takes you over to Greece, through Asia Minor, down through Syria and Judaea and across the Sinai: {{city.alexandria.road_km|int}} km of road and {{city.alexandria.foot|int}} days on foot, {{alex_vs_london|f1}} times as long as London. Carthage is stranger still. Rome to Carthage by road goes through Gaul and Spain, across the Strait of Gibraltar and back along the whole of North Africa: {{city.carthago.road_km|int}} km, {{city.carthago.foot|int}} days on foot, for a city {{city.carthago.straight_km|int}} km away.</p>
+<p class="pull">By road alone, Carthage was further from Rome than Alexandria. Nobody went that way: they took a ship.</p>
+<p>That is the main limit of a roads-only model. The Mediterranean was the empire's real highway, and the roads fed it. Stanford's ORBIS model of the Roman world (Scheidel and Meeks) does the job properly, with sea routes, rivers, seasons and many kinds of traveller, and it shows how often the sea was much quicker than the road. This map does something narrower on a far more detailed road network: it shows how the land itself was tied together, and where the roads alone could and could not take you.</p>
+<div class="figure"><p class="fig-h">How much of the network lies how far from Rome</p><p class="fig-sub">Kilometres of road by days on foot from Rome (the time to the middle of each section). Hover a bar.</p><div class="chart" id="bandChart"></div></div>
+<p>Only {{share_within.foot.30|pct}} of the network is within a month's walk of Rome; by courier, {{share_within.courier.30|pct}} is. The furthest point the roads reach is {{farthest.name|raw}}, in the Fezzan in southern Libya, {{farthest.days.foot|int}} days on foot along desert routes that Itiner-e marks as hypothetical. {{km_unreachable|int}} km of road ({{share_unreachable|pct1}}) cannot be reached by road at all: Sardinia, Corsica, Crete and Cyprus, and a few short fragments.</p>
+
+<h2><span class="n">03 · How much is certain</span>Most of the map is an educated guess</h2>
+<p>Itiner-e grades every section by how sure we are of where it ran. <b>Certain</b> sections are well documented and digitised to within 50 m in mountains and 200 m in the plains. <b>Conjectured</b> sections are known roads whose exact course is less sure. <b>Hypothetical</b> ones are roads that probably existed but cannot be placed, or desert and floodplain tracks with no single fixed line. Only {{cert.Certain.km|int}} km, {{cert.Certain.share_km|pct1}} of the network, is certain. {{cert.Conjectured.share_km|pct}} is conjectured and {{cert.Hypothetical.share_km|pct1}} hypothetical.</p>
+<div class="figure"><p class="fig-h">Certain, conjectured and hypothetical road</p><p class="fig-sub">Kilometres of main and secondary road by certainty. Hover a block.</p><div class="chart" id="certChart"></div></div>
+<p>Main roads make up {{share_main|pct}} of the length, and even of these only {{main_certain_share|pct1}} is certain. The certain kilometres cluster where surveys have been thorough and dry country preserves the line: Arabia, Syria, Galatia and Cappadocia, and Judaea have the most. The longest single section, {{longest_section.name|raw}} in the Libyan desert, runs {{longest_section.km|int}} km and is hypothetical. Not one kilometre of the modelled route from Rome to London runs on a section graded certain.</p>
+<p>None of this is a weakness of the dataset. It is the dataset being honest. A road can be known from milestones and itineraries long before anyone can say which field it crossed, and Itiner-e records that difference instead of hiding it. For a travel-time model it matters less than it sounds: an error of a few hundred metres in a road's course hardly changes a journey of weeks. Leaving out every hypothetical section changes the times to Constantinople and Alexandria by less than a day.</p>
+
+<h2><span class="n">04 · When they were built</span>A fifth of the network has a date</h2>
+<p>Few roads can be dated. {{dated.n|int}} sections, {{dated.share_km|pct}} of the length, carry the name of the emperor or magistrate under whom they were built or a start date, mostly from milestones and inscriptions. That is a record of where inscriptions survive and have been studied, not of when the network grew, so I have not tried to animate it. Within it, Claudius has the most kilometres ({{builders.0.km|int}} km), much of it in Gaul and in Lycia, where a monument at Patara lists the roads built under him, then Trajan ({{builders.1.km|int}} km) and Hadrian ({{builders.2.km|int}} km).</p>
+<div class="figure"><p class="fig-h">Kilometres of road by the emperor or magistrate named as builder</p><p class="fig-sub">The construction period field, grouped by name ({{dated.n_cons|int}} sections have one). Hover a bar.</p><div class="chart" id="builderChart"></div></div>
+<p>The ancient itineraries tell a different story. {{itin.share_any|pct}} of the length appears in at least one: {{itin.km_peutinger|int}} km on the Tabula Peutingeriana, the medieval copy of a late Roman road map, and {{itin.km_antonine|int}} km in the Antonine Itinerary, a list of routes and stopping places. Among the named roads the longest in the data is the Via Egnatia across the Balkans ({{named_roads.0.km|int}} km), then the Via Hadriana in Egypt and the Via Claudia Augusta over the Alps.</p>
+
+<h2><span class="n">05 · The straightest roads</span>Roman roads really do run straight</h2>
+<p>To find the longest straight runs I joined sections into continuous lines through junctions where the road carries on within 20 degrees of straight, then looked for stretches that never stray more than 200 m from a straight line, the accuracy of a certain section in the plains. Long conjectured lines drawn with only a few points are left out, because they are straight only because they were drawn that way. {{n_runs_20|int}} stretches run straight for 20 km or more.</p>
+<div class="figure"><p class="fig-h">The longest straight runs</p><p class="fig-sub">Stretches that stay within 200 m of a straight line. Click a row to see it on the map.</p><div id="runTable"></div></div>
+<p>The longest, {{runs.0.km|int}} km, crosses the chalk plain of Picardy between Saint-Quentin and Amiens, a line a modern road still follows. Then come the Via Postumia in the Veneto ({{runs.1.km|int}} km) and the Via Appia across the Pontine plain towards Terracina ({{runs.2.km|int}} km), the longest straight on a section graded certain. These are lower bounds: a tolerance of 200 m is strict, and the famous long alignments of Roman Britain and Gaul bend just enough, at river crossings and ridges, to break into shorter runs.</p>
+
+<h2><span class="n">06 · The densest networks</span>Latium leads, Mesopotamia trails</h2>
+<p>Measured as kilometres of road per 1,000 km² in the provinces of about AD 117 (from the Digital Atlas of the Roman Empire, with Italy as its eleven regions), the densest network is in {{provinces.0.name|raw}}, the country round Rome: {{provinces.0.density|int}} km per 1,000 km². Outside Italy, {{top_prov_noit.0.name|raw}} ({{top_prov_noit.0.density|int}}), {{top_prov_noit.1.name|raw}} ({{top_prov_noit.1.density|int}}) and {{top_prov_noit.2.name|raw}} ({{top_prov_noit.2.density|int}}) lead. Italy as a whole has {{italia.density|int}}, against {{empire_density|int}} for all the provinces together.</p>
+<div class="figure"><p class="fig-h">Road density by province</p><p class="fig-sub">Kilometres of road per 1,000 km² of land, provinces of about AD 117. Click a row to see the province on the map.</p><div id="provTable"></div>
+<button class="btn" id="provMore">Show all {{n_provinces|int}}</button></div>
+<p>The thinnest networks are where the province was mostly desert or held only briefly: Egypt ({{prov_by.Aegyptus.density|int}}), Crete and Cyrenaica ({{prov_by.Creta et Cyrene.density|int}}) and Trajan's short-lived Armenia and Mesopotamia ({{prov_by.Armenia Mesopotamia.density|f1}}), with Mauretania Tingitana in Morocco ({{prov_by.Mauretania Tingitana.density|int}}) not far behind. Within Italy, Umbria (regio VI) is surprisingly thin ({{prov_by.Italia, regio VI (Umbria).density|int}}), a reminder that coverage is uneven. Density also follows research. Judaea, one of the most intensively surveyed landscapes in the world, has {{prov_by.Iudaea.share_certain|pct}} of its roads graded certain, against {{cert.Certain.share_km|pct1}} for the network as a whole. {{share_outside|pct1}} of the network, {{km_outside_provinces|int}} km, lies outside the provinces altogether: in Scotland, beyond the Rhine and Danube, and along desert routes into the Sahara.</p>
+
+<h2><span class="n">07 · How I did this</span>Methods and caveats</h2>
+<p><b>Data.</b> Itiner-e static version 2024 (Zenodo record version 1.3), {{n_sections|int}} road sections with their geodesic length, average slope and passability. Section ends that meet within 1 m are one junction; the network is clean at that tolerance. Dates come from the construction period field, else the lower date; 9999 means not given.</p>
+<p><b>Travel times.</b> Time on a section is its length divided by the speed (on foot {{modes.foot.kmd|f1}}, cart {{modes.cart.kmd|int}}, courier {{modes.courier.kmd|int}} km a day, the middle of Wikipedia's ranges) and by the section's passability. Each sea crossing counts as one day; the Euripus bridge to Euboea counts as road, and the Bosporus and Hellespont ferries are already in Itiner-e. Off the network, the last stretch to any point is counted at half the road speed, up to {{offroad_max_km|int}} km from a road. There are no rests, seasons, rivers, sea routes or borders. These are modelled times for a steady traveller, not records of real journeys.</p>
+<p><b>Straight runs and density.</b> Straight runs are found on continuous lines joined through junctions (deflection under 20 degrees), simplified with a 200 m tolerance in a local equidistant projection; conjectured stretches need at least one point every 2 km. Density uses DARE's province outlines, which are themselves approximate, and land area in an equal-area projection.</p>
+<p><b>What this cannot say.</b> Most of the network is conjectured, and only a fifth is dated, so the map shows the roads that existed at some point between about 300 BCE and 300 CE, not the network at any one moment. Coverage is uneven: some regions have been surveyed field by field, others only from old atlases. And the travel model leaves out the sea, which for most long journeys was the quicker way.</p>
+<details><summary>Sources and licences</summary>
+<ul>
+<li>de Soto, P., Pažout, A., Brughmans, T. et al. (2025) A high-resolution dataset of roads of the Roman Empire: Itiner-e static version 2024. Zenodo, doi:10.5281/zenodo.17122148. Described in Scientific Data, doi:10.1038/s41597-025-06140-z. CC BY 4.0. A growing version is at itiner-e.org.</li>
+<li>Province outlines and ancient place names: the Digital Atlas of the Roman Empire (DARE), Johan Åhlfeldt, via github.com/klokantech/roman-empire.</li>
+<li>English Wikipedia, 'Roman roads' (travel speeds and the 400,000 km estimate), CC BY-SA 4.0.</li>
+<li>Scheidel, W. and Meeks, E., ORBIS: The Stanford Geospatial Network Model of the Roman World, orbis.stanford.edu (mentioned for comparison only).</li>
+<li>Natural Earth (public domain): land and modern place names for search.</li>
+<li>Base map tiles © Esri.</li>
+</ul></details>
+
+<div class="cta"><a class="p" href="https://doi.org/10.5281/zenodo.23857866">Read the paper</a><a href="https://github.com/Tristan-Hotham/roman-roads">Data and code</a><a href="https://blog.tristanhotham.com/2026/10/31/roman-roads/">Blog post</a></div>
+
+<footer>
+<p>Dr Tristan Hotham, Independent researcher. ORCID <a href="https://orcid.org/0000-0003-4931-9349">0000-0003-4931-9349</a>.</p>
+<p>Cite as: Hotham, T. (2026) Roads of the Roman Empire: certainty, density, straight runs and days from Rome in the Itiner-e network. Zenodo. <a href="https://doi.org/10.5281/zenodo.23857866">https://doi.org/10.5281/zenodo.23857866</a></p>
+<p>Data: Itiner-e (de Soto, Pažout, Brughmans et al. 2025), CC BY 4.0. Licence: derived data, text and figures CC BY 4.0; code MIT. Blog post: <a href="https://blog.tristanhotham.com/2026/10/31/roman-roads/">blog.tristanhotham.com</a>.</p>
+<p>I wrote the text, with drafting and editing assistance from Claude (Anthropic), which also helped prepare the analysis code. I reviewed and checked all text and results.</p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<button class="btn theme" id="theme" aria-label="Toggle dark mode">◐</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const R = /*RESULTS*/;
+const RAMP = /*RAMP*/;
+const CERT = /*CERT*/;
+const BANDS = /*BANDS*/;
+const fmt = n => n == null || n === "" || !isFinite(n) ? "n/a" : Math.round(n).toLocaleString("en-GB");
+const f1 = n => (Math.round(n * 10) / 10).toLocaleString("en-GB");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tip = document.getElementById("tip");
+function showTip(h, x, y) { tip.innerHTML = h; tip.style.display = "block"; const w = tip.offsetWidth; x = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)); tip.style.left = x + scrollX + "px"; tip.style.top = y + scrollY + "px"; }
+function hideTip() { tip.style.display = "none"; }
+document.addEventListener("click", hideTip);
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const lbl = (svg, x, y, s, cls = "lab", anchor = "start") => { const t = el("text", { x, y, class: cls, "text-anchor": anchor }, svg); t.textContent = s; return t; };
+const redraws = [];
+function resp(box, render) { let last = 0; const go = force => { const w = Math.max(280, Math.round(box.clientWidth)); if (!force && Math.abs(w - last) < 4) return; last = w; box.innerHTML = ""; render(w, w < 560); }; new ResizeObserver(() => go()).observe(box); go(); redraws.push(() => go(true)); }
+const isDark = () => { const r = document.documentElement; return r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const small = () => innerWidth < 900;
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const RX = RAMP.map(r => r[0]), RC = RAMP.map(r => hex(r[1]));
+function rampRGB(d) { if (!isFinite(d)) return null; d = Math.max(0, Math.min(RX[RX.length - 1], d)); let i = 1; while (i < RX.length - 1 && d > RX[i]) i += 1; const t = (d - RX[i - 1]) / (RX[i] - RX[i - 1]); return RC[i - 1].map((a, j) => Math.round(a + (RC[i][j] - a) * t)); }
+const rampCol = d => { const c = rampRGB(d); return c ? `rgb(${c[0]},${c[1]},${c[2]})` : "#9A9288"; };
+const rampCSS = () => "linear-gradient(90deg," + RAMP.map(r => `${r[1]} ${(r[0] / RX[RX.length - 1] * 100).toFixed(1)}%`).join(",") + ")";
+const days = d => !isFinite(d) ? "not by road" : d < 1 ? `${Math.max(1, Math.round(d * 24))} hours` : `${fmt(d)} day${Math.round(d) === 1 ? "" : "s"}`;
+const CERTC = { 0: CERT[0][2], 1: CERT[1][2], 2: CERT[2][2] };
+const MODES = ["foot", "cart", "courier"];
+
+/* hero mark: a milestone with roads radiating */
+(function () {
+  const g = document.getElementById("heroMark");
+  for (let i = 0; i < 9; i += 1) { const a = (-90 + (i - 4) * 22) * Math.PI / 180; el("line", { x1: 60, y1: 104, x2: 60 + 58 * Math.cos(a), y2: 104 + 58 * Math.sin(a), stroke: rampCol(i * 22), "stroke-width": 4, "stroke-linecap": "round" }, g); }
+  el("rect", { x: 44, y: 70, width: 32, height: 62, rx: 3, fill: "#E9E1D2", stroke: "#1F1A17", "stroke-width": 2.5 }, g);
+  el("path", { d: "M44 76 Q60 58 76 76", fill: "#E9E1D2", stroke: "#1F1A17", "stroke-width": 2.5 }, g);
+  const t = el("text", { x: 60, y: 104, "text-anchor": "middle", style: "font:700 13px var(--display);fill:#1F1A17" }, g); t.textContent = "M·P";
+})();
+
+/* ---------- city chart ---------- */
+let cityMode = "foot";
+(function () { const row = document.getElementById("cityMode");
+  MODES.forEach(m => { const b = document.createElement("button"); b.className = "btn"; b.textContent = R.modes[m].label; b.setAttribute("aria-pressed", m === cityMode); b.onclick = () => { cityMode = m; row.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", x === b)); redraws.forEach(f => f()); }; row.appendChild(b); }); })();
+resp(document.getElementById("cityChart"), (W, sm) => {
+  const box = document.getElementById("cityChart"); const K = R.city_order; const rh = 22, m = { l: sm ? 118 : 178, r: 64, t: 8 };
+  const H = m.t + K.length * rh + 30; const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box);
+  const max = cityMode === "foot" ? 260 : cityMode === "cart" ? 130 : 70; const step = cityMode === "foot" ? 50 : cityMode === "cart" ? 25 : 10;
+  const x = v => m.l + (W - m.l - m.r) * v / max;
+  for (let v = 0; v <= max; v += step) { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - 22, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 6, v + (v === 0 ? "" : ""), "lab s m", "middle"); }
+  lbl(svg, W - m.r + 6, H - 6, "days", "lab s m");
+  K.forEach((k, i) => {
+    const c = R.city[k], v = c[cityMode], y0 = m.t + i * rh;
+    el("rect", { x: x(0), y: y0 + 4, width: Math.max(1, x(v) - x(0)), height: rh - 8, fill: rampCol(c.foot) }, svg);
+    if (cityMode !== "courier") { const lo = c[cityMode + "_lo"], hi = c[cityMode + "_hi"]; el("line", { x1: x(lo), x2: x(hi), y1: y0 + rh / 2, y2: y0 + rh / 2, stroke: css("--fg"), "stroke-width": 1.2 }, svg); [lo, hi].forEach(z => el("line", { x1: x(z), x2: x(z), y1: y0 + rh / 2 - 4, y2: y0 + rh / 2 + 4, stroke: css("--fg"), "stroke-width": 1.2 }, svg)); }
+    lbl(svg, m.l - 8, y0 + rh / 2 + 4, sm ? c.name.replace(/ \(.*\)/, "") : c.name, "lab", "end");
+    lbl(svg, x(cityMode === "courier" ? v : c[cityMode + "_hi"]) + 6, y0 + rh / 2 + 4, fmt(v), "lab b");
+    const hit = el("rect", { x: 0, y: y0, width: W, height: rh, fill: "transparent", style: "cursor:pointer" }, svg);
+    const h = `<b>${esc(c.name)}</b> (${esc(c.latin)})<br>on foot ${fmt(c.foot)} days (${fmt(c.foot_lo)} to ${fmt(c.foot_hi)})<br>cart ${fmt(c.cart)}, courier ${fmt(c.courier)}<br>${fmt(c.road_km)} km of road${c.sea.length ? ", plus a sea crossing" : ""}; ${fmt(c.straight_km)} km as the crow flies`;
+    hit.addEventListener("mousemove", e => showTip(h, e.clientX, e.clientY - 4)); hit.addEventListener("mouseleave", hideTip);
+    hit.addEventListener("click", e => { e.stopPropagation(); hideTip(); showCity(k); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+  });
+});
+
+/* ---------- days band chart ---------- */
+resp(document.getElementById("bandChart"), (W, sm) => {
+  const box = document.getElementById("bandChart"); const B = R.foot_bands; const H = 220, m = { l: 46, r: 8, t: 10, b: 40 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box); const max = 70000, x = i => m.l + (W - m.l - m.r) * i / B.length, bw = (W - m.l - m.r) / B.length, y = v => H - m.b - (H - m.t - m.b) * v / max;
+  for (let v = 0; v <= max; v += 10000) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: css("--rule") }, svg); lbl(svg, m.l - 6, y(v) + 4, v ? (v / 1000) + "k" : "0", "lab s m", "end"); }
+  B.forEach((b, i) => {
+    el("rect", { x: x(i) + 2, y: y(b.km), width: bw - 4, height: y(0) - y(b.km), fill: rampCol((b.a + (b.b ?? 160)) / 2) }, svg);
+    lbl(svg, x(i) + bw / 2, H - m.b + 15, b.b == null ? `${b.a}+` : `${b.a}`, "lab s m", "middle");
+    const hit = el("rect", { x: x(i), y: m.t, width: bw, height: H - m.t - m.b, fill: "transparent" }, svg);
+    const h = `<b>${b.b == null ? b.a + " days or more" : b.a + " to " + b.b + " days"}</b><br>${fmt(b.km)} km of road`;
+    hit.addEventListener("mousemove", e => showTip(h, e.clientX, e.clientY - 4)); hit.addEventListener("mouseleave", hideTip);
+  });
+  lbl(svg, m.l + (W - m.l - m.r) / 2, H - 6, "days on foot from Rome (start of each band)", "lab s m", "middle");
+  lbl(svg, m.l, 8, "km of road", "lab s m");
+});
+
+/* ---------- certainty chart ---------- */
+resp(document.getElementById("certChart"), (W, sm) => {
+  const box = document.getElementById("certChart"); const rows = [["Main road", R.type_cert["Main Road"]], ["Secondary road", R.type_cert["Secondary Road"]]];
+  const rh = 34, m = { l: sm ? 92 : 120, r: 10, t: 6 }; const H = m.t + rows.length * (rh + 12) + 24; const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box);
+  const max = 200000, x = v => m.l + (W - m.l - m.r) * v / max;
+  for (let v = 0; v <= max; v += 50000) { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - 22, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 6, v ? (v / 1000) + "k km" : "0", "lab s m", "middle"); }
+  rows.forEach(([lab, d], i) => { const y0 = m.t + i * (rh + 12); let acc = 0;
+    lbl(svg, m.l - 8, y0 + rh / 2 + 4, lab, "lab b", "end");
+    CERT.forEach(([k, l, c]) => { const v = d[k] || 0; const r = el("rect", { x: x(acc), y: y0, width: Math.max(0, x(acc + v) - x(acc)), height: rh, fill: c }, svg);
+      const h = `<b>${lab}, ${l.toLowerCase()}</b><br>${fmt(v)} km`; r.addEventListener("mousemove", e => showTip(h, e.clientX, e.clientY - 4)); r.addEventListener("mouseleave", hideTip); acc += v; });
+  });
+  const lg = document.createElement("div"); lg.className = "legend"; lg.innerHTML = CERT.map(([k, l, c]) => `<span><i style="background:${c};height:10px;width:14px"></i>${l}: ${fmt(R.cert[k].km)} km (${(R.cert[k].share_km * 100).toFixed(1)}%)</span>`).join(""); box.appendChild(lg);
+});
+
+/* ---------- builders chart ---------- */
+resp(document.getElementById("builderChart"), (W, sm) => {
+  const box = document.getElementById("builderChart"); const B = R.builders.slice(0, 10); const rh = 22, m = { l: sm ? 120 : 150, r: 60, t: 4 };
+  const H = m.t + B.length * rh + 24; const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, box); const max = 6000, x = v => m.l + (W - m.l - m.r) * v / max;
+  for (let v = 0; v <= max; v += 2000) { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - 22, stroke: css("--rule") }, svg); lbl(svg, x(v), H - 6, v ? fmt(v) + " km" : "0", "lab s m", "middle"); }
+  B.forEach((b, i) => { const y0 = m.t + i * rh; el("rect", { x: x(0), y: y0 + 4, width: x(b.km) - x(0), height: rh - 8, fill: css("--hot") }, svg);
+    lbl(svg, m.l - 8, y0 + rh / 2 + 4, b.name, "lab", "end"); lbl(svg, x(b.km) + 6, y0 + rh / 2 + 4, fmt(b.km), "lab b");
+    const hit = el("rect", { x: 0, y: y0, width: W, height: rh, fill: "transparent" }, svg); const h = `<b>${esc(b.name)}</b><br>${fmt(b.km)} km in ${b.n} sections`;
+    hit.addEventListener("mousemove", e => showTip(h, e.clientX, e.clientY - 4)); hit.addEventListener("mouseleave", hideTip); });
+});
+
+/* ---------- tables ---------- */
+function runTable() {
+  const d = document.getElementById("runTable"); const max = R.runs[0].km;
+  d.innerHTML = `<table class="rank"><thead><tr><th>Stretch</th><th class="num">Straight</th><th class="num hide-s">Off line</th><th class="num hide-s">Certain</th></tr></thead><tbody>` +
+    R.runs.slice(0, 10).map((r, i) => `<tr class="cl" data-i="${i}"><td>${esc(r.label)}<br><small>${esc(r.from)} to ${esc(r.to)}</small></td><td class="num">${f1(r.km)} km<br><span class="bar" style="width:${Math.round(r.km / max * 80)}px"></span></td><td class="num hide-s">${fmt(r.maxdev_m)} m</td><td class="num hide-s">${Math.round(r.share_certain * 100)}%</td></tr>`).join("") + `</tbody></table>`;
+  d.querySelectorAll("tr.cl").forEach(tr => tr.onclick = () => { showRun(+tr.dataset.i); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+}
+runTable();
+let provAll = false;
+function provTable() {
+  const d = document.getElementById("provTable"); const P = provAll ? R.provinces : R.provinces.slice(0, 12); const max = R.provinces[0].density;
+  d.innerHTML = `<table class="rank"><thead><tr><th>Province</th><th class="num">km per 1,000 km²</th><th class="num hide-s">Road km</th><th class="num hide-s">Certain</th></tr></thead><tbody>` +
+    P.map(p => `<tr class="cl" data-n="${esc(p.name)}"><td>${esc(p.name)}</td><td class="num">${f1(p.density)}<br><span class="bar" style="width:${Math.round(p.density / max * 90)}px"></span></td><td class="num hide-s">${fmt(p.km)}</td><td class="num hide-s">${Math.round(p.share_certain * 100)}%</td></tr>`).join("") + `</tbody></table>`;
+  d.querySelectorAll("tr.cl").forEach(tr => tr.onclick = () => { showProv(tr.dataset.n); document.getElementById("atlas").scrollIntoView({ behavior: "smooth", block: "start" }); });
+}
+provTable();
+document.getElementById("provMore").onclick = e => { provAll = !provAll; e.target.textContent = provAll ? "Show fewer" : `Show all ${R.n_provinces}`; provTable(); };
+
+/* ---------- map ---------- */
+const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
+const ESRI_ATT = 'Tiles &copy; Esri | Roads: <a href="https://doi.org/10.5281/zenodo.17122148">Itiner-e</a> CC BY 4.0 | Provinces: DARE';
+const LYDEF = { base: "plain", hills: true, hillK: 35, labels: true, labelK: 60, bounds: false, roads: true, width: 1.6, iso: true, isoK: 45, prov: false, cross: true, cities: true };
+const LY = { ...LYDEF };
+try { Object.assign(LY, JSON.parse(localStorage.getItem("roman_layers") || "{}")); } catch (e) {}
+const saveLY = () => { try { localStorage.setItem("roman_layers", JSON.stringify(LY)); } catch (e) {} };
+const map = L.map("map", { minZoom: 3, maxZoom: 13, zoomSnap: .5, maxBounds: [[10, -30], [68, 65]] }).setView([42, 14], small() ? 3.5 : 4.5);
+["hills:250", "iso:300", "prov:350", "labels:430", "roads:450", "route:500", "names:620"].forEach(s => { const [n, z] = s.split(":"); map.createPane(n); map.getPane(n).style.zIndex = z; });
+["hills", "labels", "names", "iso"].forEach(n => map.getPane(n).style.pointerEvents = "none");
+const canvas = L.canvas({ pane: "roads", padding: .3, tolerance: 5 });
+let base = null, hills = null, labels = null, bounds = null;
+function setTiles() {
+  [base, labels, hills, bounds].forEach(l => { if (l) map.removeLayer(l); });
+  const t = isDark() ? "Dark" : "Light";
+  const url = LY.base === "relief" ? ESRI + "World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}" : LY.base === "topo" ? ESRI + "World_Topo_Map/MapServer/tile/{z}/{y}/{x}" : LY.base === "satellite" ? ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}" : `${ESRI}Canvas/World_${t}_Gray_Base/MapServer/tile/{z}/{y}/{x}`;
+  base = L.tileLayer(url, { maxZoom: 16, maxNativeZoom: LY.base === "relief" ? 13 : 16, attribution: ESRI_ATT }).addTo(map);
+  hills = L.tileLayer(ESRI + "Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16, maxNativeZoom: 16, pane: "hills" });
+  labels = L.tileLayer(`${ESRI}Canvas/World_${t}_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, { maxZoom: 16, pane: "labels" });
+  bounds = L.tileLayer(ESRI + "Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16, pane: "labels" });
+  applyLayers();
+}
+function applyLayers() {
+  if (!base) return;
+  if (LY.hills) { hills.addTo(map); hills.setOpacity(Math.min(1, .1 + LY.hillK / 120)); } else map.removeLayer(hills);
+  if (LY.labels) { labels.addTo(map); labels.setOpacity(LY.labelK / 100); } else map.removeLayer(labels);
+  if (LY.bounds) bounds.addTo(map); else map.removeLayer(bounds);
+  if (roadLayer) { if (LY.roads) roadLayer.addTo(map); else map.removeLayer(roadLayer); }
+  if (isoLayer) { if (LY.iso && S.colour === "days") { isoLayer.addTo(map); isoLayer.setOpacity(LY.isoK / 100); } else map.removeLayer(isoLayer); }
+  if (provLayer) { if (LY.prov) provLayer.addTo(map); else map.removeLayer(provLayer); } else if (LY.prov) loadProv();
+  if (crossLayer) { if (LY.cross) crossLayer.addTo(map); else map.removeLayer(crossLayer); }
+  if (cityLayer) { if (LY.cities) cityLayer.addTo(map); else map.removeLayer(cityLayer); }
+  restyle(); legend();
+}
+(function layerControl() {
+  const Ctl = L.Control.extend({ options: { position: "topright" }, onAdd() {
+    const d = L.DomUtil.create("div"); L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
+    d.innerHTML = `<button class="lyrBtn" aria-expanded="false">Map layers</button>
+<div class="lyrPanel" hidden>
+ <div class="row"><label style="font-weight:600">Base map</label><div class="sub"><select data-k="base" aria-label="Base map"><option value="plain">Plain grey</option><option value="topo">Topographic</option><option value="relief">Shaded relief</option><option value="satellite">Satellite</option></select></div></div>
+ <div class="row"><label><input type="checkbox" data-k="hills"> Hill shading</label><div class="sub"><span>strength</span><input type="range" data-k="hillK" min="10" max="100" step="5" aria-label="Hill shading strength"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="labels"> Modern place names</label><div class="sub"><span>strength</span><input type="range" data-k="labelK" min="20" max="100" step="5" aria-label="Place name strength"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="bounds"> Modern borders and more places</label></div>
+ <div class="hd">Roman roads</div>
+ <div class="row"><label><input type="checkbox" data-k="roads"> Roads (Itiner-e)</label><div class="sub"><span>width</span><input type="range" data-k="width" min=".6" max="4" step=".2" aria-label="Road width"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="iso"> Days shading off the roads</label><div class="sub"><span>strength</span><input type="range" data-k="isoK" min="10" max="90" step="5" aria-label="Shading strength"></div></div>
+ <div class="row"><label><input type="checkbox" data-k="cities"> Ancient city names</label></div>
+ <div class="row"><label><input type="checkbox" data-k="cross"> Sea crossings</label></div>
+ <div class="row"><label><input type="checkbox" data-k="prov"> Provinces, about AD 117 (DARE)</label></div>
+ <button class="reset">Reset layers</button>
+</div>`;
+    return d; } });
+  map.addControl(new Ctl());
+  const box = map.getContainer(), btn = box.querySelector(".lyrBtn"), pan = box.querySelector(".lyrPanel");
+  btn.onclick = () => { const o = pan.hidden; pan.hidden = !o; btn.setAttribute("aria-expanded", o); };
+  const sync = () => pan.querySelectorAll("[data-k]").forEach(i => { const k = i.dataset.k; if (i.type === "checkbox") i.checked = LY[k]; else i.value = LY[k]; });
+  pan.querySelectorAll("[data-k]").forEach(i => i.addEventListener(i.type === "range" ? "input" : "change", () => {
+    const k = i.dataset.k; LY[k] = i.type === "checkbox" ? i.checked : (k === "base" ? i.value : +i.value);
+    if (k === "hillK") LY.hills = true; if (k === "labelK") LY.labels = true; if (k === "width") LY.roads = true; if (k === "isoK") LY.iso = true;
+    sync(); saveLY(); if (k === "base") setTiles(); else applyLayers();
+  }));
+  pan.querySelector(".reset").onclick = () => { Object.assign(LY, LYDEF); saveLY(); sync(); setTiles(); };
+  sync();
+})();
+const Note = L.Control.extend({ options: { position: "bottomleft" }, onAdd() { const d = L.DomUtil.create("div", "mapnote"); d.id = "mapnote"; L.DomEvent.disableClickPropagation(d); return d; } });
+map.addControl(new Note());
+L.control.scale({ imperial: false, position: "bottomright" }).addTo(map);
+
+/* ---------- state ---------- */
+const S = { colour: "days", mode: "foot", start: null, startName: "Rome", sel: null, prov: null };
+let NET = null, RD = null, SEC = [], roadLayer = null, isoLayer = null, provLayer = null, crossLayer = null, cityLayer = null, routeLayer = L.layerGroup(), markLayer = L.layerGroup();
+let ADJ = null, T = {}, PREV = null, PREVE = null, GRID = null;
+const NSEC = () => SEC.length;
+const kmdOf = m => R.modes[m].kmd;
+function wOf(e, kmd) { if (e < SEC.length) return SEC[e].km / (kmd * SEC[e].pass); const c = NET.crossings[e - SEC.length]; return c[3] ? c[2] / kmd : NET.cross_days; }
+function buildAdj() {
+  const n = NET.nodes.length; ADJ = Array.from({ length: n }, () => []);
+  NET.edges.forEach((e, i) => { if (e[0] !== e[1]) { ADJ[e[0]].push([e[1], i]); ADJ[e[1]].push([e[0], i]); } });
+  NET.crossings.forEach((c, j) => { const i = NET.edges.length + j; ADJ[c[0]].push([c[1], i]); ADJ[c[1]].push([c[0], i]); });
+}
+function dijkstra(src, kmd, wantPrev) {
+  const n = NET.nodes.length, dist = new Float64Array(n).fill(Infinity), prev = wantPrev ? new Int32Array(n).fill(-1) : null, prevE = wantPrev ? new Int32Array(n).fill(-1) : null;
+  const hk = [], hv = []; const push = (k, v) => { hk.push(k); hv.push(v); let i = hk.length - 1; while (i > 0) { const p = (i - 1) >> 1; if (hk[p] <= hk[i]) break; [hk[p], hk[i]] = [hk[i], hk[p]]; [hv[p], hv[i]] = [hv[i], hv[p]]; i = p; } };
+  const pop = () => { const k = hk[0], v = hv[0]; const lk = hk.pop(), lv = hv.pop(); if (hk.length) { hk[0] = lk; hv[0] = lv; let i = 0; for (;;) { const l = 2 * i + 1, r = l + 1; let s = i; if (l < hk.length && hk[l] < hk[s]) s = l; if (r < hk.length && hk[r] < hk[s]) s = r; if (s === i) break; [hk[s], hk[i]] = [hk[i], hk[s]]; [hv[s], hv[i]] = [hv[i], hv[s]]; i = s; } } return [k, v]; };
+  dist[src] = 0; push(0, src);
+  while (hk.length) { const [d, u] = pop(); if (d > dist[u]) continue; for (const [v, e] of ADJ[u]) { const nd = d + wOf(e, kmd); if (nd < dist[v]) { dist[v] = nd; if (wantPrev) { prev[v] = u; prevE[v] = e; } push(nd, v); } } }
+  return { dist, prev, prevE };
+}
+function recompute() {
+  MODES.forEach(m => { const r = dijkstra(S.start, kmdOf(m), m === S.mode); T[m] = r.dist; if (m === S.mode) { PREV = r.prev; PREVE = r.prevE; } });
+}
+function secDays(i, m) { const s = SEC[i], w = s.km / (kmdOf(m) * s.pass); return Math.min(T[m][s.u] + w / 2, T[m][s.v] + w / 2); }
+function pointDays(code, dq, m) {
+  const e = code >> 8, f = (code & 255) / 255, s = SEC[e], kmd = kmdOf(m), w = s.km / (kmd * s.pass);
+  return Math.min(T[m][s.u] + f * w, T[m][s.v] + (1 - f) * w) + (dq / NET.grid.dist_scale) / (kmd * NET.off_factor);
+}
+const DATECOL = BANDS.map(b => b[4]);
+function secStyle(s) {
+  const z = map.getZoom(), k = LY.width * (z < 4 ? .55 : z < 5 ? .75 : z < 7 ? 1 : 1.4) * (s.type === 0 ? 1.25 : .8);
+  let color;
+  if (S.colour === "days") color = rampCol(secDays(s.i, S.mode));
+  else if (S.colour === "cert") color = CERTC[s.cert];
+  else if (S.colour === "type") color = s.type === 0 ? css("--hot") : (isDark() ? "#B9AFA2" : "#6E655C");
+  else color = s.band >= 0 ? DATECOL[s.band] : (isDark() ? "#5A524A" : "#C9C0B2");
+  const dim = S.prov && s.prov !== S.prov;
+  const wt = S.colour === "type" && s.type === 1 ? k * .8 : S.colour === "cert" && s.cert === 0 ? k * 1.7 : k;
+  return { color, weight: wt, opacity: dim ? .18 : (S.colour === "date" && s.band < 0 ? .7 : .92), dashArray: s.cert === 2 ? `${3 * LY.width},${2.5 * LY.width}` : null, lineCap: "round" };
+}
+function restyle() { if (!roadLayer) return; SEC.forEach(s => s.l.setStyle(secStyle(s))); if (S.colour === "cert") SEC.forEach(s => { if (s.cert === 0) s.l.bringToFront(); }); else if (S.colour === "type") SEC.forEach(s => { if (s.type === 0) s.l.bringToFront(); }); status(); }
+function status() {
+  const n = document.getElementById("mapnote"); if (!n) return;
+  const lab = { days: `Days ${R.modes[S.mode].label.toLowerCase().replace("courier (relay of horses)", "by courier").replace("horse-drawn cart", "by cart")} from ${S.startName}`, cert: "Certainty of each road's course", type: "Main and secondary roads", date: "Date of building, where known" }[S.colour];
+  n.innerHTML = `<b>${esc(lab)}</b>${S.colour === "days" ? "Click any road or any point on land." : "Click a road for its details."}`;
+}
+function legend() {
+  const d = document.getElementById("legend"); let h = "";
+  if (S.colour === "days") { const mx = RX[RX.length - 1]; h = `<span>0</span><span class="rampbar" style="background:${rampCSS()}"></span><span>${mx}+ days ${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} from ${esc(S.startName)}</span><span><i style="background:#9A9288"></i>not reachable by road</span>`; }
+  else if (S.colour === "cert") h = CERT.map(([k, l, c], i) => `<span style="color:${c}"><i class="${i === 2 ? "dash" : ""}" style="background:${c}"></i><span style="color:var(--muted)">${l} (${(R.cert[k].share_km * 100).toFixed(1)}% of km)</span></span>`).join("");
+  else if (S.colour === "type") h = `<span><i style="background:var(--hot);height:5px"></i>Main road (${Math.round(R.share_main * 100)}% of km)</span><span><i style="background:#6E655C;height:3px"></i>Secondary road</span>`;
+  else h = BANDS.map(b => `<span><i style="background:${b[4]}"></i>${esc(b[1])}</span>`).join("") + `<span><i style="background:#C9C0B2"></i>No date (${Math.round(R.dated.share_undated_km * 100)}% of km)</span>`;
+  h += `<span><i class="dash" style="color:var(--muted)"></i>dashed: hypothetical</span>`;
+  if (LY.cross) h += `<span><i style="background:#2E6FA8;height:2px"></i>sea crossing (one day)</span>`;
+  d.innerHTML = h;
+}
+// colour and mode buttons
+(function () {
+  const row = document.getElementById("colRow");
+  [["days", "Days from start"], ["cert", "Certainty"], ["type", "Main or secondary"], ["date", "Date built"]].forEach(([k, l]) => { const b = document.createElement("button"); b.className = "btn"; b.textContent = l; b.setAttribute("aria-pressed", k === S.colour); b.onclick = () => { S.colour = k; row.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", x === b)); applyLayers(); }; row.appendChild(b); });
+  const mr = document.getElementById("modeRow");
+  MODES.forEach(m => { const b = document.createElement("button"); b.className = "btn"; b.textContent = R.modes[m].label.replace(" (relay of horses)", ""); b.setAttribute("aria-pressed", m === S.mode); b.onclick = () => { S.mode = m; mr.querySelectorAll(".btn").forEach(x => x.setAttribute("aria-pressed", x === b)); if (NET) { recompute(); drawIso(); restyle(); legend(); refreshSide(); } }; mr.appendChild(b); });
+})();
+
+/* ---------- loading ---------- */
+function decode(d) { const out = []; let x = 0, y = 0; for (let i = 0; i < d.length; i += 2) { x += d[i]; y += d[i + 1]; out.push([y / 1e4, x / 1e4]); } return out; }
+function loadImg(src) { return new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = src; }); }
+Promise.all([fetch("data/network.json").then(r => r.json()), fetch("data/roads_site.json").then(r => r.json()), fetch("data/places.json").then(r => r.json())]).then(([net, rd, places]) => {
+  NET = net; RD = rd; window.PLACES = places;
+  const C = rd.cols.reduce((o, c, i) => (o[c] = i, o), {});
+  roadLayer = L.layerGroup();
+  rd.rows.forEach((r, i) => {
+    const e = NET.edges[i];
+    const s = { i, type: r[C.type], cert: r[C.cert], band: r[C.band], year: r[C.year], name: r[C.name], cons: r[C.cons], itin: r[C.itin], bib: r[C.bib], cite: r[C.cite], prov: r[C.prov] >= 0 ? rd.prov[r[C.prov]] : null, km: e[2], slope: r[C.slope], pass: e[3], u: e[0], v: e[1] };
+    s.l = L.polyline(decode(rd.geo[i]), { renderer: canvas, interactive: true });
+    s.l.on("click", ev => { L.DomEvent.stopPropagation(ev); pickSection(i, ev.latlng); });
+    SEC.push(s); roadLayer.addLayer(s.l);
+  });
+  buildAdj();
+  S.start = NET.rome; recompute();
+  // crossings
+  crossLayer = L.layerGroup();
+  NET.crossings.forEach(c => { const a = NET.nodes[c[0]], b = NET.nodes[c[1]];
+    L.polyline([[a[1], a[0]], [b[1], b[0]]], { pane: "roads", color: "#2E6FA8", weight: 2, dashArray: "2,5", opacity: .9, interactive: false }).addTo(crossLayer);
+  });
+  // ancient city labels
+  cityLayer = L.layerGroup();
+  NET.cities.forEach(c => { const n = NET.nodes[c[3]]; L.marker([n[1], n[0]], { pane: "names", interactive: false, icon: L.divIcon({ className: ["rome", "london", "constantinople", "alexandria", "carthago"].includes(c[0]) ? "cityL" : "cityL minor", html: `${esc(c[1])}`, iconSize: [120, 16], iconAnchor: [60, -4] }) }).addTo(cityLayer);
+    L.circleMarker([n[1], n[0]], { pane: "route", radius: 3, color: css("--fg"), weight: 1.5, fillColor: css("--card"), fillOpacity: 1, interactive: false }).addTo(cityLayer); });
+  routeLayer.addTo(map); markLayer.addTo(map);
+  // start select
+  const sel = document.getElementById("startSel");
+  sel.innerHTML = NET.cities.map(c => `<option value="${c[3]}">${esc(c[1])} (${esc(c[2])})</option>`).join("") + `<option value="custom" disabled>A place you chose</option>`;
+  sel.value = String(NET.rome);
+  sel.onchange = () => { if (sel.value === "custom") return; const c = NET.cities.find(x => String(x[3]) === sel.value); setStart(+sel.value, c[1]); };
+  map.on("click", ev => pickPoint(ev.latlng));
+  const zl = () => map.getContainer().classList.toggle("zlow", map.getZoom() < 5.5); zl();
+  map.on("zoomend", () => { zl(); restyle(); });
+  setTiles(); intro(); search();
+  return Promise.all([loadImg("data/grid_edge.png"), loadImg("data/grid_dist.png")]);
+}).then(([ie, id]) => {
+  const g = NET.grid, cv = document.createElement("canvas"); cv.width = g.nx; cv.height = g.ny; const cx = cv.getContext("2d", { willReadFrequently: true });
+  cx.drawImage(ie, 0, 0); const a = cx.getImageData(0, 0, g.nx, g.ny).data; cx.clearRect(0, 0, g.nx, g.ny); cx.drawImage(id, 0, 0); const b = cx.getImageData(0, 0, g.nx, g.ny).data;
+  const code = new Int32Array(g.nx * g.ny), dq = new Uint8Array(g.nx * g.ny);
+  for (let i = 0; i < code.length; i += 1) { code[i] = (a[4 * i] << 16) | (a[4 * i + 1] << 8) | a[4 * i + 2]; dq[i] = b[4 * i]; }
+  GRID = { code, dq, cv, cx };
+  drawIso(); applyLayers();
+}).catch(err => { console.error(err); document.getElementById("side").innerHTML = "<p>The map data could not be loaded.</p>"; });
+
+const merc = lat => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+function cellOf(ll) { const g = NET.grid; if (ll.lng < g.lon0 || ll.lng > g.lon1 || ll.lat < g.lat0 || ll.lat > g.lat1) return -1;
+  const x = Math.floor((ll.lng - g.lon0) / (g.lon1 - g.lon0) * g.nx), y = Math.floor((merc(g.lat1) - merc(ll.lat)) / (merc(g.lat1) - merc(g.lat0)) * g.ny); return y * g.nx + x; }
+function drawIso() {
+  if (!GRID) return; const g = NET.grid, img = GRID.cx.createImageData(g.nx, g.ny), D = img.data;
+  for (let i = 0; i < GRID.code.length; i += 1) { const c = GRID.code[i]; if (c === 0xFFFFFF) continue; const d = pointDays(c, GRID.dq[i], S.mode); const rgb = rampRGB(d);
+    if (!rgb) { D[4 * i] = 150; D[4 * i + 1] = 146; D[4 * i + 2] = 136; D[4 * i + 3] = 110; continue; }
+    D[4 * i] = rgb[0]; D[4 * i + 1] = rgb[1]; D[4 * i + 2] = rgb[2]; const km = GRID.dq[i] / g.dist_scale; D[4 * i + 3] = Math.round(255 * (km < 12 ? 1 : Math.max(.2, 1 - (km - 12) / (NET.off_max - 12)))); }
+  GRID.cx.putImageData(img, 0, 0); const url = GRID.cv.toDataURL();
+  if (isoLayer) isoLayer.setUrl(url); else isoLayer = L.imageOverlay(url, [[g.lat0, g.lon0], [g.lat1, g.lon1]], { pane: "iso", opacity: LY.isoK / 100, interactive: false });
+}
+
+/* ---------- interaction ---------- */
+const side = document.getElementById("side");
+let sideState = { kind: "intro" };
+function refreshSide() { if (sideState.kind === "sec") pickSection(sideState.i, sideState.ll, true); else if (sideState.kind === "pt") pickPoint(sideState.ll, true); else if (sideState.kind === "city") showCity(sideState.k, true); else intro(); }
+function timesTable(f) { return `<table>${MODES.map(m => `<tr><td>${esc(R.modes[m].label)}<br><small>${R.modes[m].kmd} km a day</small></td><td class="num"><b>${days(f(m))}</b></td></tr>`).join("")}</table>`; }
+function intro() {
+  sideState = { kind: "intro" }; routeLayer.clearLayers(); markLayer.clearLayers(); S.prov = null; if (provLayer) provLayer.setStyle(provStyle);
+  side.innerHTML = `<h4>The network</h4><div class="big">${fmt(R.km_total)} km</div><p class="sub">${fmt(R.n_sections)} sections, ${fmt(R.n_nodes)} junctions</p>
+<p>Roads are coloured by days ${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} from ${esc(S.startName)}. Click any road or any point on land for the time from there, the route, or to start from it instead.</p>
+<h4>Days from Rome on foot</h4><table>${R.city_order.slice().filter(k => ["london", "constantinople", "alexandria", "lutetia", "athenae", "hierosolyma", "carthago"].includes(k)).map(k => `<tr><td><span class="go" data-city="${k}">${esc(R.city[k].name)}</span></td><td class="num">${fmt(R.city[k].foot)}</td></tr>`).join("")}</table>
+<p class="sub">Modelled times for a steady traveller on the roads, with four short sea crossings. The sea was usually quicker.</p>`;
+  wire();
+}
+function wire() { side.querySelectorAll("[data-city]").forEach(s => s.onclick = () => showCity(s.dataset.city)); side.querySelectorAll("[data-act]").forEach(b => b.onclick = () => { const a = b.dataset.act; if (a === "route") drawRoute(+b.dataset.n, b.dataset.e ? +b.dataset.e : null, b.dataset.f ? +b.dataset.f : null); if (a === "start") setStart(+b.dataset.n, b.dataset.name); if (a === "intro") intro(); if (a === "rome") { document.getElementById("startSel").value = String(NET.rome); setStart(NET.rome, "Rome"); } }); }
+function nearNode(s, f) { return f < .5 ? s.u : s.v; }
+function pickSection(i, ll, keep) {
+  const s = SEC[i]; sideState = { kind: "sec", i, ll }; if (!keep) { routeLayer.clearLayers(); }
+  markLayer.clearLayers(); L.polyline(s.l.getLatLngs(), { pane: "route", color: isDark() ? "#fff" : "#111", weight: 6, opacity: .35, interactive: false }).addTo(markLayer);
+  const nm = s.name >= 0 ? RD.name[s.name] : "Unnamed section", bd = s.band >= 0 ? BANDS[s.band][1] : null;
+  side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>Road section</h4><div class="big">${esc(nm)}</div>
+<p class="sub">${s.type === 0 ? "Main road" : "Secondary road"}, <span style="color:${CERTC[s.cert]};font-weight:500">${CERT[s.cert][1].toLowerCase()}</span>, ${f1(s.km)} km${s.prov ? ", " + esc(s.prov) : ""}</p>
+<h4>From ${esc(S.startName)} to the middle of this section</h4>${timesTable(m => secDays(i, m))}
+<div class="acts"><button class="btn" data-act="route" data-n="${T[S.mode][s.u] <= T[S.mode][s.v] ? s.u : s.v}">Show the route</button><button class="btn" data-act="start" data-n="${s.u}" data-name="${esc(NET.names[s.u])}">Start from here</button></div>
+<table>${s.cons >= 0 ? `<tr><td>Built under</td><td>${esc(RD.cons[s.cons])}</td></tr>` : ""}${s.year != null ? `<tr><td>Date used</td><td>${s.year < 0 ? -s.year + " BCE" : s.year + " CE"}${bd ? "<br><small>" + esc(bd) + "</small>" : ""}</td></tr>` : `<tr><td>Date</td><td><small>not given</small></td></tr>`}
+${s.itin >= 0 ? `<tr><td>Itinerary or name</td><td>${esc(RD.itin[s.itin])}</td></tr>` : ""}<tr><td>Average slope</td><td>${f1(s.slope)}°${s.pass < 1 ? ` <small>(slowed to ${Math.round(s.pass * 100)}%)</small>` : ""}</td></tr>
+${s.bib >= 0 ? `<tr><td>Sources</td><td><small>${esc(RD.bib[s.bib])}</small></td></tr>` : ""}${s.cite >= 0 ? `<tr><td>Digitised by</td><td><small>${esc(RD.cite[s.cite])}</small></td></tr>` : ""}</table>
+<p class="sub">Itiner-e section ${i}. Times are modelled.</p>`;
+  wire();
+  if (!keep && ll) L.popup({ maxWidth: 260 }).setLatLng(ll).setContent(`<b class="t">${esc(nm)}</b>${days(secDays(i, S.mode))} ${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} from ${esc(S.startName)}<br><small>${CERT[s.cert][1]} ${s.type === 0 ? "main" : "secondary"} road</small>`).openOn(map);
+}
+function pickPoint(ll, keep) {
+  if (!GRID) return; const c = cellOf(ll); markLayer.clearLayers(); if (!keep) routeLayer.clearLayers();
+  sideState = { kind: "pt", ll };
+  L.circleMarker(ll, { pane: "route", radius: 5, color: css("--fg"), weight: 2, fillColor: css("--hot"), fillOpacity: 1 }).addTo(markLayer);
+  if (c < 0 || GRID.code[c] === 0xFFFFFF) {
+    side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>This point</h4><div class="big">No road nearby</div><p class="sub">More than ${NET.off_max} km from any road in Itiner-e, at sea, or outside the map.</p>`; wire();
+    if (!keep) L.popup({ maxWidth: 240 }).setLatLng(ll).setContent(`<b class="t">No road nearby</b>More than ${NET.off_max} km from any mapped Roman road, or at sea.`).openOn(map);
+    return;
+  }
+  const code = GRID.code[c], dq = GRID.dq[c], e = code >> 8, f = (code & 255) / 255, s = SEC[e], off = dq / NET.grid.dist_scale;
+  const kmd = kmdOf(S.mode), w = s.km / (kmd * s.pass), viaU = T[S.mode][s.u] + f * w <= T[S.mode][s.v] + (1 - f) * w;
+  const nm = s.name >= 0 ? RD.name[s.name] : "an unnamed section", t = pointDays(code, dq, S.mode);
+  const here = NET.names[nearNode(s, f)];
+  side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>From ${esc(S.startName)} to this point</h4><div class="big">${days(t)}</div><p class="sub">${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"}; nearest road ${esc(nm)} (${CERT[s.cert][1].toLowerCase()}), ${f1(off)} km away, near ${esc(here)}</p>
+${timesTable(m => pointDays(code, dq, m))}
+<div class="acts"><button class="btn" data-act="route" data-n="${viaU ? s.u : s.v}" data-e="${e}" data-f="${f}">Show the route</button><button class="btn" data-act="start" data-n="${nearNode(s, f)}" data-name="${esc(here)}">Start from here</button>${S.start !== NET.rome ? `<button class="btn" data-act="rome">Back to Rome</button>` : ""}</div>
+<p class="sub">The last ${f1(off)} km off the road counted at half the road speed. ${isFinite(t) ? "" : "This road is not joined to the start by road: it is on an island, or the network has a gap."}</p>`;
+  wire();
+  if (!keep) L.popup({ maxWidth: 260 }).setLatLng(ll).setContent(`<b class="t">${days(t)}</b>${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} from ${esc(S.startName)}<br><small>near ${esc(here)}</small><br><button class="btn" id="popRoute">Show the route</button>`).openOn(map);
+  setTimeout(() => { const b = document.getElementById("popRoute"); if (b) b.onclick = () => drawRoute(viaU ? s.u : s.v); }, 0);
+}
+function drawRoute(n, e, f) {
+  routeLayer.clearLayers(); if (!isFinite(T[S.mode][n])) return;
+  const lines = []; let k = n, km = 0, sea = 0, guard = 0;
+  while (PREV[k] >= 0 && guard < 100000) { const ed = PREVE[k]; guard += 1;
+    if (ed < SEC.length) { lines.push(SEC[ed].l.getLatLngs()); km += SEC[ed].km; } else { const c = NET.crossings[ed - SEC.length], a = NET.nodes[c[0]], b = NET.nodes[c[1]]; lines.push([[a[1], a[0]], [b[1], b[0]]]); if (!c[3]) sea += 1; }
+    k = PREV[k]; }
+  L.polyline(lines, { pane: "route", color: isDark() ? "#000" : "#fff", weight: 8, opacity: .9, interactive: false }).addTo(routeLayer);
+  L.polyline(lines, { pane: "route", color: isDark() ? "#fff" : "#111", weight: 3.5, opacity: 1, interactive: false }).addTo(routeLayer);
+  const b = L.polyline(lines).getBounds(); if (b.isValid()) map.fitBounds(b.pad(.15), { maxZoom: 7 });
+  const nt = document.getElementById("mapnote"); if (nt) nt.innerHTML = `<b>${days(T[S.mode][n])}</b>from ${esc(S.startName)} to ${esc(NET.names[n])}: ${fmt(km)} km of road${sea ? `, ${sea} sea crossing${sea > 1 ? "s" : ""}` : ""}`;
+}
+function setStart(n, name) {
+  S.start = n; S.startName = name; const sel = document.getElementById("startSel");
+  if (!NET.cities.some(c => c[3] === n)) { sel.value = "custom"; sel.querySelector('option[value="custom"]').textContent = name; }
+  recompute(); drawIso(); restyle(); legend(); routeLayer.clearLayers(); markLayer.clearLayers(); map.closePopup(); intro();
+  const p = NET.nodes[n]; L.circleMarker([p[1], p[0]], { pane: "route", radius: 7, color: "#fff", weight: 2.5, fillColor: "#111", fillOpacity: 1 }).addTo(markLayer);
+}
+function showCity(k, keep) {
+  if (!NET) return; if (S.start !== NET.rome) { document.getElementById("startSel").value = String(NET.rome); setStart(NET.rome, "Rome"); }
+  const c = R.city[k], n = NET.cities.find(x => x[0] === k)[3];
+  sideState = { kind: "city", k };
+  side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>Rome to ${esc(c.name)}</h4><div class="big">${fmt(T[S.mode][n])} days</div><p class="sub">${S.mode === "foot" ? "on foot" : S.mode === "cart" ? "by cart" : "by courier"} to ${esc(c.latin)}; ${fmt(c.road_km)} km of road${c.sea.length ? " and a sea crossing" : ""}, ${fmt(c.straight_km)} km as the crow flies</p>
+${timesTable(m => T[m][n])}<p class="sub">On foot at 25 to 20 km a day: ${fmt(c.foot_lo)} to ${fmt(c.foot_hi)} days. ${Math.round(c.route_share_certain * 100)}% of the route is on roads graded certain.</p>`;
+  wire(); drawRoute(n);
+}
+function showRun(i) {
+  const r = R.runs[i]; routeLayer.clearLayers(); markLayer.clearLayers();
+  L.polyline([[r.lat0, r.lon0], [r.lat1, r.lon1]], { pane: "route", color: css("--hot"), weight: 9, opacity: .35, interactive: false }).addTo(markLayer);
+  map.fitBounds(L.latLngBounds([[r.lat0, r.lon0], [r.lat1, r.lon1]]).pad(.35), { maxZoom: 11 });
+  side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>Straight run</h4><div class="big">${f1(r.km)} km</div><p class="sub">${esc(r.label)}</p>
+<table><tr><td>From</td><td>${esc(r.from)}</td></tr><tr><td>To</td><td>${esc(r.to)}</td></tr><tr><td>Furthest from the line</td><td>${fmt(r.maxdev_m)} m</td></tr><tr><td>Graded certain</td><td>${Math.round(r.share_certain * 100)}%</td></tr><tr><td>Sections</td><td><small>${esc(r.sections)}</small></td></tr></table>
+<p class="sub">Switch the base map to satellite in Map layers to see the line on the ground.</p>`; wire();
+}
+const provStyle = f => ({ color: isDark() ? "#E2D7C7" : "#3B342E", weight: S.prov === f.properties.name ? 2.5 : .8, opacity: .8, fillColor: rampDensity(f.properties.density), fillOpacity: S.prov ? (S.prov === f.properties.name ? .25 : .03) : .16 });
+function rampDensity(d) { const t = Math.min(1, d / 140); const a = hex("#F3E3C3"), b = hex("#7A1F2B"); return `rgb(${a.map((x, j) => Math.round(x + (b[j] - x) * t)).join(",")})`; }
+function loadProv(then) {
+  if (provLayer) { if (then) then(); return; }
+  fetch("data/provinces.geojson").then(r => r.json()).then(G => {
+    provLayer = L.geoJSON(G, { pane: "prov", style: provStyle, onEachFeature: (f, l) => l.bindTooltip(`<b>${esc(f.properties.name)}</b><br>${f1(f.properties.density)} km per 1,000 km²`, { sticky: true }) });
+    if (LY.prov) provLayer.addTo(map); if (then) then();
+  });
+}
+function showProv(name) {
+  LY.prov = true; saveLY(); const pan = map.getContainer().querySelector('[data-k="prov"]'); if (pan) pan.checked = true;
+  loadProv(() => { provLayer.addTo(map); S.prov = name; provLayer.setStyle(provStyle); restyle(); let b = null; provLayer.eachLayer(l => { if (l.feature.properties.name === name) b = l.getBounds(); }); if (b) map.fitBounds(b.pad(.1), { maxZoom: 8 });
+    const p = R.provinces.find(x => x.name === name);
+    side.innerHTML = `<button class="back go" data-act="intro">Back to overview</button><h4>Province, about AD 117</h4><div class="big">${esc(name)}</div><p class="sub">${f1(p.density)} km of road per 1,000 km²</p><table><tr><td>Road</td><td class="num">${fmt(p.km)} km</td></tr><tr><td>Land area</td><td class="num">${fmt(p.area_km2)} km²</td></tr><tr><td>Graded certain</td><td class="num">${Math.round(p.share_certain * 100)}%</td></tr></table><p class="sub">Outline from DARE. Other provinces are dimmed.</p>`; wire(); });
+}
+function search() {
+  const q = document.getElementById("q"), sug = document.getElementById("sug"); let items = [], sel = -1;
+  const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const pool = [];
+  NET.cities.forEach(c => pool.push({ n: c[1], s: c[2], t: "node", k: c[3], r: 0 }));
+  const seen = new Set(); NET.names.forEach((nm, i) => { if (/^road junction/.test(nm) || seen.has(nm)) return; seen.add(nm); pool.push({ n: nm, s: "Roman place on the network", t: "node", k: i, r: 2 }); });
+  PLACES.forEach(p => pool.push({ n: p[0], s: p[1], t: "pt", k: [p[3], p[2]], r: 1 }));
+  pool.forEach(p => p.q = norm(p.n));
+  function show() { sug.innerHTML = items.map((it, i) => `<li role="option" aria-selected="${i === sel}" data-i="${i}">${esc(it.n)} <span>${esc(it.s)}</span></li>`).join(""); sug.style.display = items.length ? "block" : "none"; sug.querySelectorAll("li").forEach(li => li.onmousedown = e => { e.preventDefault(); go(items[+li.dataset.i]); }); }
+  function go(it) { q.value = it.n; sug.style.display = "none"; let ll; if (it.t === "node") { const p = NET.nodes[it.k]; ll = L.latLng(p[1], p[0]); } else ll = L.latLng(it.k[0], it.k[1]); map.setView(ll, Math.max(map.getZoom(), 7)); pickPoint(ll); }
+  q.addEventListener("input", () => { const v = norm(q.value.trim()); sel = -1; if (v.length < 2) { items = []; show(); return; }
+    items = pool.filter(p => p.q.startsWith(v)).sort((a, b) => a.r - b.r || a.n.length - b.n.length).slice(0, 10);
+    if (items.length < 10) items = items.concat(pool.filter(p => !p.q.startsWith(v) && p.q.includes(v)).sort((a, b) => a.r - b.r).slice(0, 10 - items.length)); show(); });
+  q.addEventListener("keydown", e => { if (e.key === "ArrowDown") { sel = Math.min(items.length - 1, sel + 1); show(); e.preventDefault(); } else if (e.key === "ArrowUp") { sel = Math.max(0, sel - 1); show(); e.preventDefault(); } else if (e.key === "Enter" && items.length) go(items[Math.max(0, sel)]); else if (e.key === "Escape") { sug.style.display = "none"; } });
+  q.addEventListener("blur", () => setTimeout(() => sug.style.display = "none", 150));
+}
+// theme toggle
+document.getElementById("theme").onclick = () => { const r = document.documentElement; r.dataset.theme = isDark() ? "light" : "dark"; setTiles(); redraws.forEach(f => f()); };
+</script>
+/*FULLSCREEN*/
+</body>
+</html>
