@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite it as below."
+title: "Roads of the Roman Empire: Certainty, Density, Straight Runs and Days from Rome in the Itiner-e Network"
+type: dataset
+authors:
+  - family-names: Hotham
+    given-names: Tristan
+    orcid: "https://orcid.org/0000-0003-4931-9349"
+    affiliation: "Independent researcher"
+doi: "10.5281/zenodo.23857866"
+url: "https://maps.tristanhotham.com/roman-roads/"
+repository-code: "https://github.com/Tristan-Hotham/roman-roads"
+license: CC-BY-4.0
+keywords:
+  - "Roman roads"
+  - "Roman Empire"
+  - "Itiner-e"
+  - "transport networks"
+  - "travel time"
+  - "network analysis"
+  - "historical GIS"
+  - "archaeology"
